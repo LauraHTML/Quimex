@@ -1,0 +1,338 @@
+import "./styles/page.css";
+import Image from "next/image";
+import Link from "next/link";
+
+import Navbar02Page from "@/components/navbar-02/navbar-02";
+import Footer03Page from "@/components/footer-03/footer-03";
+
+import { Button } from "../components/ui/button";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from "../components/ui/field";
+
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+
+export default function Home() {
+  return (
+    <>
+      <Navbar02Page></Navbar02Page>
+      <section
+        id="hero"
+        className="flex flex-row items-center justify-center text-white text-center py-[8rem]"
+      >
+        <div className="flex flex-col w-3/4 items-center gap-5">
+          <h1 className="headline-1">
+            Inovação e Sustentabilidade em Soluções Químicas
+          </h1>
+          <p className="lead">
+            Transformando derivados de refinarias em compostos de alto valor,
+            impulsionando a indústria com parcerias estratégicas e produtos de
+            excelência.
+          </p>
+          <Button className="btn-lg py-2 px-2">
+            <Link href="#o-que-fazemos">Saiba Mais Sobre Nós</Link>
+          </Button>
+        </div>
+      </section>
+      {/* O Que Fazemos / Vendemos Section */}
+      <section id="o-que-fazemos" className="flex flex-col items-center justify-center h-full m-5x">
+        <div className="m-0 flex flex-col px-6 pt-10 justify-center items-center">
+          <div className="destaque-sobre flex flex-row gap-3 bg-secondary p-2 items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="size-6"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.5 3.798v5.02a3 3 0 0 1-.879 2.121l-2.377 2.377a9.845 9.845 0 0 1 5.091 1.013 8.315 8.315 0 0 0 5.713.636l.285-.071-3.954-3.955a3 3 0 0 1-.879-2.121v-5.02a23.614 23.614 0 0 0-3 0Zm4.5.138a.75.75 0 0 0 .093-1.495A24.837 24.837 0 0 0 12 2.25a25.048 25.048 0 0 0-3.093.191A.75.75 0 0 0 9 3.936v4.882a1.5 1.5 0 0 1-.44 1.06l-6.293 6.294c-1.62 1.621-.903 4.475 1.471 4.88 2.686.46 5.447.698 8.262.698 2.816 0 5.576-.239 8.262-.697 2.373-.406 3.092-3.26 1.47-4.881L15.44 9.879A1.5 1.5 0 0 1 15 8.818V3.936Z"
+                clipRule="evenodd"
+              />
+            </svg>
+
+            <p className="m-0">O que nós entregamos</p>
+          </div>
+          <h2 className="text-center">
+            Criando as Ligações Essenciais para o seu Sucesso
+          </h2>
+          <div className="flex flex-col md:flex-row gap- justify-center items-center h-80">
+            <div className="w-full md:w-4/5 mb-4 duration-300 ease-in-out hover:scale-90 hover:bg-accent [&:not(:hover)]:scale-80 bg-secondary-foreground">
+              <div className="flex flex-col p-5 items-center text-center shadow-sm rounded-md  h-70 feature-box border-1 border-accent">
+                <Image
+                  className="p-1"
+                  src="/icones/icon-confiavel.svg"
+                  alt="ícone de escudo com"
+                  width={50}
+                  height={50}
+                />
+                <h3 className="font-bold">Confiável</h3>
+                <p className="m-0">
+                  Cumprimos o que prometemos, com consistência e transparência.
+                </p>
+              </div>
+            </div>
+            <div className="w-full md:w-4/5 mb-4">
+              <div className="flex flex-col p-5 items-center text-center shadow-sm rounded-md duration-300 ease-in-out hover:bg-accent hover:scale-90 [&:not(:hover)]:scale-80 h-70 border-1 border-accent bg-secondary-foreground">
+                <Image
+                  className="p-1"
+                  src="/icones/icon-inovadora.svg"
+                  alt="ícone de escudo com"
+                  width={65}
+                  height={65}
+                />
+                <h3 className="font-bold">Inovadora</h3>
+                <p>
+                  Estamos sempre à frente, pesquisando novas tecnologias que
+                  redefinem o mercado.
+                </p>
+              </div>
+            </div>
+            <div className="w-full md:w-4/5 mb-4">
+              <div className="flex flex-col p-5 items-center text-center shadow-sm rounded-md duration-300 ease-in-out hover:bg-accent hover:scale-90 [&:not(:hover)]:scale-80 h-70 feature-box border-1 border-accent bg-secondary-foreground">
+                <Image
+                  className="p-1"
+                  src="/icones/icon-parceria.svg"
+                  alt="ícone de escudo com"
+                  width={65}
+                  height={65}
+                />
+                <h3 className="font-bold">Parceira</h3>
+                <p>
+                  Colaboramos ativamente para alcançar os melhores resultados
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Quem Somos Section */}
+      <section
+        id="quem-somos"
+        className="flex flex-row items-center justify-center "
+      >
+        <div className="flex flex-col md:flex-row items-center justify-between p-10">
+          <div className="flex flex-col gap-4 w-full md:w-1/2 items-left">
+            <h3>Sobre Nós</h3>
+            <div className="bg-primary h-1 w-48 mt-3"></div>
+
+            <div className="flex flex-col gap-7 pt-5 pb-5">
+              <h2 className="font-bold leading-none ">
+                Descubra a diferença que a Quimex pode te oferecer.
+              </h2>
+              <p className="hidden md:flex">
+                Nascemos da visão de inovar o setor químico, atuando como uma
+                empresa dinâmica que transforma derivados de refinarias em uma
+                vasta gama de soluções especializadas. Nossa jornada é pautada
+                na pesquisa e desenvolvimento, com um compromisso absoluto com a
+                qualidade, segurança e eficiência. Acima de tudo, construímos
+                relações colaborativas duradouras, garantindo que cada produto
+                atenda sempre aos mais altos padrões da indústria.
+              </p>
+              <div className="flex md:hidden">
+                <p>
+                  Nascemos para inovar. Transformamos derivados químicos em
+                  soluções de alta performance, unindo pesquisa de ponta,
+                  segurança e eficiência. Mais que produtos, construímos
+                  parcerias duradouras, garantindo a mais alta qualidade para a
+                  sua indústria.
+                </p>
+              </div>
+            </div>
+            <Button variant={"default"} className="w-40">
+              <Link href="#" className="btn btn-outline-secondary">
+                -----
+              </Link>
+            </Button>
+          </div>
+          <div className="hidden md:flex max-w-[100%] h-[30rem]">
+            <img
+              src="/img-profissional.png"
+              className="rounded img-profissional"
+              alt="Nossa Equipe e Laboratório"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Setores de Produtos Químicos Section */}
+      <section id="setores-produtos" className="h-full pt-30 pb-30">
+        <div className="flex flex-col">
+          <h2 className="text-center font-bold">
+            Setores de Produtos Químicos que Atendemos
+          </h2>
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-center ">
+            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white">
+              <div className="card-side card-frente card-agro flex flex-col justify-center h-full w-full">
+                <h3 className="text-white fw-bold">Agroindústria</h3>
+              </div>
+              <div className="card-side card-fundo flex flex-col justify-center h-full w-full bg-primary">
+                <p className="card-text">
+                  Soluções para otimização de colheitas, fertilizantes e
+                  proteção de cultivos.
+                </p>
+              </div>
+            </div>
+            <div className="product-sector-card flex flex-colu justify-center items-center text-center text-white">
+              <div className="card-side card-frente card-industria flex flex-col justify-center h-full w-full">
+                <h3 className="text-white fw-bold">
+                  Indústria e Transformação
+                </h3>
+              </div>
+              <div className="card-side card-fundo flex flex-col justify-center h-full w-full bg-primary">
+                <p className="card-text">
+                  Químicos para processos industriais, polímeros e
+                  revestimentos.
+                </p>
+              </div>
+            </div>
+            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white">
+              <div className="card-side card-frente card-farmacia flex flex-col justify-center h-full w-full">
+                <h3 className="text-white fw-bold">Farmacêutica e Cosmética</h3>
+              </div>
+              <div className="card-side card-fundo flex flex-col justify-center h-full w-full bg-primary">
+                <p className="card-text">
+                  Ingredientes de alta pureza para medicamentos e produtos de
+                  beleza.
+                </p>
+              </div>
+            </div>
+            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white">
+              <div className="card-side card-frente card-limpeza flex flex-col justify-center h-full w-full">
+                <h3 className="fw-bold">Limpeza e Saneamento</h3>
+              </div>
+
+              <div className="card-side card-fundo flex flex-col justify-center h-full w-full bg-primary">
+                <p className="card-text">
+                  Compostos para produtos de limpeza domésticos e industriais,
+                  tratamento de água.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Marcas de Parceria Section */}
+      <section
+        id="parcerias"
+        className="flex flex-col justify-center bg-secondary h-[100vh]"
+      >
+        <div className="flex flex-col">
+          <h2 className="text-center">Nossas Marcas Parceiras</h2>
+          <div className="flex flex-col md:flex-row items-center justify-center text-center gap-3">
+            <div className="col-6 col-md-4 col-lg-2 mb-4">
+              <img
+                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+1"
+                className="img-fluid transition-all hover:scale-110"
+                alt="Logo Parceiro 1"
+              />
+            </div>
+            <div className="col-6 col-md-4 col-lg-2 mb-4">
+              <img
+                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+2"
+                className="img-fluid transition-all hover:scale-110"
+                alt="Logo Parceiro 2"
+              />
+            </div>
+            <div className="col-6 col-md-4 col-lg-2 mb-4">
+              <img
+                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+3"
+                className="img-fluid transition-all hover:scale-110"
+                alt="Logo Parceiro 3"
+              />
+            </div>
+            <div className="col-6 col-md-4 col-lg-2 mb-4">
+              <img
+                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+4"
+                className="img-fluid transition-all hover:scale-110"
+                alt="Logo Parceiro 4"
+              />
+            </div>
+            <div className="col-6 col-md-4 col-lg-2 mb-4">
+              <img
+                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+5"
+                className="img-fluid transition-all hover:scale-110"
+                alt="Logo Parceiro 5"
+              />
+            </div>
+          </div>
+          <div className="text-center">
+            <Button>
+              <Link href="#">Seja Nosso Parceiro</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="contato"
+        className="flex flex-col items-center justify-center h-full mt-6 pt-15 pb-15"
+      >
+        <h2 className="text-center">Entre em Contato</h2>
+        <div className="flex flex-row justify-center p-3">
+          <div className="">
+            <p className="text-center">
+              Estamos ansiosos para ouvir você e explorar novas oportunidades de
+              parceria.
+            </p>
+            <div className="w-full">
+              <FieldGroup>
+                <FieldSet>
+                  <FieldLegend></FieldLegend>
+                  <FieldDescription></FieldDescription>
+                  <FieldGroup>
+                    <Field>
+                      <FieldLabel htmlFor="checkout-7j9-card-name-43j">
+                        Nome completo
+                      </FieldLabel>
+                      <Input id="" placeholder="Seu nome" required />
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="checkout-7j9-card-number-uw1">
+                        Email
+                      </FieldLabel>
+                      <Input
+                        id="email"
+                        placeholder="seu.email@exemplo.com"
+                        required
+                      />
+                    </Field>
+                  </FieldGroup>
+                </FieldSet>
+                <FieldSet>
+                  <FieldGroup>
+                    <Field>
+                      <FieldLabel htmlFor="checkout-7j9-optional-comments">
+                        Mensagem
+                      </FieldLabel>
+                      <Textarea
+                        id="mensagem"
+                        placeholder="Sua mensagem..."
+                        className="resize-none md:resize-y"
+                      />
+                    </Field>
+                  </FieldGroup>
+                </FieldSet>
+                <Field orientation="horizontal">
+                  <Button type="submit">Enviar</Button>
+                </Field>
+              </FieldGroup>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Footer */}
+      <Footer03Page></Footer03Page>
+    </>
+  );
+}
