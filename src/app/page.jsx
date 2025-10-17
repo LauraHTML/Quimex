@@ -44,6 +44,8 @@ export default function Home() {
           </Button>
         </div>
       </section>
+
+      <div className="fundo-sobre">
       {/* O Que Fazemos / Vendemos Section */}
       <section id="o-que-fazemos" className="flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
         <div className="flex flex-col items-center justify-center max-w-6xl w-full">
@@ -166,6 +168,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* Setores de Produtos Químicos Section */}
       <section id="setores-produtos" className="flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
@@ -174,47 +177,47 @@ export default function Home() {
             Setores de Produtos Químicos que Atendemos
           </h2>
           <div className="flex flex-col md:flex-row md:flex-wrap gap-6 justify-center md:items-stretch w-full items-center">
-            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white">
-              <div className="card-side card-frente card-agro flex flex-col justify-center h-full w-full">
+            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white transition-all duration-300 ease-in-out">
+              <div className="card-side rounded-xl card-frente card-agro flex flex-col justify-center h-full w-full absolute top-0 left-0 hover:rotate-y-180 rotate-y-none">
                 <h3 className="text-white fw-bold">Agroindústria</h3>
               </div>
-              <div className="card-side card-fundo flex flex-col justify-center h-full w-full bg-primary">
+              <div className="card-side card-fundo rounded-xl flex flex-col justify-center h-full w-full bg-primary absolute top-0 left-0 backface-hidden rotate-y-[-180deg] hover:rotate-y-none">
                 <p className="card-text">
                   Soluções para otimização de colheitas, fertilizantes e
                   proteção de cultivos.
                 </p>
               </div>
             </div>
-            <div className="product-sector-card flex flex-colu justify-center items-center text-center text-white">
-              <div className="card-side card-frente card-industria flex flex-col justify-center h-full w-full">
+            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white transition-all duration-300 ease-in-out">
+              <div className="card-side card-frente rounded-xl card-industria flex flex-col justify-center h-full w-full absolute top-0 left-0 hover:rotate-y-180 rotate-y-none">
                 <h3 className="text-white fw-bold">
                   Indústria e Transformação
                 </h3>
               </div>
-              <div className="card-side card-fundo flex flex-col justify-center h-full w-full bg-primary">
+              <div className="card-side card-fundo rounded-xl flex flex-col justify-center h-full w-full bg-primary absolute top-0 left-0 backface-hidden rotate-y-[-180deg] hover:rotate-y-none">
                 <p className="card-text">
                   Químicos para processos industriais, polímeros e
                   revestimentos.
                 </p>
               </div>
             </div>
-            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white">
-              <div className="card-side card-frente card-farmacia flex flex-col justify-center h-full w-full">
-                <h3 className="text-white fw-bold">Farmacêutica e Cosmética</h3>
+            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white transition-all duration-300 ease-in-out">
+              <div className="card-side card-frente rounded-xl card-farmacia flex flex-col justify-center h-full w-full absolute top-0 left-0 hover:rotate-y-180 rotate-y-none">
+                <h3 className="fw-bold">Farmacêutica e Cosmética</h3>
               </div>
-              <div className="card-side card-fundo flex flex-col justify-center h-full w-full bg-primary">
+              <div className="card-side card-fundo rounded-xl flex flex-col justify-center h-full w-full bg-primary absolute top-0 left-0 backface-hidden rotate-y-[-180deg] hover:rotate-y-none ">
                 <p className="card-text">
                   Ingredientes de alta pureza para medicamentos e produtos de
                   beleza.
                 </p>
               </div>
-            </div>
-            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white">
-              <div className="card-side card-frente card-limpeza flex flex-col justify-center h-full w-full">
+            </div> 
+            <div className="product-sector-card flex flex-col justify-center items-center text-center text-white transition-all duration-300 ease-in-out">
+              <div className="card-side card-frente rounded-xl card-limpeza flex flex-col justify-center h-full w-full absolute top-0 left-0 hover:rotate-y-180 rotate-y-none">
                 <h3 className="fw-bold">Limpeza e Saneamento</h3>
               </div>
 
-              <div className="card-side card-fundo flex flex-col justify-center h-full w-full bg-primary">
+              <div className="card-side card-fundo rounded-xl flex flex-col justify-center h-full w-full bg-primary absolute top-0 left-0 backface-hidden rotate-y-[-180deg] hover:rotate-y-none transition-transform duration-300 ease-in-out">
                 <p className="card-text">
                   Compostos para produtos de limpeza domésticos e industriais,
                   tratamento de água.
@@ -225,11 +228,8 @@ export default function Home() {
         </div>
       </section>
       {/* Marcas de Parceria Section */}
-      <section
-        id="parcerias"
-        className="flex flex-col justify-center bg-secondary h-[100vh]"
-      >
-        <div className="flex flex-col">
+      <section id="parcerias" className="flex flex-col justify-center items-center h-80">
+        <div className="flex flex-col w-full max-w-6xl bg-accent p-10">
           <h2 className="text-center">Nossas Marcas Parceiras</h2>
           <div className="flex flex-col md:flex-row items-center justify-center text-center gap-3">
             <div className="col-6 col-md-4 col-lg-2 mb-4">
