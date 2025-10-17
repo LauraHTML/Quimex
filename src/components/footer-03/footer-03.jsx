@@ -41,8 +41,7 @@ const footerSections = [
 
 const Footer03Page = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="grow" />
+    <div className="flex flex-col">
       <footer className="bg-footer text-white">
         <div className="max-w-(--breakpoint-xl) mx-auto">
           <div className="py-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-x-8 gap-y-10 px-6 xl:px-0">

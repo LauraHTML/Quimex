@@ -45,9 +45,9 @@ export default function Home() {
         </div>
       </section>
       {/* O Que Fazemos / Vendemos Section */}
-      <section id="o-que-fazemos" className="flex flex-col items-center justify-center h-full m-5x">
-        <div className="m-0 flex flex-col px-6 pt-10 justify-center items-center">
-          <div className="destaque-sobre flex flex-row gap-3 bg-secondary p-2 items-center">
+      <section id="o-que-fazemos" className="flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
+        <div className="flex flex-col items-center justify-center max-w-6xl w-full">
+          <div className="flex flex-row gap-3 bg-secondary p-2 items-center rounded-md mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -60,68 +60,68 @@ export default function Home() {
                 clipRule="evenodd"
               />
             </svg>
-
-            <p className="m-0">O que nós entregamos</p>
+            <p className="m-0 font-semibold">O que nós entregamos</p>
           </div>
-          <h2 className="text-center">
+
+          <h2 className="text-center text-2xl md:text-3xl font-bold mb-10">
             Criando as Ligações Essenciais para o seu Sucesso
           </h2>
-          <div className="flex flex-col md:flex-row gap- justify-center items-center h-80">
-            <div className="w-full md:w-4/5 mb-4 duration-300 ease-in-out hover:scale-90 hover:bg-accent [&:not(:hover)]:scale-80 bg-secondary-foreground">
-              <div className="flex flex-col p-5 items-center text-center shadow-sm rounded-md  h-70 feature-box border-1 border-accent">
-                <Image
-                  className="p-1"
-                  src="/icones/icon-confiavel.svg"
-                  alt="ícone de escudo com"
-                  width={50}
-                  height={50}
-                />
-                <h3 className="font-bold">Confiável</h3>
-                <p className="m-0">
-                  Cumprimos o que prometemos, com consistência e transparência.
-                </p>
-              </div>
+
+          <div className="flex flex-col md:flex-row md:flex-wrap gap-6 justify-center md:items-stretch w-full items-center">
+           
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+              <Image
+                className="p-1 mx-auto"
+                src="/icones/icon-confiavel.svg"
+                alt="ícone confiável"
+                width={50}
+                height={50}
+              />
+              <h3 className="font-bold mt-3">Confiável</h3>
+              <p className="text-sm mt-2">
+                Cumprimos o que prometemos, com consistência e transparência.
+              </p>
             </div>
-            <div className="w-full md:w-4/5 mb-4">
-              <div className="flex flex-col p-5 items-center text-center shadow-sm rounded-md duration-300 ease-in-out hover:bg-accent hover:scale-90 [&:not(:hover)]:scale-80 h-70 border-1 border-accent bg-secondary-foreground">
-                <Image
-                  className="p-1"
-                  src="/icones/icon-inovadora.svg"
-                  alt="ícone de escudo com"
-                  width={65}
-                  height={65}
-                />
-                <h3 className="font-bold">Inovadora</h3>
-                <p>
-                  Estamos sempre à frente, pesquisando novas tecnologias que
-                  redefinem o mercado.
-                </p>
-              </div>
+
+  
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+              <Image
+                className="p-1 mx-auto"
+                src="/icones/icon-inovadora.svg"
+                alt="ícone inovadora"
+                width={65}
+                height={65}
+              />
+              <h3 className="font-bold mt-3">Inovadora</h3>
+              <p className="text-sm mt-2">
+                Estamos sempre à frente, pesquisando novas tecnologias que redefinem o mercado.
+              </p>
             </div>
-            <div className="w-full md:w-4/5 mb-4">
-              <div className="flex flex-col p-5 items-center text-center shadow-sm rounded-md duration-300 ease-in-out hover:bg-accent hover:scale-90 [&:not(:hover)]:scale-80 h-70 feature-box border-1 border-accent bg-secondary-foreground">
-                <Image
-                  className="p-1"
-                  src="/icones/icon-parceria.svg"
-                  alt="ícone de escudo com"
-                  width={65}
-                  height={65}
-                />
-                <h3 className="font-bold">Parceira</h3>
-                <p>
-                  Colaboramos ativamente para alcançar os melhores resultados
-                </p>
-              </div>
+
+        
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+              <Image
+                className="p-1 mx-auto"
+                src="/icones/icon-parceria.svg"
+                alt="ícone parceria"
+                width={65}
+                height={65}
+              />
+              <h3 className="font-bold mt-3">Parceira</h3>
+              <p className="text-sm mt-2">
+                Colaboramos ativamente para alcançar os melhores resultados.
+              </p>
             </div>
           </div>
         </div>
       </section>
+
       {/* Quem Somos Section */}
       <section
         id="quem-somos"
         className="flex flex-row items-center justify-center "
       >
-        <div className="flex flex-col md:flex-row items-center justify-between p-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0 p-10">
           <div className="flex flex-col gap-4 w-full md:w-1/2 items-left">
             <h3>Sobre Nós</h3>
             <div className="bg-primary h-1 w-48 mt-3"></div>
@@ -155,10 +155,12 @@ export default function Home() {
               </Link>
             </Button>
           </div>
-          <div className="hidden md:flex max-w-[100%] h-[30rem]">
+
+          <div className="hidden md:flex w-lg h-lg">
             <img
-              src="/img-profissional.png"
-              className="rounded img-profissional"
+              src="/profissional-industria.png"
+              // Deixe apenas o w-full. A altura será automática.
+              className="rounded img-profissional w-full"
               alt="Nossa Equipe e Laboratório"
             />
           </div>
@@ -166,12 +168,12 @@ export default function Home() {
       </section>
 
       {/* Setores de Produtos Químicos Section */}
-      <section id="setores-produtos" className="h-full pt-30 pb-30">
-        <div className="flex flex-col">
+      <section id="setores-produtos" className="flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
+        <div className="flex flex-col items-center justify-center max-w-6xl w-full gap-7">
           <h2 className="text-center font-bold">
             Setores de Produtos Químicos que Atendemos
           </h2>
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-center ">
+          <div className="flex flex-col md:flex-row md:flex-wrap gap-6 justify-center md:items-stretch w-full items-center">
             <div className="product-sector-card flex flex-col justify-center items-center text-center text-white">
               <div className="card-side card-frente card-agro flex flex-col justify-center h-full w-full">
                 <h3 className="text-white fw-bold">Agroindústria</h3>

@@ -11,16 +11,15 @@ body {
   background: url('/industria-quimica.png') no-repeat center center/cover;
 }
 
-.img-profissional{
-  width: 30rem;
-  height: 30rem;
-  object-fit: cover;
+/* .img-profissional {
+
+  object-fit: contain;
   mask-image: url("/forma.svg");
   mask-size: cover;
   mask-repeat: no-repeat;
   -webkit-mask-image: url("/forma.svg");
   -webkit-mask-size: cover;
-}
+} */
 
 .card-side{
   border-radius: 3.18mm;
