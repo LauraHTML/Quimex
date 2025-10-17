@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -7,9 +9,21 @@ import {
   TwitchIcon,
   TwitterIcon,
 } from "lucide-react";
-import Link from "next/link";
 
 import Image from "next/image";
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+import {
+  Link,
+  DirectLink,
+  Element,
+  Events,
+  animateScroll,
+  scrollSpy,
+  scroller
+} from "react-scroll";
 
 const footerSections = [
   {
@@ -17,15 +31,15 @@ const footerSections = [
     links: [
       {
         title: "Quem Somos",
-        href: "#quem-somos",
+        href: "quem-somos",
       },
       {
         title: "O Que Fazemos",
-        href: "#o-que-fazemos",
+        href: "o-que-fazemos",
       },
       {
         title: "Nossos Produtos",
-        href: "#setores-produtos",
+        href: "setores-produtos",
       },
       {
         title: "Parcerias",
@@ -33,13 +47,54 @@ const footerSections = [
       },
       {
         title: "Contato",
-        href: "#contato",
+        href: "contato",
       },
     ],
   },
 ];
 
 const Footer03Page = () => {
+
+  const durationFn = function(deltaTop) {
+      return deltaTop;
+    };
+    
+    const  scrollToTop = () => {
+      animateScroll.scrollToTop()
+    }
+    const scrollTo = (offset) => {
+      scroller.scrollTo("scroll-to-element", {
+        duration: 800,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        offset: offset
+      });
+    }
+    const scrollToWithContainer= () =>{
+      let goToContainer = new Promise((resolve, reject) => {
+        Events.scrollEvent.register("end", () => {
+          resolve(true);
+          Events.scrollEvent.remove("end");
+        });
+    
+        scroller.scrollTo("scroll-container", {
+          duration: 800,
+          delay: 0,
+          smooth: "easeInOutQuart"
+        });
+      });
+    
+      goToContainer.then(() =>
+        scroller.scrollTo("scroll-container-second-element", {
+          duration: 800,
+          delay: 0,
+          smooth: "easeInOutQuart",
+          containerId: "scroll-container",
+          offset: 50
+        })
+      );
+    }
+  
   return (
     <div className="flex flex-col">
       <footer className="bg-footer text-white">
@@ -65,8 +120,7 @@ const Footer03Page = () => {
                   {links.map(({ title, href }) => (
                     <li key={title} className="">
                       <Link
-                        href={href}
-                        className="hover:text-primary"
+                      to={href} spy={true} smooth={true} offset={50} duration={500} className="hover:text-primary cursor-pointer"
                       >
                         {title}
                       </Link>

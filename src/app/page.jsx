@@ -28,7 +28,7 @@ export default function Home() {
       <Navbar02Page></Navbar02Page>
       <section
         id="hero"
-        className="flex flex-row items-center justify-center text-white text-center py-[8rem]"
+        className="hero flex flex-row items-center justify-center text-white text-center py-[8rem]"
       >
         <div className="flex flex-col w-3/4 items-center gap-5">
           <h1 className="headline-1">
@@ -45,9 +45,8 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="fundo-sobre">
       {/* O Que Fazemos / Vendemos Section */}
-      <section id="o-que-fazemos" className="flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
+      <section id="o-que-fazemos" className="o-que-fazemos flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
         <div className="flex flex-col items-center justify-center max-w-6xl w-full">
           <div className="flex flex-row gap-3 bg-secondary p-2 items-center rounded-md mb-4">
             <svg
@@ -121,7 +120,7 @@ export default function Home() {
       {/* Quem Somos Section */}
       <section
         id="quem-somos"
-        className="flex flex-row items-center justify-center "
+        className="quem-somos flex flex-row items-center justify-center "
       >
         <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0 p-10">
           <div className="flex flex-col gap-4 w-full md:w-1/2 items-left">
@@ -152,8 +151,8 @@ export default function Home() {
               </div>
             </div>
             <Button variant={"default"} className="w-40">
-              <Link href="#" className="btn btn-outline-secondary">
-                -----
+              <Link href="#parcerias" className="btn btn-outline-secondary">
+                Nossos Parceiros
               </Link>
             </Button>
           </div>
@@ -168,10 +167,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-      </div>
 
       {/* Setores de Produtos Químicos Section */}
-      <section id="setores-produtos" className="flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
+      <section id="setores-produtos" className="setores-produtos flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
         <div className="flex flex-col items-center justify-center max-w-6xl w-full gap-7">
           <h2 className="text-center font-bold">
             Setores de Produtos Químicos que Atendemos
@@ -228,7 +226,7 @@ export default function Home() {
         </div>
       </section>
       {/* Marcas de Parceria Section */}
-      <section id="parcerias" className="flex flex-col justify-center items-center h-80">
+      <section id="parcerias" className="parcerias flex flex-col justify-center items-center h-80">
         <div className="flex flex-col w-full max-w-6xl bg-accent p-10">
           <h2 className="text-center">Nossas Marcas Parceiras</h2>
           <div className="flex flex-col md:flex-row items-center justify-center text-center gap-3">
@@ -278,7 +276,7 @@ export default function Home() {
 
       <section
         id="contato"
-        className="flex flex-col items-center justify-center h-full mt-6 pt-15 pb-15"
+        className="contato flex flex-col items-center justify-center h-full mt-6 pt-15 pb-15"
       >
         <h2 className="text-center">Entre em Contato</h2>
         <div className="flex flex-row justify-center p-3">

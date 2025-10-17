@@ -186,6 +186,9 @@ h3{
   font-size: var(--text-headline-3);
 }
 
+body {
+  scroll-behavior: smooth;
+}
 
 @layer base {
   * {
