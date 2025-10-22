@@ -68,30 +68,30 @@ export const NavMenu = (props) => {
   return (
     <NavigationMenu {...props}>
       <NavigationMenuList
-        className="gap-3 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start data-[orientation=vertical]:justify-start">
+        className="gap-0 md:gap-3 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start data-[orientation=vertical]:justify-start">
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link className="cursor-pointer text-base" to="quem-somos" spy={true} smooth={true} offset={50} duration={500}>Quem Somos</Link>
+            <Link className="cursor-pointer" to="o-que-fazemos" spy={true} smooth={true} offset={-70} duration={500}>O Que Fazemos</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link className="cursor-pointer" to="o-que-fazemos" spy={true} smooth={true} offset={50} duration={500}>O Que Fazemos</Link>
+            <Link className="cursor-pointer text-base" to="quem-somos" spy={true} smooth={true} offset={-70} duration={500}>Quem Somos</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link className="cursor-pointer" to="setores-produtos" spy={true} smooth={true} offset={50} duration={500}>Produtos</Link>
+            <Link className="cursor-pointer" to="setores-produtos" spy={true} smooth={true} offset={-30} duration={500}>Produtos</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link className="cursor-pointer" to="parcerias" spy={true} smooth={true} offset={50} duration={500}>Parcerias</Link>
+            <Link className="cursor-pointer" to="parcerias" spy={true} smooth={true} offset={-100} duration={500}>Parcerias</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link className="cursor-pointer" to="contato" spy={true} smooth={true} offset={50} duration={500}>Contato</Link>
+            <Link className="cursor-pointer" to="contato" spy={true} smooth={true} offset={-20} duration={500}>Contato</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

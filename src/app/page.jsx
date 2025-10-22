@@ -1,6 +1,9 @@
+"use client";
+
 import "./styles/page.css";
 import Image from "next/image";
-import Link from "next/link";
+
+import { Link } from 'react-scroll';
 
 import Navbar02Page from "@/components/navbar-02/navbar-02";
 import Footer03Page from "@/components/footer-03/footer-03";
@@ -40,7 +43,7 @@ export default function Home() {
             excelência.
           </p>
           <Button className="btn-lg py-2 px-2">
-            <Link href="#o-que-fazemos">Saiba Mais Sobre Nós</Link>
+            <Link to="o-que-fazemos" smooth={true} duration={500} spy={true} offset={-70} >Saiba Mais Sobre Nós</Link>
           </Button>
         </div>
       </section>
@@ -151,7 +154,7 @@ export default function Home() {
               </div>
             </div>
             <Button variant={"default"} className="w-40">
-              <Link href="#parcerias" className="btn btn-outline-secondary">
+              <Link to="parcerias" smooth={true} duration={500} spy={true} offset={-100} href="#parcerias" className="btn btn-outline-secondary">
                 Nossos Parceiros
               </Link>
             </Button>
@@ -226,41 +229,41 @@ export default function Home() {
         </div>
       </section>
       {/* Marcas de Parceria Section */}
-      <section id="parcerias" className="parcerias flex flex-col justify-center items-center h-80">
-        <div className="flex flex-col w-full max-w-6xl bg-accent p-10">
+      <section id="parcerias" className="parcerias flex flex-col justify-center items-center h-full m-10">
+        <div className="flex flex-col h-full w-full max-w-6xl bg-accent p-10 gap-4">
           <h2 className="text-center">Nossas Marcas Parceiras</h2>
-          <div className="flex flex-col md:flex-row items-center justify-center text-center gap-3">
+          <div className="flex flex-col md:flex-row items-center justify-center text-center gap-6">
             <div className="col-6 col-md-4 col-lg-2 mb-4">
               <img
-                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+1"
+                src="https://placehold.co/150"
                 className="img-fluid transition-all hover:scale-110"
                 alt="Logo Parceiro 1"
               />
             </div>
             <div className="col-6 col-md-4 col-lg-2 mb-4">
               <img
-                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+2"
+                src="https://placehold.co/150"
                 className="img-fluid transition-all hover:scale-110"
                 alt="Logo Parceiro 2"
               />
             </div>
             <div className="col-6 col-md-4 col-lg-2 mb-4">
               <img
-                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+3"
+                src="https://placehold.co/150"
                 className="img-fluid transition-all hover:scale-110"
                 alt="Logo Parceiro 3"
               />
             </div>
             <div className="col-6 col-md-4 col-lg-2 mb-4">
               <img
-                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+4"
+                src="https://placehold.co/150"
                 className="img-fluid transition-all hover:scale-110"
                 alt="Logo Parceiro 4"
               />
             </div>
             <div className="col-6 col-md-4 col-lg-2 mb-4">
               <img
-                src="https://via.placeholder.com/150x80/dbe4c7/5d8e7d?text=Logo+Parceiro+5"
+                src="https://placehold.co/150"
                 className="img-fluid transition-all hover:scale-110"
                 alt="Logo Parceiro 5"
               />
@@ -268,7 +271,7 @@ export default function Home() {
           </div>
           <div className="text-center">
             <Button>
-              <Link href="#">Seja Nosso Parceiro</Link>
+              <Link to="contato" smooth={true} duration={500} spy={true} offset={-70}>Seja Nosso Parceiro</Link>
             </Button>
           </div>
         </div>

@@ -30,12 +30,12 @@ const footerSections = [
     title: "Seções",
     links: [
       {
-        title: "Quem Somos",
-        href: "quem-somos",
-      },
-      {
         title: "O Que Fazemos",
         href: "o-que-fazemos",
+      },
+      {
+        title: "Quem Somos",
+        href: "quem-somos",
       },
       {
         title: "Nossos Produtos",
@@ -43,7 +43,7 @@ const footerSections = [
       },
       {
         title: "Parcerias",
-        href: "#parcerias",
+        href: "parcerias",
       },
       {
         title: "Contato",
@@ -120,7 +120,7 @@ const Footer03Page = () => {
                   {links.map(({ title, href }) => (
                     <li key={title} className="">
                       <Link
-                      to={href} spy={true} smooth={true} offset={50} duration={500} className="hover:text-primary cursor-pointer"
+                      to={href} spy={true} smooth={true} offset={-70} duration={500} className="hover:text-primary cursor-pointer"
                       >
                         {title}
                       </Link>
@@ -142,18 +142,7 @@ const Footer03Page = () => {
             </span>
 
             <div className="text-primary flex items-center gap-5">
-              <Link href="#" target="_blank">
-                <TwitterIcon className="h-5 w-5" />
-              </Link>
-              <Link href="#" target="_blank">
-                <DribbbleIcon className="h-5 w-5" />
-              </Link>
-              <Link href="#" target="_blank">
-                <TwitchIcon className="h-5 w-5" />
-              </Link>
-              <Link href="#" target="_blank">
-                <GithubIcon className="h-5 w-5" />
-              </Link>
+             
             </div>
           </div>
         </div>
