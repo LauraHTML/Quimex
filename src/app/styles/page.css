@@ -2,15 +2,9 @@ body {
   scroll-behavior: smooth;
 }
 
-.navbar-toggler:focus{
-  box-shadow: var(--azul-escuro-logo);
-  background-color: var(--tertiary-color);
-}
-
 #hero {
   background: url('/industria-quimica.png') no-repeat center center/cover;
 }
-
 
 .card-side{
   border-radius: 3.18mm;

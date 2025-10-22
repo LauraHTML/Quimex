@@ -1,4 +1,7 @@
 import { Geist } from "next/font/google";
+import { ThemeProvider } from "./contexts/theme-context"
+import { AuthProvider } from "./contexts/auth-context"
+import { Toaster } from "@/components/ui/sonner"
 
 import "./globals.css";
 import "./styles/page.css"
@@ -18,7 +21,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
       <body className={`${geist.variable}`}>
-        {children}
+      <ThemeProvider>
+          <AuthProvider>
+          <Toaster />
+            {children}
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

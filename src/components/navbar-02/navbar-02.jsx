@@ -3,7 +3,7 @@ import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
 import { SunIcon } from "lucide-react";
-import Image from "next/image";
+import Link from "next/link";
 
 const Navbar02Page = () => {
   return (
@@ -17,7 +17,9 @@ const Navbar02Page = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <Link href="/login">
           <Button>Área Restrita</Button>
+          </Link>
 
           <div className="md:hidden">
             <NavigationSheet />

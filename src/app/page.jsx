@@ -31,10 +31,10 @@ export default function Home() {
       <Navbar02Page></Navbar02Page>
       <section
         id="hero"
-        className="hero flex flex-row items-center justify-center text-white text-center py-[8rem]"
+        className="hero flex flex-row items-center justify-center text-white text-center my-5 py-[8rem]"
       >
         <div className="flex flex-col w-3/4 items-center gap-5">
-          <h1 className="headline-1">
+          <h1 className="text-3xl">
             Inovação e Sustentabilidade em Soluções Químicas
           </h1>
           <p className="lead">
@@ -127,11 +127,11 @@ export default function Home() {
       >
         <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0 p-10">
           <div className="flex flex-col gap-4 w-full md:w-1/2 items-left">
-            <h3>Sobre Nós</h3>
+            <h3 className="font-bold">Sobre Nós</h3>
             <div className="bg-primary h-1 w-48 mt-3"></div>
 
             <div className="flex flex-col gap-7 pt-5 pb-5">
-              <h2 className="font-bold leading-none ">
+              <h2 className="text-2xl font-bold leading-none ">
                 Descubra a diferença que a Quimex pode te oferecer.
               </h2>
               <p className="hidden md:flex">
@@ -174,13 +174,13 @@ export default function Home() {
       {/* Setores de Produtos Químicos Section */}
       <section id="setores-produtos" className="setores-produtos flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
         <div className="flex flex-col items-center justify-center max-w-6xl w-full gap-7">
-          <h2 className="text-center font-bold">
+          <h2 className="text-4xl text-center font-bold">
             Setores de Produtos Químicos que Atendemos
           </h2>
           <div className="flex flex-col md:flex-row md:flex-wrap gap-6 justify-center md:items-stretch w-full items-center">
             <div className="product-sector-card flex flex-col justify-center items-center text-center text-white transition-all duration-300 ease-in-out">
               <div className="card-side rounded-xl card-frente card-agro flex flex-col justify-center h-full w-full absolute top-0 left-0 hover:rotate-y-180 rotate-y-none">
-                <h3 className="text-white fw-bold">Agroindústria</h3>
+                <h3 className="fw-bold text-3xl">Agroindústria</h3>
               </div>
               <div className="card-side card-fundo rounded-xl flex flex-col justify-center h-full w-full bg-primary absolute top-0 left-0 backface-hidden rotate-y-[-180deg] hover:rotate-y-none">
                 <p className="card-text">
@@ -191,7 +191,7 @@ export default function Home() {
             </div>
             <div className="product-sector-card flex flex-col justify-center items-center text-center text-white transition-all duration-300 ease-in-out">
               <div className="card-side card-frente rounded-xl card-industria flex flex-col justify-center h-full w-full absolute top-0 left-0 hover:rotate-y-180 rotate-y-none">
-                <h3 className="text-white fw-bold">
+                <h3 className="fw-bold text-3xl">
                   Indústria e Transformação
                 </h3>
               </div>
@@ -204,7 +204,7 @@ export default function Home() {
             </div>
             <div className="product-sector-card flex flex-col justify-center items-center text-center text-white transition-all duration-300 ease-in-out">
               <div className="card-side card-frente rounded-xl card-farmacia flex flex-col justify-center h-full w-full absolute top-0 left-0 hover:rotate-y-180 rotate-y-none">
-                <h3 className="fw-bold">Farmacêutica e Cosmética</h3>
+                <h3 className="fw-bold text-3xl">Farmacêutica e Cosmética</h3>
               </div>
               <div className="card-side card-fundo rounded-xl flex flex-col justify-center h-full w-full bg-primary absolute top-0 left-0 backface-hidden rotate-y-[-180deg] hover:rotate-y-none ">
                 <p className="card-text">
@@ -215,7 +215,7 @@ export default function Home() {
             </div> 
             <div className="product-sector-card flex flex-col justify-center items-center text-center text-white transition-all duration-300 ease-in-out">
               <div className="card-side card-frente rounded-xl card-limpeza flex flex-col justify-center h-full w-full absolute top-0 left-0 hover:rotate-y-180 rotate-y-none">
-                <h3 className="fw-bold">Limpeza e Saneamento</h3>
+                <h3 className="fw-bold text-3xl">Limpeza e Saneamento</h3>
               </div>
 
               <div className="card-side card-fundo rounded-xl flex flex-col justify-center h-full w-full bg-primary absolute top-0 left-0 backface-hidden rotate-y-[-180deg] hover:rotate-y-none transition-transform duration-300 ease-in-out">
@@ -231,7 +231,7 @@ export default function Home() {
       {/* Marcas de Parceria Section */}
       <section id="parcerias" className="parcerias flex flex-col justify-center items-center h-full m-10">
         <div className="flex flex-col h-full w-full max-w-6xl bg-accent p-10 gap-4">
-          <h2 className="text-center">Nossas Marcas Parceiras</h2>
+          <h2 className="text-3xl text-center">Nossas Marcas Parceiras</h2>
           <div className="flex flex-col md:flex-row items-center justify-center text-center gap-6">
             <div className="col-6 col-md-4 col-lg-2 mb-4">
               <img
@@ -281,7 +281,7 @@ export default function Home() {
         id="contato"
         className="contato flex flex-col items-center justify-center h-full mt-6 pt-15 pb-15"
       >
-        <h2 className="text-center">Entre em Contato</h2>
+        <h2 className="text-3xl text-center">Entre em Contato</h2>
         <div className="flex flex-row justify-center p-3">
           <div className="">
             <p className="text-center">
