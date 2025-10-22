@@ -269,3 +269,15 @@ body {
   position: relative;
   perspective: 800px;
 }
+
+.animate-molecule-float {
+  animation: molecule-float 3s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.animate-liquid-flow {
+  animation: liquid-flow 2s linear infinite;
+}

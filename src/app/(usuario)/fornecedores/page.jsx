@@ -17,6 +17,15 @@ import {
 } from "@/components/ui/dialog"
 import { Plus, Search, Trash2, Truck, Phone, Mail, User, Edit2 } from "lucide-react"
 
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 export default function FornecedoresPage() {
   const { user } = useAuth()
   const [fornecedores, setFornecedores] = useState(mockFornecedores)
@@ -29,6 +38,7 @@ export default function FornecedoresPage() {
     contato: "",
     telefone: "",
     email: "",
+    setor:"",
   })
 
   if (!user) return null
@@ -36,6 +46,7 @@ export default function FornecedoresPage() {
   const filteredFornecedores = fornecedores.filter(
     (f) =>
       f.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      f.setor.toLowerCase().includes(searchTerm.toLowerCase()) ||
       f.cnpj.includes(searchTerm) ||
       f.contato.toLowerCase().includes(searchTerm.toLowerCase()),
   )
@@ -44,6 +55,7 @@ export default function FornecedoresPage() {
     setEditingFornecedor(fornecedor)
     setFormData({
       nome: fornecedor.nome,
+      setor: fornecedor.setor,
       cnpj: fornecedor.cnpj,
       contato: fornecedor.contato,
       telefone: fornecedor.telefone,
@@ -60,6 +72,7 @@ export default function FornecedoresPage() {
             ? {
                 ...f,
                 nome: formData.nome,
+                setor: formData.setor,
                 cnpj: formData.cnpj,
                 contato: formData.contato,
                 telefone: formData.telefone,
@@ -72,6 +85,7 @@ export default function FornecedoresPage() {
       const newFornecedor = {
         id: String(Date.now()),
         nome: formData.nome,
+        setor: formData.setor,
         cnpj: formData.cnpj,
         contato: formData.contato,
         telefone: formData.telefone,
@@ -103,6 +117,7 @@ export default function FornecedoresPage() {
     if (!open) {
       setEditingFornecedor(null)
       setFormData({
+        setor: "",
         nome: "",
         cnpj: "",
         contato: "",
@@ -111,6 +126,22 @@ export default function FornecedoresPage() {
       })
     }
   }
+
+  //visualizar por setor
+  const setores = ["Agroindústria", "Indústria e transformação", "Farmacêutica e cosmética", "Limpeza e saneamento"];
+
+  const [setoresSelecionados, setSetoresSelecionados] = useState([
+    setores[0],
+    setores[4],
+  ]);
+
+  const handlesetoresChange = (setores = string, checked = boolean) => {
+    if (checked) {
+      setSetoresSelecionados([...setoresSelecionados, setores]);
+    } else {
+      setSetoresSelecionados(setoresSelecionados.filter((t) => t !== setores));
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -141,6 +172,15 @@ export default function FornecedoresPage() {
                   value={formData.nome}
                   onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                   placeholder="Química Industrial Ltda"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="nome">Setor da Empresa</Label>
+                <Input
+                  id="nome"
+                  value={formData.setor}
+                  onChange={(e) => setFormData({ ...formData, setor: e.target.value })}
+                  placeholder="Setor da Agroindústria"
                 />
               </div>
               <div className="space-y-2">
@@ -191,7 +231,28 @@ export default function FornecedoresPage() {
         </Dialog>
       </div>
 
-      <div className="relative">
+    <div className="flex flex-row gap-2">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Visualizar por setor</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-44">
+        <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {setores.map((setores) => (
+          <DropdownMenuCheckboxItem
+            checked={setoresSelecionados.includes(setores)}
+            key={setores}
+            onCheckedChange={(checked) => handlesetoresChange(setores, checked)}
+            // Prevent the dropdown menu from closing when the checkbox is clicked
+            onSelect={(e) => e.preventDefault()}
+          >
+            {setores}
+          </DropdownMenuCheckboxItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+      <div className="flex flex-row gap-2 flex-wrap relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Buscar por nome, CNPJ ou contato..."
@@ -200,6 +261,8 @@ export default function FornecedoresPage() {
           className="pl-10"
         />
       </div>
+    </div>
+      
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredFornecedores.map((fornecedor) => (
