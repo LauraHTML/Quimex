@@ -4,7 +4,7 @@ export const Logo = () => (
   <div className="flex flex-row gap-2 h-20 items-center justify-center">
    <Image
     className="p-1"
-    src="/logotipo-nova.png"
+    src="/logotipo.png"
     alt="ícone de escudo com"
     width={180}
     height={70}
