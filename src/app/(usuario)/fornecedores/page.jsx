@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useAuth } from "@/app/contexts/auth-context"
 import { mockFornecedores } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Plus, Search, Trash2, Truck, Phone, Mail, User, Edit2 } from "lucide-react"
+import { Plus, Search, Trash2, Truck, Phone, Mail, User, Edit2, Factory } from "lucide-react"
 
 import {
   DropdownMenu,
@@ -26,7 +26,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+//paginação
+import { buttonVariants } from "@/components/ui/button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
+
 export default function FornecedoresPage() {
+
   const { user } = useAuth()
   const [fornecedores, setFornecedores] = useState(mockFornecedores)
   const [searchTerm, setSearchTerm] = useState("")
@@ -38,18 +52,10 @@ export default function FornecedoresPage() {
     contato: "",
     telefone: "",
     email: "",
-    setor:"",
+    setor: "",
   })
 
   if (!user) return null
-
-  const filteredFornecedores = fornecedores.filter(
-    (f) =>
-      f.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      f.setor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      f.cnpj.includes(searchTerm) ||
-      f.contato.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
 
   const handleEditFornecedor = (fornecedor) => {
     setEditingFornecedor(fornecedor)
@@ -70,14 +76,14 @@ export default function FornecedoresPage() {
         fornecedores.map((f) =>
           f.id === editingFornecedor.id
             ? {
-                ...f,
-                nome: formData.nome,
-                setor: formData.setor,
-                cnpj: formData.cnpj,
-                contato: formData.contato,
-                telefone: formData.telefone,
-                email: formData.email,
-              }
+              ...f,
+              nome: formData.nome,
+              setor: formData.setor,
+              cnpj: formData.cnpj,
+              contato: formData.contato,
+              telefone: formData.telefone,
+              email: formData.email,
+            }
             : f,
         ),
       )
@@ -128,19 +134,85 @@ export default function FornecedoresPage() {
   }
 
   //visualizar por setor
-  const setores = ["Agroindústria", "Indústria e transformação", "Farmacêutica e cosmética", "Limpeza e saneamento"];
+  const setores = ["Agroindústria", "Indústria e transformação", "Farmacêutica", "Cosmética", "Limpeza", "Saneamento"];
 
-  const [setoresSelecionados, setSetoresSelecionados] = useState([
-    setores[0],
-    setores[4],
-  ]);
+  const [setoresSelecionados, setSetoresSelecionados] = useState([]);
 
-  const handlesetoresChange = (setores = string, checked = boolean) => {
+  const handlesetoresChange = (setor, checked) => {
     if (checked) {
-      setSetoresSelecionados([...setoresSelecionados, setores]);
+      setSetoresSelecionados([...setoresSelecionados, setor]);
     } else {
-      setSetoresSelecionados(setoresSelecionados.filter((t) => t !== setores));
+      setSetoresSelecionados(setoresSelecionados.filter((s) => s !== setor));
     }
+
+  };
+
+  const filteredFornecedores = useMemo(() => {
+
+    // Comece com a lista completa
+    let listaFiltrada = fornecedores;
+
+    // ETAPA A: Filtrar por SETOR (Dropdown)
+    // Se houver algum setor selecionado, filtre por ele
+    if (setoresSelecionados.length > 0) {
+      listaFiltrada = listaFiltrada.filter(fornecedor =>
+        setoresSelecionados.includes(fornecedor.setor)
+      );
+    }
+
+    // ETAPA B: Filtrar por TERMO DE BUSCA (Input)
+    // Pegue o resultado do filtro anterior e filtre novamente
+    if (searchTerm.trim() !== "") {
+      const lowerCaseSearch = searchTerm.toLowerCase();
+
+      listaFiltrada = listaFiltrada.filter(fornecedor =>
+        fornecedor.nome.toLowerCase().includes(lowerCaseSearch) ||
+        fornecedor.cnpj.toLowerCase().includes(lowerCaseSearch) ||
+        fornecedor.contato.toLowerCase().includes(lowerCaseSearch) ||
+        fornecedor.setor.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // O 'return' do useMemo é a lista final e filtrada
+    return listaFiltrada;
+
+    // O 'useMemo' só vai rodar esta lógica quando um destes 3 estados mudar.
+  }, [fornecedores, setoresSelecionados, searchTerm]);
+
+  //paginação estado
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  //lógica paginação
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  
+  //retorna todos os fornecedores
+  const currentFornecedores = filteredFornecedores.slice(indexOfFirstItem, indexOfLastItem);
+
+  //quantidade de páginas para a quantidade de cards -> Quantidade total de cars pela de cars por página =6;
+  const totalPages = Math.ceil(filteredFornecedores.length / itemsPerPage);
+
+  //qual página vai mostrar
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+
+    if (totalPages <= maxPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, 4, '...', totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+      }
+    }
+
+    return pages;
   };
 
   return (
@@ -231,41 +303,40 @@ export default function FornecedoresPage() {
         </Dialog>
       </div>
 
-    <div className="flex flex-row gap-2">
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Visualizar por setor</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-44">
-        <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {setores.map((setores) => (
-          <DropdownMenuCheckboxItem
-            checked={setoresSelecionados.includes(setores)}
-            key={setores}
-            onCheckedChange={(checked) => handlesetoresChange(setores, checked)}
-            // Prevent the dropdown menu from closing when the checkbox is clicked
-            onSelect={(e) => e.preventDefault()}
-          >
-            {setores}
-          </DropdownMenuCheckboxItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-      <div className="flex flex-row gap-2 flex-wrap relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Buscar por nome, CNPJ ou contato..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10"
-        />
+      <div className="flex flex-col md:flex-row gap-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-fit">Visualizar por setor</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-44">
+            <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {setores.map((setores) => (
+              <DropdownMenuCheckboxItem
+                checked={setoresSelecionados.includes(setores)}
+                key={setores}
+                onCheckedChange={(checked) => handlesetoresChange(setores, checked)}
+                // Prevent the dropdown menu from closing when the checkbox is clicked
+                onSelect={(e) => e.preventDefault()}
+              >
+                {setores}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <div className="flex flex-row gap-2 flex-wrap relative w-full">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por nome, CNPJ ou contato..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
       </div>
-    </div>
-      
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredFornecedores.map((fornecedor) => (
+        {currentFornecedores.map((fornecedor) => (
           <Card
             key={fornecedor.id}
             className="group hover:shadow-lg transition-all duration-200 hover:border-primary/50"
@@ -307,6 +378,10 @@ export default function FornecedoresPage() {
                 {fornecedor.contato}
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Factory className="h-4 w-4 flex-shrink-0" />
+                {fornecedor.setor}
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Phone className="h-4 w-4 flex-shrink-0" />
                 {fornecedor.telefone}
               </div>
@@ -318,6 +393,42 @@ export default function FornecedoresPage() {
           </Card>
         ))}
       </div>
+
+      {filteredFornecedores.length > itemsPerPage && (
+        <Pagination className="mt-8">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+              />
+            </PaginationItem>
+
+            {getPageNumbers().map((page, index) => (
+              <PaginationItem key={index}>
+                {page === '...' ? (
+                  <PaginationEllipsis />
+                ) : (
+                  <PaginationLink
+                    onClick={() => setCurrentPage(page)}
+                    isActive={currentPage === page}
+                    className="cursor-pointer"
+                  >
+                    {page}
+                  </PaginationLink>
+                )}
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
 
       {filteredFornecedores.length === 0 && (
         <div className="text-center py-12">
