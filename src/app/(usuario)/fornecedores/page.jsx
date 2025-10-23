@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useAuth } from "@/app/contexts/auth-context"
 import { mockFornecedores } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
@@ -27,17 +27,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 //paginação
-import { buttonVariants } from "@/components/ui/button";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { cn } from "@/lib/utils";
+import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
+import { CardInfo } from "@/components/CardInfo";
 
 export default function FornecedoresPage() {
 
@@ -186,14 +177,13 @@ export default function FornecedoresPage() {
   //lógica paginação
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  
+
   //retorna todos os fornecedores
   const currentFornecedores = filteredFornecedores.slice(indexOfFirstItem, indexOfLastItem);
 
-  //quantidade de páginas para a quantidade de cards -> Quantidade total de cars pela de cars por página =6;
+  //quantidade de páginas para a quantidade de cards -> Quantidade total de cars pela de cards por página =6;
   const totalPages = Math.ceil(filteredFornecedores.length / itemsPerPage);
 
-  //qual página vai mostrar
   const getPageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
@@ -211,6 +201,10 @@ export default function FornecedoresPage() {
         pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
       }
     }
+
+    useEffect(() => {
+      setCurrentPage(1);
+    }, [filteredFornecedores.length]);
 
     return pages;
   };
@@ -335,107 +329,18 @@ export default function FornecedoresPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {currentFornecedores.map((fornecedor) => (
-          <Card
+      <ControlePaginacao
+        items={filteredFornecedores}
+        renderItem={(fornecedor) => (
+          <CardInfo
             key={fornecedor.id}
-            className="group hover:shadow-lg transition-all duration-200 hover:border-primary/50"
-          >
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between gap-3 flex-wrap">
-                <div className="flex items-center gap-3 flex-1 min-w-0 flex-wrap">
-                  <div className="p-2.5 rounded-xl bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
-                    <Truck className="h-5 w-5 text-orange-500" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <CardTitle className="text-lg truncate">{fornecedor.nome}</CardTitle>
-                    <p className="text-xs text-muted-foreground mt-1">CNPJ: {fornecedor.cnpj}</p>
-                  </div>
-                </div>
-                <div className="flex gap-1">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleEditFornecedor(fornecedor)}
-                    className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
-                  >
-                    <Edit2 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDeleteFornecedor(fornecedor.id)}
-                    className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2.5">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <User className="h-4 w-4 flex-shrink-0" />
-                {fornecedor.contato}
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Factory className="h-4 w-4 flex-shrink-0" />
-                {fornecedor.setor}
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Phone className="h-4 w-4 flex-shrink-0" />
-                {fornecedor.telefone}
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4 flex-shrink-0" />
-                <span className="truncate">{fornecedor.email}</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {filteredFornecedores.length > itemsPerPage && (
-        <Pagination className="mt-8">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-              />
-            </PaginationItem>
-
-            {getPageNumbers().map((page, index) => (
-              <PaginationItem key={index}>
-                {page === '...' ? (
-                  <PaginationEllipsis />
-                ) : (
-                  <PaginationLink
-                    onClick={() => setCurrentPage(page)}
-                    isActive={currentPage === page}
-                    className="cursor-pointer"
-                  >
-                    {page}
-                  </PaginationLink>
-                )}
-              </PaginationItem>
-            ))}
-
-            <PaginationItem>
-              <PaginationNext
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
-
-      {filteredFornecedores.length === 0 && (
-        <div className="text-center py-12">
-          <Truck className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-          <p className="text-muted-foreground">Nenhum fornecedor encontrado.</p>
-        </div>
-      )}
+            fornecedor={fornecedor}
+            onEdit={handleEditFornecedor}
+            onDelete={handleDeleteFornecedor}
+          />
+        )}
+        itemsPerPage={9}
+      />
     </div>
   )
 }

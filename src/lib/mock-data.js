@@ -144,7 +144,7 @@ export const mockFornecedores = [
   {
     id: "1",
     nome: "Química Industrial Ltda",
-    setor: "Limpeza",
+    setor: "Cosmética",
     cnpj: "98.765.432/0001-10",
     contato: "João Silva",
     telefone: "(11) 4000-0000",
@@ -194,7 +194,7 @@ export const mockFornecedores = [
   {
     id: "6",
     nome: "Higienix Produtos Químicos",
-    setor: "Limpeza",
+    setor: "Cosmética",
     cnpj: "98.765.432/0006-15",
     contato: "Patrícia Costa",
     telefone: "(11) 4000-0005",
