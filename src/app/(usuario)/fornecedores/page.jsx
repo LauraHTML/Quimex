@@ -4,7 +4,6 @@ import { useState, useMemo, useEffect } from "react"
 import { useAuth } from "@/app/contexts/auth-context"
 import { mockFornecedores } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -15,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Plus, Search, Trash2, Truck, Phone, Mail, User, Edit2, Factory } from "lucide-react"
+import { Plus, Search } from "lucide-react"
 
 import {
   DropdownMenu,
@@ -28,7 +27,7 @@ import {
 
 //paginação
 import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
-import { CardInfo } from "@/components/CardInfo";
+import { CardFornecedor } from "@/components/cards/CardFornecedor";
 
 export default function FornecedoresPage() {
 
@@ -104,9 +103,7 @@ export default function FornecedoresPage() {
   }
 
   const handleDeleteFornecedor = (id) => {
-    if (confirm("Tem certeza que deseja excluir este fornecedor?")) {
-      setFornecedores(fornecedores.filter((f) => f.id !== id))
-    }
+    setFornecedores(fornecedores.filter((f) => f.id !== id))
   }
 
   const handleCloseDialog = (open) => {
@@ -143,7 +140,6 @@ export default function FornecedoresPage() {
     // Comece com a lista completa
     let listaFiltrada = fornecedores;
 
-    // ETAPA A: Filtrar por SETOR (Dropdown)
     // Se houver algum setor selecionado, filtre por ele
     if (setoresSelecionados.length > 0) {
       listaFiltrada = listaFiltrada.filter(fornecedor =>
@@ -151,8 +147,7 @@ export default function FornecedoresPage() {
       );
     }
 
-    // ETAPA B: Filtrar por TERMO DE BUSCA (Input)
-    // Pegue o resultado do filtro anterior e filtre novamente
+    //filtrar resultados
     if (searchTerm.trim() !== "") {
       const lowerCaseSearch = searchTerm.toLowerCase();
 
@@ -164,50 +159,12 @@ export default function FornecedoresPage() {
       );
     }
 
-    // O 'return' do useMemo é a lista final e filtrada
+    // lista final filtrada
     return listaFiltrada;
 
     // O 'useMemo' só vai rodar esta lógica quando um destes 3 estados mudar.
   }, [fornecedores, setoresSelecionados, searchTerm]);
 
-  //paginação estado
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-
-  //lógica paginação
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-  //retorna todos os fornecedores
-  const currentFornecedores = filteredFornecedores.slice(indexOfFirstItem, indexOfLastItem);
-
-  //quantidade de páginas para a quantidade de cards -> Quantidade total de cars pela de cards por página =6;
-  const totalPages = Math.ceil(filteredFornecedores.length / itemsPerPage);
-
-  const getPageNumbers = () => {
-    const pages = [];
-    const maxPagesToShow = 5;
-
-    if (totalPages <= maxPagesToShow) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (currentPage <= 3) {
-        pages.push(1, 2, 3, 4, '...', totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-      } else {
-        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
-      }
-    }
-
-    useEffect(() => {
-      setCurrentPage(1);
-    }, [filteredFornecedores.length]);
-
-    return pages;
-  };
 
   return (
     <div className="space-y-6">
@@ -332,7 +289,7 @@ export default function FornecedoresPage() {
       <ControlePaginacao
         items={filteredFornecedores}
         renderItem={(fornecedor) => (
-          <CardInfo
+          <CardFornecedor
             key={fornecedor.id}
             fornecedor={fornecedor}
             onEdit={handleEditFornecedor}

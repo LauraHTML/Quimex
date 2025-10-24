@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useAuth } from "@/app/contexts/auth-context";
 import { mockProdutos, mockLojas } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
@@ -23,30 +23,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Plus,
-  Search,
-  Package,
-  DollarSign,
-  Hash,
-  Edit2,
-  Trash2,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Plus, Search,} from "lucide-react";
 
-// delete
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+//paginação
+import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
+import { CardProdutos } from "@/components/cards/CardProdutos";
 
 export default function ProdutosPage() {
   const { user } = useAuth();
@@ -61,6 +51,7 @@ export default function ProdutosPage() {
     preco: "",
     estoque: "",
     lojaId: "",
+    classificacao: "",
   });
 
   if (!user) return null;
@@ -69,13 +60,6 @@ export default function ProdutosPage() {
     user.role === "admin_matriz"
       ? produtos
       : produtos.filter((p) => p.lojaId === user.lojaId);
-
-  const filteredProdutos = filteredByRole.filter(
-    (p) =>
-      p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.sku.includes(searchTerm) ||
-      p.descricao.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   const handleEditProduto = (produto) => {
     setEditingProduto(produto);
@@ -86,6 +70,7 @@ export default function ProdutosPage() {
       preco: produto.preco.toString(),
       estoque: produto.estoque.toString(),
       lojaId: produto.lojaId,
+      classificacao: produto.classificacao,
     });
     setIsDialogOpen(true);
   };
@@ -96,14 +81,15 @@ export default function ProdutosPage() {
         produtos.map((p) =>
           p.id === editingProduto.id
             ? {
-                ...p,
-                nome: formData.nome,
-                descricao: formData.descricao,
-                sku: formData.sku,
-                preco: Number.parseFloat(formData.preco),
-                estoque: Number.parseInt(formData.estoque),
-                lojaId: formData.lojaId || user.lojaId || "1",
-              }
+              ...p,
+              nome: formData.nome,
+              descricao: formData.descricao,
+              sku: formData.sku,
+              classificacao: formData.classificacao,
+              preco: Number.parseFloat(formData.preco),
+              estoque: Number.parseInt(formData.estoque),
+              lojaId: formData.lojaId || user.lojaId || "1",
+            }
             : p
         )
       );
@@ -112,6 +98,7 @@ export default function ProdutosPage() {
         id: String(Date.now()),
         nome: formData.nome,
         descricao: formData.descricao,
+        classificacao: formData.descricao,
         sku: formData.sku,
         preco: Number.parseFloat(formData.preco),
         estoque: Number.parseInt(formData.estoque),
@@ -130,11 +117,12 @@ export default function ProdutosPage() {
       preco: "",
       estoque: "",
       lojaId: "",
+      classificacao: "",
     });
   };
 
   const handleDeleteProduto = (id) => {
-      setProdutos(produtos.filter((p) => p.id !== id));
+    setProdutos(produtos.filter((p) => p.id !== id));
   };
 
   const handleCloseDialog = (open) => {
@@ -148,6 +136,7 @@ export default function ProdutosPage() {
         preco: "",
         estoque: "",
         lojaId: "",
+        classificacao: "",
       });
     }
   };
@@ -163,6 +152,46 @@ export default function ProdutosPage() {
     return "destructive";
   };
 
+  //visualizar por setor
+  const classificacao = ["Limpeza", "Reagente", "Aditivo", "Alimento"];
+
+  const [classificacaoSelecionados, setClassificacaoSelecionados] = useState([]);
+
+  const handleClassificacaoChange = (classificacao, checked) => {
+    if (checked) {
+      setClassificacaoSelecionados([...classificacaoSelecionados, classificacao]);
+    } else {
+      setClassificacaoSelecionados(classificacaoSelecionados.filter((c) => c !== classificacao));
+    }
+
+  };
+
+    const filteredProdutos = useMemo(() => {
+  
+     let listaFiltrada = filteredByRole;;
+  
+      if (classificacaoSelecionados.length > 0) {
+        listaFiltrada = listaFiltrada.filter(produtos =>
+          classificacaoSelecionados.includes(produtos.classificacao)
+        );
+      }
+  
+      //filtrar resultados
+      if (searchTerm.trim() !== "") {
+        const lowerCaseSearch = searchTerm.toLowerCase();
+  
+        listaFiltrada = listaFiltrada.filter(produto =>
+          produto.nome.toLowerCase().includes(lowerCaseSearch) ||
+          produto.descricao.toLowerCase().includes(lowerCaseSearch) ||
+          produto.sku.toLowerCase().includes(lowerCaseSearch) ||
+          produto.classificacao.toLowerCase().includes(lowerCaseSearch) 
+        );
+      }
+  
+      return listaFiltrada;
+  
+    }, [filteredByRole, classificacaoSelecionados, searchTerm]);
+    
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -290,7 +319,29 @@ export default function ProdutosPage() {
         </Dialog>
       </div>
 
-      <div className="relative">
+
+      <div className="flex flex-col md:flex-row gap-2">
+      <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-fit">Visualizar por função</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-44">
+            <DropdownMenuLabel>Selecione função</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {classificacao.map((classificacao) => (
+              <DropdownMenuCheckboxItem
+                checked={classificacaoSelecionados.includes(classificacao)}
+                key={classificacao}
+                onCheckedChange={(checked) => handleClassificacaoChange(classificacao, checked)}
+                // Prevent the dropdown menu from closing when the checkbox is clicked
+                onSelect={(e) => e.preventDefault()}
+              >
+                {classificacao}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      <div className="flex flex-row gap-2 flex-wrap relative w-full">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Buscar por nome, SKU ou descrição..."
@@ -299,101 +350,22 @@ export default function ProdutosPage() {
           className="pl-10"
         />
       </div>
+    </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredProdutos.map((produto) => (
-          <Card
+      <ControlePaginacao
+        items={filteredProdutos}
+        renderItem={(produto) => (
+          <CardProdutos
             key={produto.id}
-            className="group hover:shadow-lg transition-all duration-200 hover:border-primary/50"
-          >
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between gap-3 flex-wrap">
-                <div className="flex items-center gap-3 flex-shrink min-w-0 flex-wrap">
-                  <div className="p-2.5 rounded-xl bg-green-500/10 group-hover:bg-green-500/20 transition-colors">
-                    <Package className="h-5 w-5 text-green-500" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <CardTitle className="text-lg truncate">
-                      {produto.nome}
-                    </CardTitle>
-                    <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
-                      {produto.descricao}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-1">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleEditProduto(produto)}
-                    className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
-                  >
-                    <Edit2 className="h-4 w-4" />
-                  </Button>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </AlertDialogTrigger>
-
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Tem certeza que deseja excluir este produto?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Esta ação não pode ser desfeita. Isto irá apagar
-                          permanentemente o produto dos nossos servidores.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDeleteProduto(produto.id)}>
-                          Confirmar
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Hash className="h-4 w-4 flex-shrink-0" />
-                <span className="font-mono">{produto.sku}</span>
-              </div>
-              <div className="flex items-center justify-between pt-2">
-                <div className="flex items-baseline gap-1">
-                  <DollarSign className="h-4 w-4 text-green-500" />
-                  <span className="text-2xl font-bold">
-                    R$ {produto.preco.toFixed(2)}
-                  </span>
-                </div>
-                <Badge variant={getStockBadgeVariant(produto.estoque)}>
-                  Estoque: {produto.estoque}
-                </Badge>
-              </div>
-              <div className="pt-2 border-t">
-                <p className="text-xs text-muted-foreground">
-                  {getLojaNome(produto.lojaId)}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {filteredProdutos.length === 0 && (
-        <div className="text-center py-12">
-          <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-          <p className="text-muted-foreground">Nenhum produto encontrado.</p>
-        </div>
-      )}
+            nomeLoja={getLojaNome}
+            produto={produto}
+            onEdit={handleEditProduto}
+            onDelete={handleDeleteProduto}
+            badgeVariant={getStockBadgeVariant}
+          />
+        )}
+        itemsPerPage={9}
+      />
     </div>
   );
 }

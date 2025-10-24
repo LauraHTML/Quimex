@@ -58,9 +58,6 @@ export function ControlePaginacao({
   if (items.length === 0) {
     return (
       <div className="flex flex-col gap-5 text-center py-12 text-muted-foreground items-center">
-        <div className="p-2.5 rounded-xl bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
-          <Truck className="h-10 w-10 text-orange-500" />
-        </div>
         Nenhum item encontrado
       </div>
     );

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui
 import { Store, Users, Package, DollarSign } from "lucide-react"
 import { canViewConsolidated } from "../../../lib/utils/permissions"
 import { mockLojas, mockUsers, mockProdutos, mockVendas } from "../../../lib/mock-data"
+import { CardInfo } from "@/components/cards/CardFornecedor";
 
 export default function DashboardPage() {
   const { user } = useAuth()
@@ -88,6 +89,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       )}
+
     </div>
   )
 }
