@@ -98,7 +98,7 @@ export default function ProdutosPage() {
         id: String(Date.now()),
         nome: formData.nome,
         descricao: formData.descricao,
-        classificacao: formData.descricao,
+        classificacao: formData.classificacao,
         sku: formData.sku,
         preco: Number.parseFloat(formData.preco),
         estoque: Number.parseInt(formData.estoque),
@@ -229,6 +229,17 @@ export default function ProdutosPage() {
                     setFormData({ ...formData, nome: e.target.value })
                   }
                   placeholder="Ácido Sulfúrico"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="nome">Classificação por função</Label>
+                <Input
+                  id="classificacao"
+                  value={formData.classificacao}
+                  onChange={(e) =>
+                    setFormData({ ...formData, classificacao: e.target.value })
+                  }
+                  placeholder="Aditivo"
                 />
               </div>
               <div className="space-y-2">

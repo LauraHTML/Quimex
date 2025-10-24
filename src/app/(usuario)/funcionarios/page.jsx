@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useAuth } from "@/app/contexts/auth-context"
 import { mockUsers, mockLojas } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Search, Trash2, UserCircle, Mail, Phone, Building2, Edit2 } from "lucide-react"
 import { getRoleName } from "@/lib/utils/permissions"
 
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+//paginação
+import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
+import { CardFuncionarios } from "@/components/cards/CardFuncionarios";
+
 export default function FuncionariosPage() {
   const { user } = useAuth()
   const [funcionarios, setFuncionarios] = useState(mockUsers)
@@ -35,6 +48,8 @@ export default function FuncionariosPage() {
   })
 
   if (!user) return null
+
+  console.log(formData.nome)
 
   const filteredByRole =
     user.role === "admin_matriz" ? funcionarios : funcionarios.filter((f) => f.lojaId === user.lojaId)
@@ -61,7 +76,7 @@ export default function FuncionariosPage() {
 
   const handleSaveFuncionario = () => {
     if (editingFuncionario) {
-      // Edit existing
+      // Edit funcionario
       setFuncionarios(
         funcionarios.map((f) =>
           f.id === editingFuncionario.id
@@ -131,12 +146,17 @@ export default function FuncionariosPage() {
     return loja?.nome || "N/A"
   }
 
+  //paginacao
+  funcionarios.map((f) => {
+    console.log(f.role)
+  })
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold">Funcionários</h1>
-          <p className="text-muted-foreground mt-1">Gerencie os funcionários da Quimx</p>
+          <p className="text-muted-foreground mt-1">Gerencie os funcionários da Quimex</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
           <DialogTrigger asChild>
@@ -235,7 +255,18 @@ export default function FuncionariosPage() {
       </div>
 
       {/* Search */}
-      <div className="relative">
+      <div className="flex flex-col md:flex-row gap-2">
+      <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-fit">Visualizar por setor</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-44">
+            <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <p>setor</p>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      <div className="flex flex-row gap-2 flex-wrap relative w-full">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Buscar por nome, email ou CPF..."
@@ -243,6 +274,7 @@ export default function FuncionariosPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pl-10"
         />
+      </div>
       </div>
 
       {/* Lista de Funcionários */}
