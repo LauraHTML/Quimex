@@ -1,13 +1,10 @@
 "use client"
-
+ 
 import { useState } from "react"
-import { useAuth } from "@/app/contexts/auth-context"
-import { canAccessFinanceiro } from "@/lib/utils/permissions"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import {
   Dialog,
   DialogContent,
@@ -18,529 +15,326 @@ import {
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
-  Plus,
-  DollarSign,
   TrendingUp,
   TrendingDown,
-  Wallet,
-  Calendar,
-  CheckCircle2,
-  XCircle,
-  Trash2,
+  DollarSign,
+  Plus,
+  Download,
   Eye,
+  FlaskConical,
 } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-
-export default function FinanceiroPage() {
-  const { user } = useAuth()
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [detailsModalOpen, setDetailsModalOpen] = useState(false)
-  const [selectedTransacao, setSelectedTransacao] = useState(null)
-
-  const [transacoes, setTransacoes] = useState([
-    {
-      id: "1",
-      tipo: "receita",
-      descricao: "Venda de Ácido Sulfúrico",
-      valor: 5000,
-      data: "2024-01-15",
-      status: "pago",
-      categoria: "vendas",
-    },
-    {
-      id: "2",
-      tipo: "despesa",
-      descricao: "Compra de matéria-prima",
-      valor: 3000,
-      data: "2024-01-14",
-      status: "pago",
-      categoria: "fornecedores",
-    },
-    {
-      id: "3",
-      tipo: "despesa",
-      descricao: "Aluguel da loja",
-      valor: 2500,
-      data: "2024-01-10",
-      status: "pendente",
-      categoria: "operacional",
-    },
+ 
+export default function FinancialDashboard() {
+  const [filiais, setFiliais] = useState([
+    { id: "1", nome: "Quimex SP", receita: 2850000, despesas: 1950000, lucro: 900000, margem: 31.6 },
+    { id: "2", nome: "Quimex RJ", receita: 1950000, despesas: 1400000, lucro: 550000, margem: 28.2 },
+    { id: "3", nome: "Quimex MG", receita: 1650000, despesas: 1200000, lucro: 450000, margem: 27.3 },
+    { id: "4", nome: "Quimex PR", receita: 1200000, despesas: 900000, lucro: 300000, margem: 25.0 },
+    { id: "5", nome: "Quimex RS", receita: 2100000, despesas: 1500000, lucro: 600000, margem: 28.6 },
+    { id: "6", nome: "Quimex BA", receita: 980000, despesas: 750000, lucro: 230000, margem: 23.5 },
   ])
-
+ 
+  const produtosPorFilial = {
+    "Quimex SP": [
+      { id: 1, nome: "Ácido Sulfúrico", quantidade: 120, preco: 850 },
+      { id: 2, nome: "Hidróxido de Sódio", quantidade: 90, preco: 650 },
+      { id: 3, nome: "Cloreto de Sódio", quantidade: 200, preco: 400 },
+      { id: 4, nome: "Etanol Anidro", quantidade: 150, preco: 780 },
+      { id: 5, nome: "Peróxido de Hidrogênio", quantidade: 75, preco: 560 },
+    ],
+    "Quimex RJ": [
+      { id: 1, nome: "Ácido Nítrico", quantidade: 80, preco: 900 },
+      { id: 2, nome: "Etanol Hidratado", quantidade: 120, preco: 720 },
+    ],
+    "Quimex MG": [
+      { id: 1, nome: "Ácido Clorídrico", quantidade: 70, preco: 640 },
+      { id: 2, nome: "Soda Cáustica", quantidade: 100, preco: 560 },
+    ],
+    "Quimex PR": [
+      { id: 1, nome: "Acetona", quantidade: 50, preco: 750 },
+      { id: 2, nome: "Etanol Anidro", quantidade: 60, preco: 780 },
+    ],
+    "Quimex RS": [
+      { id: 1, nome: "Ácido Sulfúrico", quantidade: 110, preco: 850 },
+      { id: 2, nome: "Cloreto de Sódio", quantidade: 150, preco: 420 },
+    ],
+    "Quimex BA": [
+      { id: 1, nome: "Peróxido de Hidrogênio", quantidade: 90, preco: 560 },
+      { id: 2, nome: "Ácido Acético", quantidade: 45, preco: 880 },
+    ],
+  }
+ 
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isDetalhesOpen, setIsDetalhesOpen] = useState(false)
+  const [filialSelecionada, setFilialSelecionada] = useState(null)
   const [formData, setFormData] = useState({
+    filialId: "",
     tipo: "receita",
-    descricao: "",
     valor: "",
-    data: "",
-    categoria: "vendas",
+    descricao: "",
   })
-
-  if (!user || !canAccessFinanceiro(user)) {
-    return (
-      <div className="text-center py-12">
-        <DollarSign className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-        <p className="text-muted-foreground">Você não tem permissão para acessar o financeiro.</p>
-      </div>
-    )
+ 
+  const receitaTotal = filiais.reduce((acc, f) => acc + f.receita, 0)
+  const despesasTotal = filiais.reduce((acc, f) => acc + f.despesas, 0)
+  const lucroTotal = filiais.reduce((acc, f) => acc + f.lucro, 0)
+  const saldoEmpresa = receitaTotal - despesasTotal
+ 
+  const formatCurrency = (value) => {
+    if (value >= 1000000) return `R$ ${(value / 1000000).toFixed(2)}M`
+    return `R$ ${value.toLocaleString("pt-BR")}`
   }
-
-  const handleSaveTransacao = () => {
-    const newTransacao = {
-      id: String(Date.now()),
-      tipo: formData.tipo,
-      descricao: formData.descricao,
-      valor: Number.parseFloat(formData.valor),
-      data: formData.data,
-      status: "pendente",
-      categoria: formData.categoria,
+ 
+  const handleAddTransaction = () => {
+    if (!formData.filialId || !formData.valor || !formData.descricao) {
+      alert("Por favor, preencha todos os campos")
+      return
     }
-    setTransacoes([newTransacao, ...transacoes])
+ 
+    const valor = parseFloat(formData.valor)
+    const filialIndex = filiais.findIndex((f) => f.id === formData.filialId)
+    if (filialIndex !== -1) {
+      const updatedFiliais = [...filiais]
+      const filial = updatedFiliais[filialIndex]
+ 
+      if (formData.tipo === "receita") filial.receita += valor
+      else filial.despesas += valor
+ 
+      filial.lucro = filial.receita - filial.despesas
+      filial.margem = (filial.lucro / filial.receita) * 100
+ 
+      setFiliais(updatedFiliais)
+    }
+ 
     setIsDialogOpen(false)
-    setFormData({
-      tipo: "receita",
-      descricao: "",
-      valor: "",
-      data: "",
-      categoria: "vendas",
-    })
+    setFormData({ filialId: "", tipo: "receita", valor: "", descricao: "" })
   }
-
-  const handlePagarTransacao = (id) => {
-    setTransacoes(transacoes.map((t) => (t.id === id ? { ...t, status: "pago" } : t)))
+ 
+  const handleVisualizar = (filial) => {
+    setFilialSelecionada(filial)
+    setIsDetalhesOpen(true)
   }
-
-  const handleDeleteTransacao = (id) => {
-    if (confirm("Tem certeza que deseja deletar esta transação?")) {
-      setTransacoes(transacoes.filter((t) => t.id !== id))
-    }
+ 
+  const handleDownload = (filial) => {
+    const produtos = produtosPorFilial[filial.nome] || []
+    const csvContent = [
+      ["Produto", "Quantidade", "Preço Unitário (R$)", "Total (R$)"],
+      ...produtos.map((p) => [p.nome, p.quantidade, p.preco, p.quantidade * p.preco]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n")
+ 
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `Relatorio_${filial.nome.replace(" ", "_")}.csv`
+    a.click()
   }
-
-  const handleViewDetails = (transacao) => {
-    setSelectedTransacao(transacao)
-    setDetailsModalOpen(true)
-  }
-
-  const totalReceitas = transacoes
-    .filter((t) => t.tipo === "receita" && t.status === "pago")
-    .reduce((sum, t) => sum + t.valor, 0)
-
-  const totalDespesas = transacoes
-    .filter((t) => t.tipo === "despesa" && t.status === "pago")
-    .reduce((sum, t) => sum + t.valor, 0)
-
-  const saldo = totalReceitas - totalDespesas
-
-  const despesasPendentes = transacoes
-    .filter((t) => t.tipo === "despesa" && t.status === "pendente")
-    .reduce((sum, t) => sum + t.valor, 0)
-
-    
-function formatDate(date) {
-  if (!date) {
-    return ""
-  }
-  return date.toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  })
-}
-
-function isValidDate(date) {
-  if (!date) {
-    return false
-  }
-  return !isNaN(date.getTime())
-}
-
-// Exemplo de uso do calendário (remova se não for usar como componente separado)
-function Calendar28() {
-  const [open, setOpen] = useState(false)
-  const [date, setDate] = useState(new Date("2025-06-01"))
-  const [month, setMonth] = useState(date)
-  const [valor, setValor] = useState(formatDate(date))
-
-}
- const [month, setMonth] = useState<Date | undefined>(date)
-  const [valor, setValor] = useState(formatDate(date))
-
+ 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold">Financeiro</h1>
-          <p className="text-muted-foreground mt-1">Gestão financeira da Quimx</p>
-        </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" />
-              Nova Transação
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Adicionar Transação</DialogTitle>
-              <DialogDescription>Registre uma nova receita ou despesa</DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="tipo">Tipo</Label>
-                <Select value={formData.tipo} onValueChange={(value) => setFormData({ ...formData, tipo: value })}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="receita">Receita</SelectItem>
-                    <SelectItem value="despesa">Despesa</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="descricao">Descrição</Label>
-                <Textarea
-                  id="descricao"
-                  value={formData.descricao}
-                  onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
-                  placeholder="Descrição da transação"
-                  rows={3}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="valor">Valor (R$)</Label>
-                <Input
-                  id="valor"
-                  type="number"
-                  step="0.01"
-                  value={formData.valor}
-                  onChange={(e) => setFormData({ ...formData, valor: e.target.value })}
-                  placeholder="0.00"
-                />
-              </div>
-              <div className="space-y-2">
-                    <div className="flex flex-col gap-3">
-      <Label htmlFor="date" className="px-1">
-        Subscription Date
-      </Label>
-      <div className="relative flex gap-2">
-        <Input
-          id="date"
-          value={valor}
-          placeholder="June 01, 2025"
-          className="bg-background pr-10"
-          onChange={(e) => {
-            const date = new Date(e.target.valor)
-            setValue(e.target.valor)
-            if (isValidDate(date)) {
-              setDate(date)
-              setMonth(date)
-            }
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "ArrowDown") {
-              e.preventDefault()
-              setOpen(true)
-            }
-          }}
-        />
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              id="date-picker"
-              variant="ghost"
-              className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
-            >
-              <CalendarIcon className="size-3.5" />
-              <span className="sr-only">Select date</span>
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            className="w-auto overflow-hidden p-0"
-            align="end"
-            alignOffset={-8}
-            sideOffset={10}
-          >
-            <Calendar
-              mode="single"
-              selected={date}
-              captionLayout="dropdown"
-              month={month}
-              onMonthChange={setMonth}
-              onSelect={(date) => {
-                setDate(date)
-                setValue(formatDate(date))
-                setOpen(false)
-              }}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-    </div>
-                <Label htmlFor="data">Data</Label>
-                <Input
-                  id="data"
-                  type="date"
-                  value={formData.data}
-                  onChange={(e) => setFormData({ ...formData, data: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="categoria">Categoria</Label>
-                <Select
-                  value={formData.categoria}
-                  onValueChange={(value) => setFormData({ ...formData, categoria: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="vendas">Vendas</SelectItem>
-                    <SelectItem value="fornecedores">Fornecedores</SelectItem>
-                    <SelectItem value="operacional">Operacional</SelectItem>
-                    <SelectItem value="outros">Outros</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                Cancelar
+    <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
+      <div className="mx-auto max-w-7xl space-y-6">
+        {/* Header */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground lg:text-4xl">Dashboard Financeiro</h1>
+            <p className="mt-2 text-sm text-muted-foreground lg:text-base">
+              Visão geral do desempenho financeiro das filiais
+            </p>
+          </div>
+ 
+          {/* Botão Nova Transação */}
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
+                <Plus className="h-4 w-4" />
+                Nova Transação
               </Button>
-              <Button onClick={handleSaveTransacao}>Adicionar</Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>Adicionar Transação</DialogTitle>
+                <DialogDescription>Registre uma nova receita ou despesa</DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label>Filial</Label>
+                  <Select
+                    value={formData.filialId}
+                    onValueChange={(value) => setFormData({ ...formData, filialId: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione uma filial" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {filiais.map((filial) => (
+                        <SelectItem key={filial.id} value={filial.id}>
+                          {filial.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+ 
+                <div className="space-y-2">
+                  <Label>Tipo</Label>
+                  <Select
+                    value={formData.tipo}
+                    onValueChange={(value) => setFormData({ ...formData, tipo: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="receita">Receita</SelectItem>
+                      <SelectItem value="despesa">Despesa</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+ 
+                <div className="space-y-2">
+                  <Label>Valor (R$)</Label>
+                  <Input
+                    type="number"
+                    placeholder="0.00"
+                    value={formData.valor}
+                    onChange={(e) => setFormData({ ...formData, valor: e.target.value })}
+                  />
+                </div>
+ 
+                <div className="space-y-2">
+                  <Label>Descrição</Label>
+                  <Input
+                    placeholder="Ex: Venda de produtos"
+                    value={formData.descricao}
+                    onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-3">
+                <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                  Cancelar
+                </Button>
+                <Button onClick={handleAddTransaction}>Adicionar</Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+ 
+        {/* Resumo */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { titulo: "Receita Total", valor: receitaTotal, icon: DollarSign, color: "text-success" },
+            { titulo: "Despesas Totais", valor: despesasTotal, icon: TrendingDown, color: "text-destructive" },
+            { titulo: "Lucro Líquido", valor: lucroTotal, icon: TrendingUp, color: "text-chart-3" },
+            { titulo: "Saldo da Empresa", valor: saldoEmpresa, icon: FlaskConical, color: "text-primary" },
+          ].map((item, i) => (
+            <Card key={i} className="border-l-4 bg-card">
+              <CardHeader className="pb-3 flex justify-between items-center">
+                <CardTitle className="text-sm font-medium text-muted-foreground">{item.titulo}</CardTitle>
+                <item.icon className={`h-5 w-5 ${item.color}`} />
+              </CardHeader>
+              <CardContent>
+                <p className={`text-3xl font-bold ${item.color}`}>{formatCurrency(item.valor)}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+ 
+        {/* Tabela de Filiais */}
+        <Card className="bg-card">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold">Análise Financeira por Filial</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full table-auto min-w-[600px]">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Filial</th>
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Receita</th>
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Despesas</th>
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Lucro</th>
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Margem</th>
+                    <th className="text-center text-sm font-semibold text-muted-foreground pb-2">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filiais.map((filial) => (
+                    <tr
+                      key={filial.id}
+                      className="border-b border-border hover:bg-muted/50 transition text-sm"
+                    >
+                      <td className="py-3 font-medium">{filial.nome}</td>
+                      <td className="py-3 text-success">{formatCurrency(filial.receita)}</td>
+                      <td className="py-3 text-destructive">{formatCurrency(filial.despesas)}</td>
+                      <td className="py-3 text-chart-3">{formatCurrency(filial.lucro)}</td>
+                      <td className="py-3">{filial.margem.toFixed(1)}%</td>
+                      <td className="py-3 flex items-center justify-center gap-2">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          title="Visualizar"
+                          onClick={() => handleVisualizar(filial)}
+                        >
+                          <Eye className="h-4 w-4 text-primary" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          title="Baixar relatório"
+                          onClick={() => handleDownload(filial)}
+                        >
+                          <Download className="h-4 w-4 text-success" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+ 
+        {/* Modal Detalhes da Filial */}
+        <Dialog open={isDetalhesOpen} onOpenChange={setIsDetalhesOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>{filialSelecionada?.nome}</DialogTitle>
+              <DialogDescription>Produtos em estoque</DialogDescription>
+            </DialogHeader>
+            <div className="overflow-x-auto mt-4">
+              <table className="w-full table-auto border-collapse">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Produto</th>
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Quantidade</th>
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Preço Unitário (R$)</th>
+                    <th className="text-left text-sm font-semibold text-muted-foreground pb-2">Total (R$)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(filialSelecionada ? produtosPorFilial[filialSelecionada.nome] : []).map((p) => (
+                    <tr key={p.id} className="border-b border-border text-sm">
+                      <td className="py-2">{p.nome}</td>
+                      <td className="py-2">{p.quantidade}</td>
+                      <td className="py-2">{p.preco}</td>
+                      <td className="py-2">{p.preco * p.quantidade}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="flex justify-end mt-4">
+              <Button variant="outline" onClick={() => setIsDetalhesOpen(false)}>
+                Fechar
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
       </div>
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="border-green-200 dark:border-green-900">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Receitas</CardTitle>
-            <div className="p-2 rounded-lg bg-green-100 dark:bg-green-950">
-              <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-700 dark:text-green-500">R$ {totalReceitas.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground mt-1">Total recebido</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-red-200 dark:border-red-900">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Despesas</CardTitle>
-            <div className="p-2 rounded-lg bg-red-100 dark:bg-red-950">
-              <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-red-700 dark:text-red-500">R$ {totalDespesas.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground mt-1">Total pago</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-blue-200 dark:border-blue-900">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Saldo</CardTitle>
-            <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-950">
-              <Wallet className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div
-              className={`text-2xl font-bold ${saldo >= 0 ? "text-green-700 dark:text-green-500" : "text-red-700 dark:text-red-500"}`}
-            >
-              R$ {saldo.toFixed(2)}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">Receitas - Despesas</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-orange-200 dark:border-orange-900">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">A Pagar</CardTitle>
-            <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-950">
-              <Calendar className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-orange-700 dark:text-orange-500">
-              R$ {despesasPendentes.toFixed(2)}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">Contas pendentes</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Lista de Transações */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Transações Recentes</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {transacoes.map((transacao) => (
-              <div
-                key={transacao.id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-lg border hover:bg-accent/50 transition-colors"
-              >
-                <div className="flex items-start gap-3 flex-1 min-w-0">
-                  <div
-                    className={`p-2 rounded-lg ${
-                      transacao.tipo === "receita" ? "bg-green-100 dark:bg-green-950" : "bg-red-100 dark:bg-red-950"
-                    }`}
-                  >
-                    {transacao.tipo === "receita" ? (
-                      <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
-                    ) : (
-                      <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{transacao.descricao}</p>
-                    <div className="flex flex-wrap items-center gap-2 mt-1">
-                      <p className="text-sm text-muted-foreground">{transacao.data}</p>
-                      <Badge variant="outline" className="text-xs">
-                        {transacao.categoria}
-                      </Badge>
-                      <Badge variant={transacao.status === "pago" ? "default" : "secondary"} className="text-xs gap-1">
-                        {transacao.status === "pago" ? (
-                          <CheckCircle2 className="h-3 w-3" />
-                        ) : (
-                          <XCircle className="h-3 w-3" />
-                        )}
-                        {transacao.status}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between sm:justify-end gap-2">
-                  <p
-                    className={`text-lg font-bold ${
-                      transacao.tipo === "receita"
-                        ? "text-green-700 dark:text-green-500"
-                        : "text-red-700 dark:text-red-500"
-                    }`}
-                  >
-                    {transacao.tipo === "receita" ? "+" : "-"} R$ {transacao.valor.toFixed(2)}
-                  </p>
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => handleViewDetails(transacao)} className="gap-2">
-                      <Eye className="h-4 w-4" />
-                      <span className="hidden sm:inline">Detalhes</span>
-                    </Button>
-                    {transacao.status === "pendente" && transacao.tipo === "despesa" && (
-                      <Button size="sm" onClick={() => handlePagarTransacao(transacao.id)} className="gap-2">
-                        <CheckCircle2 className="h-4 w-4" />
-                        <span className="hidden sm:inline">Pagar</span>
-                      </Button>
-                    )}
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleDeleteTransacao(transacao.id)}
-                      className="gap-2"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                      <span className="hidden sm:inline">Deletar</span>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Dialog open={detailsModalOpen} onOpenChange={setDetailsModalOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Detalhes da Transação</DialogTitle>
-            <DialogDescription>Informações completas da transação</DialogDescription>
-          </DialogHeader>
-          {selectedTransacao && (
-            <div className="space-y-4 py-4">
-              <div className="flex items-center gap-3">
-                <div
-                  className={`p-3 rounded-lg ${
-                    selectedTransacao.tipo === "receita"
-                      ? "bg-green-100 dark:bg-green-950"
-                      : "bg-red-100 dark:bg-red-950"
-                  }`}
-                >
-                  {selectedTransacao.tipo === "receita" ? (
-                    <TrendingUp className="h-6 w-6 text-green-600 dark:text-green-400" />
-                  ) : (
-                    <TrendingDown className="h-6 w-6 text-red-600 dark:text-red-400" />
-                  )}
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Tipo</p>
-                  <p className="font-semibold capitalize">{selectedTransacao.tipo}</p>
-                </div>
-              </div>
-
-              <div className="space-y-3 border-t pt-4">
-                <div>
-                  <p className="text-sm text-muted-foreground">Descrição</p>
-                  <p className="font-medium">{selectedTransacao.descricao}</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Valor</p>
-                    <p
-                      className={`text-xl font-bold ${
-                        selectedTransacao.tipo === "receita"
-                          ? "text-green-700 dark:text-green-500"
-                          : "text-red-700 dark:text-red-500"
-                      }`}
-                    >
-                      R$ {selectedTransacao.valor.toFixed(2)}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Data</p>
-                    <p className="font-medium">{selectedTransacao.data}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Categoria</p>
-                    <Badge variant="outline" className="mt-1">
-                      {selectedTransacao.categoria}
-                    </Badge>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Status</p>
-                    <Badge
-                      variant={selectedTransacao.status === "pago" ? "default" : "secondary"}
-                      className="mt-1 gap-1"
-                    >
-                      {selectedTransacao.status === "pago" ? (
-                        <CheckCircle2 className="h-3 w-3" />
-                      ) : (
-                        <XCircle className="h-3 w-3" />
-                      )}
-                      {selectedTransacao.status}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          <div className="flex justify-end">
-            <Button onClick={() => setDetailsModalOpen(false)}>Fechar</Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
+ 
+ 

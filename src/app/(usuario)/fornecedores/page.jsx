@@ -136,10 +136,8 @@ export default function FornecedoresPage() {
   };
 
   const filteredFornecedores = useMemo(() => {
-
     // Comece com a lista completa
     let listaFiltrada = fornecedores;
-
     // Se houver algum setor selecionado, filtre por ele
     if (setoresSelecionados.length > 0) {
       listaFiltrada = listaFiltrada.filter(fornecedor =>
@@ -150,7 +148,6 @@ export default function FornecedoresPage() {
     //filtrar resultados
     if (searchTerm.trim() !== "") {
       const lowerCaseSearch = searchTerm.toLowerCase();
-
       listaFiltrada = listaFiltrada.filter(fornecedor =>
         fornecedor.nome.toLowerCase().includes(lowerCaseSearch) ||
         fornecedor.cnpj.toLowerCase().includes(lowerCaseSearch) ||

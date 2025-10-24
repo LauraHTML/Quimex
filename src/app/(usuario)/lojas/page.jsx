@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useAuth } from "@/app/contexts/auth-context"
 import { canManageLojas } from "@/lib/utils/permissions"
 import { mockLojas } from "@/lib/mock-data"
@@ -17,12 +17,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Plus, Building2, Phone, MapPin, Trash2, Edit2 } from "lucide-react"
+import { Plus, Search,Building2, Phone, MapPin, Trash2, Edit2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+//paginacao
+import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
+import { CardLojas } from "@/components/cards/cardLojas";
 
 export default function LojasPage() {
   const { user } = useAuth()
   const [lojas, setLojas] = useState(mockLojas)
+  const [searchTerm, setSearchTerm] = useState("")
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingLoja, setEditingLoja] = useState(null)
   const [formData, setFormData] = useState({
@@ -35,14 +48,14 @@ export default function LojasPage() {
     tipo: "filial",
   })
 
-  if (!user || !canManageLojas(user)) {
-    return (
-      <div className="text-center py-12">
-        <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-        <p className="text-muted-foreground">Você não tem permissão para acessar esta página.</p>
-      </div>
-    )
-  }
+  // if (!user || !canManageLojas(user)) {
+  //   return (
+  //     <div className="text-center py-12">
+  //       <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+  //       <p className="text-muted-foreground">Você não tem permissão para acessar esta página.</p>
+  //     </div>
+  //   )
+  // }
 
   const handleEditLoja = (loja) => {
     setEditingLoja(loja)
@@ -110,9 +123,7 @@ export default function LojasPage() {
       alert("Não é possível excluir a loja matriz!")
       return
     }
-    if (confirm("Tem certeza que deseja excluir esta loja?")) {
       setLojas(lojas.filter((l) => l.id !== id))
-    }
   }
 
   const handleCloseDialog = (open) => {
@@ -131,9 +142,42 @@ export default function LojasPage() {
     }
   }
 
+  const tipoLoja = ["Filial", "Matriz"];
+
+  const [tipoLojaSelecionados, setTipoLojaSelecionados] = useState([]);
+
+  const handleLojaChange = (loja, checked) => {loja
+    if (checked) {
+      setTipoLojaSelecionados([...tipoLojaSelecionados, loja]);
+    } else {
+      setTipoLojaSelecionados(tipoLojaSelecionados.filter((l) => l !== loja));
+    }
+
+  };
+
+    const filteredLojas = useMemo(() => {
+      // Comece com a lista completa
+      let listaFiltrada = lojas;
+  
+      //filtrar resultados
+      if (searchTerm.trim() !== "") {
+        const lowerCaseSearch = searchTerm.toLowerCase();
+        listaFiltrada = listaFiltrada.filter(loja =>
+          loja.nome.toLowerCase().includes(lowerCaseSearch) ||
+          loja.estado.toLowerCase().includes(lowerCaseSearch) ||
+          loja.cidade.toLowerCase().includes(lowerCaseSearch) ||
+          loja.endereco.toLowerCase().includes(lowerCaseSearch)
+        );
+      }
+      // lista final filtrada
+      return listaFiltrada;
+  
+      // O 'useMemo' só vai rodar esta lógica quando um destes 3 estados mudar.
+    }, [lojas, tipoLojaSelecionados, searchTerm]);
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col justify-between items-start gap-4">
         <div>
           <h1 className="text-3xl font-bold">Lojas</h1>
           <p className="text-muted-foreground mt-1">Gerencie as lojas da rede Quimx</p>
@@ -231,75 +275,51 @@ export default function LojasPage() {
             </div>
           </DialogContent>
         </Dialog>
+        <div className="flex flex-col md:flex-row gap-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-fit">Visualizar por setor</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-44">
+            <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {lojas.map((lojas) => (
+              <DropdownMenuCheckboxItem
+                checked={tipoLojaSelecionados.includes(lojas)}
+                key={lojas}
+                onCheckedChange={(checked) => handleLojaChange(lojas, checked)}
+                // Prevent the dropdown menu from closing when the checkbox is clicked
+                onSelect={(e) => e.preventDefault()}>
+                {lojas}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <div className="flex flex-row gap-2 flex-wrap relative w-full">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por nome, CNPJ ou contato..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+      </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {lojas.map((loja) => (
-          <Card key={loja.id} className="group hover:shadow-lg transition-all duration-200 hover:border-primary/50">
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3 flex-1 min-w-0 flex-wrap">
-                  <div
-                    className={`p-2.5 rounded-xl transition-colors ${
-                      loja.tipo === "matriz"
-                        ? "bg-purple-500/10 group-hover:bg-purple-500/20"
-                        : "bg-primary/10 group-hover:bg-primary/20"
-                    }`}
-                  >
-                    <Building2 className={`h-5 w-5 ${loja.tipo === "matriz" ? "text-purple-500" : "text-primary"}`} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <CardTitle className="text-lg truncate">{loja.nome}</CardTitle>
-                      <Badge variant={loja.tipo === "matriz" ? "default" : "secondary"} className="text-xs">
-                        {loja.tipo}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-1">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleEditLoja(loja)}
-                    className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
-                  >
-                    <Edit2 className="h-4 w-4" />
-                  </Button>
-                  {loja.tipo !== "matriz" && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDeleteLoja(loja.id)}
-                      className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2.5">
-              <div className="flex items-start gap-2 text-sm">
-                <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-                <div className="text-muted-foreground">
-                  <p>{loja.endereco}</p>
-                  <p>
-                    {loja.cidade} - {loja.estado}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Phone className="h-4 w-4 flex-shrink-0" />
-                {loja.telefone}
-              </div>
-              <div className="pt-2 border-t">
-                <p className="text-xs text-muted-foreground">CNPJ: {loja.cnpj}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <ControlePaginacao
+        items={filteredLojas}
+        renderItem={(loja) => (
+          <CardLojas
+            key={loja.id}
+            loja={loja}
+            onEdit={handleEditLoja}
+            onDelete={handleDeleteLoja}
+          />
+        )}
+        itemsPerPage={9}
+      />
+
     </div>
   )
 }

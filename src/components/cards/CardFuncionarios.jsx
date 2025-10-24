@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { UserCircle, Mail, Phone, Building2, Edit2 } from "lucide-react"
+import { Trash2, UserCircle, Mail, Phone, Building2, Edit2 } from "lucide-react";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -12,8 +12,10 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { getRoleName } from "@/lib/utils/permissions";
 
-export function CardFuncionarios({ funcionario, onEdit, onDelete }) {
+
+export function CardFuncionarios({ funcionario, onEdit, onDelete, lojaNome }) {
     return (
         <Card className="group hover:shadow-lg transition-all duration-200 hover:border-primary/50">
             <CardHeader className="pb-3">
@@ -81,7 +83,7 @@ export function CardFuncionarios({ funcionario, onEdit, onDelete }) {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Building2 className="h-4 w-4 flex-shrink-0" />
-                    {getLojaNome(funcionario.lojaId)}
+                    lojaNome{(funcionario.lojaId)}
                 </div>
                 <div className="pt-2 mt-2 border-t">
                     <p className="text-xs text-muted-foreground">CPF: {funcionario.cpf}</p>

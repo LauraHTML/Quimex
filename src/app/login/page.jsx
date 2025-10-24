@@ -93,7 +93,7 @@ export default function LoginPage() {
         >
           {/* Logo e título */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-600/30">
+            <div className="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-600/30">
               <svg
                 className="w-9 h-9 text-white"
                 fill="none"
@@ -149,7 +149,7 @@ export default function LoginPage() {
                   className={`pl-10 h-12 rounded-lg transition-all duration-200 ${theme === "dark"
                       ? "bg-slate-950/50 border-slate-800 text-slate-200 placeholder:text-slate-600"
                       : "bg-slate-50 border-slate-300 text-slate-900 placeholder:text-slate-400"
-                    } focus:border-blue-600 focus:ring-blue-600/20`}
+                    } focus:border-accent focus:ring-blue-600/20`}
                 />
               </div>
             </div>
@@ -178,7 +178,7 @@ export default function LoginPage() {
                   className={`pl-10 h-12 rounded-lg transition-all duration-200 ${theme === "dark"
                       ? "bg-slate-950/50 border-slate-800 text-slate-200 placeholder:text-slate-600"
                       : "bg-slate-50 border-slate-300 text-slate-900 placeholder:text-slate-400"
-                    } focus:border-blue-600 focus:ring-blue-600/20`}
+                    } focus:border-accent focus:ring-blue-600/20`}
                 />
               </div>
             </div>
@@ -226,7 +226,7 @@ export default function LoginPage() {
             {/* Botão de login */}
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold h-12 rounded-lg shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all duration-200 mt-6"
+              className="w-full bg-secondary hover:bg-primary text-white font-semibold h-12 rounded-lg shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all duration-200 mt-6"
               disabled={loading}
             >
               {loading ? "Entrando..." : "Entrar no Sistema"}
@@ -238,4 +238,3 @@ export default function LoginPage() {
     </div>
   )
 }
- 

@@ -15,9 +15,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Plus, Search, Trash2, UserCircle, Mail, Phone, Building2, Edit2 } from "lucide-react"
-import { getRoleName } from "@/lib/utils/permissions"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Plus, Search, Trash2, UserCircle, Mail, Phone, Building2, Edit2 } from "lucide-react";
+// import { getRoleName } from "@/lib/utils/permissions";
 
 import {
   DropdownMenu,
@@ -49,17 +49,6 @@ export default function FuncionariosPage() {
 
   if (!user) return null
 
-  console.log(formData.nome)
-
-  const filteredByRole =
-    user.role === "admin_matriz" ? funcionarios : funcionarios.filter((f) => f.lojaId === user.lojaId)
-
-  const filteredFuncionarios = filteredByRole.filter(
-    (f) =>
-      f.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      f.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      f.cpf.includes(searchTerm),
-  )
 
   const handleEditFuncionario = (funcionario) => {
     setEditingFuncionario(funcionario)
@@ -120,9 +109,7 @@ export default function FuncionariosPage() {
   }
 
   const handleDeleteFuncionario = (id) => {
-    if (confirm("Tem certeza que deseja excluir este funcionário?")) {
       setFuncionarios(funcionarios.filter((f) => f.id !== id))
-    }
   }
 
   const handleCloseDialog = (open) => {
@@ -146,10 +133,46 @@ export default function FuncionariosPage() {
     return loja?.nome || "N/A"
   }
 
-  //paginacao
-  funcionarios.map((f) => {
-    console.log(f.role)
-  })
+  const roleFuncionarios = [...new Set(mockUsers.map(user => user.role))];
+
+  const [roleFuncionarioSelecionados, setRoleFuncionarioSelecionados] = useState([]);
+
+  const handleRoleFuncionarioChange = (funcionario, checked) => {
+    if (checked) {
+      setRoleFuncionarioSelecionados([...roleFuncionarioSelecionados, funcionario]);
+    } else {
+      setRoleFuncionarioSelecionados(roleFuncionarioSelecionados.filter((f) => f !== funcionario));
+    }
+  };
+
+  console.log(formData.nome)
+
+  const filteredByRole = funcionarios.role === "admin_matriz" ? funcionarios : funcionarios.filter((f) => f.lojaId === user.lojaId)
+
+    const filteredFuncionarios = useMemo(() => {
+      // Comece com a lista filtrada por role de acesso do usuário logado
+      let listaFiltrada = funcionarios;
+      // Se houver algum setor (role) selecionado, filtra por ele
+      if (roleFuncionarioSelecionados.length > 0) {
+        listaFiltrada = listaFiltrada.filter(funcionario =>
+          roleFuncionarioSelecionados.includes(funcionario.role)
+        );
+      }
+    
+      // Se houver texto na barra de busca, filtra por nome, email ou CPF
+      if (searchTerm.trim() !== "") {
+        const lowerCaseSearch = searchTerm.toLowerCase();
+    
+        listaFiltrada = listaFiltrada.filter(funcionario =>
+          funcionario.nome.toLowerCase().includes(lowerCaseSearch) ||
+          funcionario.email.toLowerCase().includes(lowerCaseSearch) ||
+          funcionario.cpf.toLowerCase().includes(searchTerm)
+        );
+      }
+    
+      // Retorna a lista final filtrada
+      return listaFiltrada;
+    }, [filteredByRole, roleFuncionarioSelecionados, searchTerm]);
 
   return (
     <div className="space-y-6">
@@ -258,12 +281,22 @@ export default function FuncionariosPage() {
       <div className="flex flex-col md:flex-row gap-2">
       <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-fit">Visualizar por setor</Button>
+            <Button variant="outline" className="w-fit">Visualizar por função</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-44">
-            <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
+            <DropdownMenuLabel>Selecione função</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <p>setor</p>
+            {roleFuncionarios.map((funcionario) => (
+              <DropdownMenuCheckboxItem
+                checked={roleFuncionarioSelecionados.includes(funcionario)}
+                key={funcionario}
+                onCheckedChange={(checked) => handleRoleFuncionarioChange(funcionario, checked)}
+                // Prevent the dropdown menu from closing when the checkbox is clicked
+                onSelect={(e) => e.preventDefault()}
+              >
+                {funcionario}
+              </DropdownMenuCheckboxItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       <div className="flex flex-row gap-2 flex-wrap relative w-full">
@@ -278,65 +311,20 @@ export default function FuncionariosPage() {
       </div>
 
       {/* Lista de Funcionários */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredFuncionarios.map((funcionario) => (
-          <Card
-            key={funcionario.id}
-            className="group hover:shadow-lg transition-all duration-200 hover:border-primary/50"
-          >
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between gap-3 flex-wrap">
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="p-2.5 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <UserCircle className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <CardTitle className="text-lg truncate">{funcionario.nome}</CardTitle>
-                    <p className="text-xs text-muted-foreground uppercase mt-1 font-medium">
-                      {getRoleName(funcionario.role)}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-1">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleEditFuncionario(funcionario)}
-                    className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
-                  >
-                    <Edit2 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDeleteFuncionario(funcionario.id)}
-                    className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2.5">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4 flex-shrink-0" />
-                <span className="truncate">{funcionario.email}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Phone className="h-4 w-4 flex-shrink-0" />
-                {funcionario.telefone}
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Building2 className="h-4 w-4 flex-shrink-0" />
-                {getLojaNome(funcionario.lojaId)}
-              </div>
-              <div className="pt-2 mt-2 border-t">
-                <p className="text-xs text-muted-foreground">CPF: {funcionario.cpf}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <ControlePaginacao
+        items={filteredFuncionarios}
+        renderItem={(funcionario) => (
+          <CardFuncionarios
+          key={funcionario.id}
+          funcionario={funcionario}
+          onEdit={handleEditFuncionario}
+          onDelete={handleDeleteFuncionario}
+          roleNome={funcionario.role}
+          lojaNome={getLojaNome}
+        />
+        )}
+        itemsPerPage={9}
+      />
 
       {filteredFuncionarios.length === 0 && (
         <div className="text-center py-12">
