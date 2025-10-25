@@ -29,11 +29,8 @@ export default function Home() {
   return (
     <>
       <Navbar02Page></Navbar02Page>
-      <section
-        id="hero"
-        className="hero flex flex-row items-center justify-center text-white text-center my-5 py-[8rem]"
-      >
-        <div className="flex flex-col w-3/4 items-center gap-5">
+      <section id="hero" className="hero flex flex-row items-center justify-center text-white text-center my-5 py-[8rem]">
+        <div className="flex flex-col w-3/4 items-center justify-center gap-5 h-[15rem]">
           <h1 className="text-3xl">
             Inovação e Sustentabilidade em Soluções Químicas
           </h1>
@@ -42,7 +39,7 @@ export default function Home() {
             impulsionando a indústria com parcerias estratégicas e produtos de
             excelência.
           </p>
-          <Button className="btn-lg py-2 px-2">
+          <Button className="bg-accent btn-lg py-2 px-2">
             <Link to="o-que-fazemos" smooth={true} duration={500} spy={true} offset={-70} >Saiba Mais Sobre Nós</Link>
           </Button>
         </div>
@@ -51,7 +48,7 @@ export default function Home() {
       {/* O Que Fazemos / Vendemos Section */}
       <section id="o-que-fazemos" className="o-que-fazemos flex flex-col items-center justify-center w-full px-6 py-10 md:py-16">
         <div className="flex flex-col items-center justify-center max-w-6xl w-full">
-          <div className="flex flex-row gap-3 bg-secondary p-2 items-center rounded-md mb-4">
+          <div className="flex flex-row gap-3 bg-accent p-2 items-center rounded-md mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

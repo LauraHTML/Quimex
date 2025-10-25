@@ -119,7 +119,7 @@ export default function LojasPage() {
 
   const handleDeleteLoja = (id) => {
     const loja = lojas.find((l) => l.id === id)
-    if (loja?.tipo === "matriz") {
+    if (loja?.tipo === "Matriz") {
       alert("Não é possível excluir a loja matriz!")
       return
     }
@@ -142,8 +142,7 @@ export default function LojasPage() {
     }
   }
 
-  const tipoLoja = ["Filial", "Matriz"];
-
+  const tipoLoja = [...new Set(mockLojas.map(loja => loja.tipo.toLowerCase()))];
   const [tipoLojaSelecionados, setTipoLojaSelecionados] = useState([]);
 
   const handleLojaChange = (loja, checked) => {loja
@@ -152,12 +151,18 @@ export default function LojasPage() {
     } else {
       setTipoLojaSelecionados(tipoLojaSelecionados.filter((l) => l !== loja));
     }
-
   };
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
     const filteredLojas = useMemo(() => {
       // Comece com a lista completa
       let listaFiltrada = lojas;
+
+      if (tipoLojaSelecionados.length > 0) {
+      listaFiltrada = listaFiltrada.filter(loja =>
+      tipoLojaSelecionados.includes(loja.tipo.toLowerCase()) 
+    );
+  }
   
       //filtrar resultados
       if (searchTerm.trim() !== "") {
@@ -177,7 +182,7 @@ export default function LojasPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col justify-between items-start gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-4">
         <div>
           <h1 className="text-3xl font-bold">Lojas</h1>
           <p className="text-muted-foreground mt-1">Gerencie as lojas da rede Quimx</p>
@@ -261,8 +266,8 @@ export default function LojasPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="matriz">Matriz</SelectItem>
-                    <SelectItem value="filial">Filial</SelectItem>
+                    <SelectItem value="Matriz">Matriz</SelectItem>
+                    <SelectItem value="Filial">Filial</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -275,7 +280,9 @@ export default function LojasPage() {
             </div>
           </DialogContent>
         </Dialog>
-        <div className="flex flex-col md:flex-row gap-2">
+      </div>
+
+      <div className="flex flex-col md:flex-row gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="w-fit">Visualizar por setor</Button>
@@ -283,14 +290,14 @@ export default function LojasPage() {
           <DropdownMenuContent className="w-44">
             <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {lojas.map((lojas) => (
+            {tipoLoja.map((lojas) => (
               <DropdownMenuCheckboxItem
                 checked={tipoLojaSelecionados.includes(lojas)}
                 key={lojas}
                 onCheckedChange={(checked) => handleLojaChange(lojas, checked)}
                 // Prevent the dropdown menu from closing when the checkbox is clicked
                 onSelect={(e) => e.preventDefault()}>
-                {lojas}
+                {capitalize(lojas)}
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
@@ -304,8 +311,7 @@ export default function LojasPage() {
             className="pl-10"
           />
         </div>
-      </div>
-      </div>
+        </div>
 
       <ControlePaginacao
         items={filteredLojas}

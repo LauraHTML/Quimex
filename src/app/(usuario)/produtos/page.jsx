@@ -153,8 +153,7 @@ export default function ProdutosPage() {
   };
 
   //visualizar por setor
-  const classificacao = ["Limpeza", "Reagente", "Aditivo", "Alimento"];
-
+  const classificacao = [...new Set(mockProdutos.map(produto => produto.classificacao.toLowerCase()))];
   const [classificacaoSelecionados, setClassificacaoSelecionados] = useState([]);
 
   const handleClassificacaoChange = (classificacao, checked) => {
@@ -163,16 +162,16 @@ export default function ProdutosPage() {
     } else {
       setClassificacaoSelecionados(classificacaoSelecionados.filter((c) => c !== classificacao));
     }
-
   };
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
     const filteredProdutos = useMemo(() => {
   
-     let listaFiltrada = filteredByRole;;
+     let listaFiltrada = filteredByRole;
   
       if (classificacaoSelecionados.length > 0) {
         listaFiltrada = listaFiltrada.filter(produtos =>
-          classificacaoSelecionados.includes(produtos.classificacao)
+          classificacaoSelecionados.includes(produtos.classificacao.toLowerCase())
         );
       }
   
@@ -187,14 +186,14 @@ export default function ProdutosPage() {
           produto.classificacao.toLowerCase().includes(lowerCaseSearch) 
         );
       }
-  
+      // lista final filtrada
       return listaFiltrada;
   
     }, [filteredByRole, classificacaoSelecionados, searchTerm]);
     
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold">Produtos Químicos</h1>
           <p className="text-muted-foreground mt-1">
@@ -331,7 +330,7 @@ export default function ProdutosPage() {
       </div>
 
 
-      <div className="flex flex-col md:flex-row gap-2">
+      <div className="flex flex-col md:flex-row gap-2 w-full">
       <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="w-fit">Visualizar por função</Button>
@@ -347,7 +346,7 @@ export default function ProdutosPage() {
                 // Prevent the dropdown menu from closing when the checkbox is clicked
                 onSelect={(e) => e.preventDefault()}
               >
-                {classificacao}
+                {capitalize(classificacao)}
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>

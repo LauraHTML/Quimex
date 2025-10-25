@@ -2,6 +2,7 @@ import { Geist } from "next/font/google";
 import { ThemeProvider } from "./contexts/theme-context"
 import { AuthProvider } from "./contexts/auth-context"
 import { Toaster } from "@/components/ui/sonner"
+import { Analytics } from "@vercel/analytics/react";
 
 import "./globals.css";
 import "./styles/page.css"

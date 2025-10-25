@@ -7,7 +7,7 @@ export const mockLojas = [
     cidade: "São Paulo",
     estado: "SP",
     telefone: "(11) 3000-0000",
-    tipo: "matriz",
+    tipo: "Matriz",
     ativo: true,
   },
   {
@@ -18,7 +18,7 @@ export const mockLojas = [
     cidade: "São Paulo",
     estado: "SP",
     telefone: "(11) 3000-0001",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -29,7 +29,7 @@ export const mockLojas = [
     cidade: "São Paulo",
     estado: "SP",
     telefone: "(11) 3000-0002",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -40,7 +40,7 @@ export const mockLojas = [
     cidade: "Campinas",
     estado: "SP",
     telefone: "(19) 3000-0003",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -51,7 +51,7 @@ export const mockLojas = [
     cidade: "Guarulhos",
     estado: "SP",
     telefone: "(11) 3000-0004",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -62,7 +62,7 @@ export const mockLojas = [
     cidade: "Osasco",
     estado: "SP",
     telefone: "(11) 3000-0005",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -73,7 +73,7 @@ export const mockLojas = [
     cidade: "Jundiaí",
     estado: "SP",
     telefone: "(11) 3000-0006",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -84,7 +84,7 @@ export const mockLojas = [
     cidade: "Sorocaba",
     estado: "SP",
     telefone: "(15) 3000-0007",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -95,7 +95,7 @@ export const mockLojas = [
     cidade: "Ribeirão Preto",
     estado: "SP",
     telefone: "(16) 3000-0008",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -106,7 +106,7 @@ export const mockLojas = [
     cidade: "Santos",
     estado: "SP",
     telefone: "(13) 3000-0009",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -117,7 +117,7 @@ export const mockLojas = [
     cidade: "Belo Horizonte",
     estado: "MG",
     telefone: "(31) 3000-0010",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -128,7 +128,7 @@ export const mockLojas = [
     cidade: "Curitiba",
     estado: "PR",
     telefone: "(41) 3000-0011",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
   {
@@ -139,7 +139,7 @@ export const mockLojas = [
     cidade: "Rio de Janeiro",
     estado: "RJ",
     telefone: "(21) 3000-0012",
-    tipo: "filial",
+    tipo: "Filial",
     ativo: true,
   },
 ];
@@ -338,230 +338,6 @@ export const mockUsers = [
   },
 ];
 
-
-export const mockProdutos = [
-  {
-    id: "1",
-    nome: "Ácido Sulfúrico 98%",
-    descricao: "Ácido sulfúrico concentrado para uso industrial",
-    classificacao: "Aditivo",
-    sku: "QMX-AS-98-001",
-    preco: 450.0,
-    estoque: 100,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "2",
-    nome: "Hidróxido de Sódio (Soda Cáustica)",
-    descricao: "Soda cáustica em escamas 99%",
-    classificacao: "Limpeza",
-    sku: "QMX-HS-99-002",
-    preco: 280.0,
-    estoque: 200,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "3",
-    nome: "Peróxido de Hidrogênio 50%",
-    descricao: "Água oxigenada concentrada para processos industriais",
-    classificacao: "Reagente",
-    sku: "QMX-PH-50-003",
-    preco: 320.0,
-    estoque: 150,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "4",
-    nome: "Acetona PA",
-    descricao: "Acetona para análise, grau analítico",
-    classificacao: "Aditivo", // Originalmente 'Aditivo', mantido.
-    sku: "QMX-AC-PA-004",
-    preco: 180.0,
-    estoque: 80,
-    lojaId: "3",
-    ativo: true,
-  },
-  {
-    id: "5",
-    nome: "Etanol 99.5%",
-    descricao: "Álcool etílico absoluto",
-    classificacao: "Reagente",
-    sku: "QMX-ET-99-005",
-    preco: 220.0,
-    estoque: 120,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "6",
-    nome: "Cloreto de Sódio PA",
-    descricao: "Sal de cozinha purificado para análise",
-    classificacao: "Aditivo", // Originalmente 'Aditivo', mantido.
-    sku: "QMX-CS-PA-006",
-    preco: 95.0,
-    estoque: 300,
-    lojaId: "3",
-    ativo: true,
-  },
-  {
-    id: "7",
-    nome: "Ácido Cítrico Anidro",
-    descricao: "Acidulante e conservante grau alimentício",
-    classificacao: "Alimento",
-    sku: "QMX-AC-AL-007", // SKU corrigido para 'Alimento'
-    preco: 260.0,
-    estoque: 400,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "8",
-    nome: "Metanol PA",
-    descricao: "Metanol para análise (HPLC)",
-    classificacao: "Reagente",
-    sku: "QMX-ME-PA-008", // SKU corrigido
-    preco: 190.0,
-    estoque: 70,
-    lojaId: "3",
-    ativo: true,
-  },
-  {
-    id: "9",
-    nome: "Hipoclorito de Sódio 12%",
-    descricao: "Alvejante líquido para desinfecção e limpeza",
-    classificacao: "Limpeza",
-    sku: "QMX-HS-12-009",
-    preco: 150.0,
-    estoque: 250,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "10",
-    nome: "Glicerina Bidestilada USP",
-    descricao: "Glicerina vegetal para uso farmacêutico e cosmético",
-    classificacao: "Aditivo",
-    sku: "QMX-GB-USP-010",
-    preco: 310.0,
-    estoque: 180,
-    lojaId: "3",
-    ativo: true,
-  },
-  {
-    id: "11",
-    nome: "Sorbato de Potássio",
-    descricao: "Conservante fungicida para alimentos e bebidas",
-    classificacao: "Alimento",
-    sku: "QMX-SP-AL-011",
-    preco: 330.0,
-    estoque: 220,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "12",
-    nome: "Ácido Clorídrico 37%",
-    descricao: "Solução de ácido clorídrico para decapagem e limpeza",
-    classificacao: "Limpeza",
-    sku: "QMX-AC-37-012",
-    preco: 210.0,
-    estoque: 110,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "13",
-    nome: "Nitrato de Prata PA",
-    descricao: "Reagente para titulação e análise laboratorial",
-    classificacao: "Reagente",
-    sku: "QMX-NP-PA-013",
-    preco: 850.0, // Preço mais alto
-    estoque: 30,  // Estoque baixo
-    lojaId: "3",
-    ativo: true,
-  },
-  {
-    id: "14",
-    nome: "Bicarbonato de Sódio",
-    descricao: "Uso geral, aditivo e corretor de pH",
-    classificacao: "Aditivo",
-    sku: "QMX-BS-UG-014",
-    preco: 120.0,
-    estoque: 500,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "15",
-    nome: "Goma Xantana",
-    descricao: "Espessante e estabilizante para indústria alimentícia",
-    classificacao: "Alimento",
-    sku: "QMX-GX-AL-015",
-    preco: 410.0,
-    estoque: 85,
-    lojaId: "3",
-    ativo: true,
-  },
-  {
-    id: "16",
-    nome: "Detergente Neutro Concentrado",
-    descricao: "Base detergente para formulações de limpeza",
-    classificacao: "Limpeza",
-    sku: "QMX-DN-CO-016",
-    preco: 300.0,
-    estoque: 130,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "17",
-    nome: "Tolueno PA",
-    descricao: "Solvente para laboratório",
-    classificacao: "Reagente",
-    sku: "QMX-TO-PA-017",
-    preco: 160.0,
-    estoque: 0,     // Produto inativo/sem estoque
-    lojaId: "3",
-    ativo: false, // Item inativo
-  },
-  {
-    id: "18",
-    nome: "Propilenoglicol USP",
-    descricao: "Solvente e umectante para cosméticos e alimentos",
-    classificacao: "Aditivo",
-    sku: "QMX-PG-USP-018",
-    preco: 360.0,
-    estoque: 140,
-    lojaId: "2",
-    ativo: true,
-  },
-  {
-    id: "19",
-    nome: "Amônia Solução 25%",
-    descricao: "Solução de hidróxido de amônio para limpeza e processos",
-    classificacao: "Limpeza",
-    sku: "QMX-AM-25-019",
-    preco: 195.0,
-    estoque: 95,
-    lojaId: "3",
-    ativo: true,
-  },
-  {
-    id: "20",
-    nome: "Benzoato de Sódio",
-    descricao: "Conservante para bebidas e produtos ácidos",
-    classificacao: "Alimento",
-    sku: "QMX-BS-AL-020",
-    preco: 275.0,
-    estoque: 160,
-    lojaId: "2",
-    ativo: true,
-  },
-];
-
 export const mockFornecedores = [
   {
     id: "1",
@@ -753,3 +529,742 @@ export const mockContasPagar = [
     status: "pendente",
   },
 ]
+
+export const mockProdutos = [
+  {
+    id: "1",
+    sku: "QMX-001",
+    nome: "Ácido Sulfúrico 98%",
+    preco: 45.9,
+    estoque: 200,
+    classificacao: "Ácidos Inorgânicos",
+    codigoCor: "bg-orange-600",
+    image: "/sulfuric-acid-bottle.jpg",
+  },
+  {
+    id: "2",
+    sku: "QMX-002",
+    nome: "Hidróxido de Sódio",
+    preco: 32.5,
+    estoque: 200,
+    classificacao: "Bases",
+    codigoCor: "bg-green-700",
+    image: "/sodium-hydroxide-bottle.jpg",
+  },
+  {
+    id: "3",
+    sku: "QMX-003",
+    nome: "Álcool Etílico 99.5%",
+    preco: 28.9,
+    estoque: 200,
+    classificacao: "Inflamáveis",
+    codigoCor: "bg-red-600",
+    image: "/ethanol-bottle.jpg",
+  },
+  {
+    id: "4",
+    sku: "QMX-004",
+    nome: "Acetona PA",
+    preco: 35.0,
+    estoque: 200,
+    classificacao: "Inflamáveis",
+    codigoCor: "bg-red-600",
+    image: "/acetone-bottle.jpg",
+  },
+  {
+    id: "5",
+    sku: "QMX-005",
+    nome: "Cloreto de Sódio",
+    preco: 15.9,
+    estoque: 200,
+    classificacao: "Químicos Gerais",
+    codigoCor: "bg-gray-200",
+    image: "/sodium-chloride-bottle.jpg",
+  },
+  {
+    id: "6",
+    sku: "QMX-006",
+    nome: "Peróxido de Hidrogênio",
+    preco: 22.5,
+    estoque: 200,
+    classificacao: "Oxidantes",
+    codigoCor: "bg-lime-500",
+    image: "/hydrogen-peroxide-bottle.jpg",
+  },
+  {
+    id: "7",
+    sku: "QMX-007",
+    nome: "Ácido Clorídrico 37%",
+    preco: 38.9,
+    estoque: 200,
+    classificacao: "Ácidos Inorgânicos",
+    codigoCor: "bg-orange-600",
+    image: "/hydrochloric-acid-bottle.jpg",
+  },
+  {
+    id: "8",
+    sku: "QMX-008",
+    nome: "Carbonato de Cálcio",
+    preco: 18.5,
+    estoque: 200,
+    classificacao: "Químicos Gerais",
+    codigoCor: "bg-gray-200",
+    image: "/calcium-carbonate-bottle.jpg",
+  },
+  
+  // --- Produtos da Agroindústria ---
+  {
+    id: "9",
+    sku: "AGRO-001",
+    nome: "Ácido Bórico",
+    preco: 40.0,
+    estoque: 200,
+    classificacao: "Tóxicos", // Uso condicionado devido à toxicidade
+    codigoCor: "bg-purple-600", // Roxo
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "10",
+    sku: "AGRO-002",
+    nome: "Ácido Cítrico",
+    preco: 25.0,
+    estoque: 200,
+    classificacao: "Ácidos Orgânicos",
+    codigoCor: "bg-yellow-500", // Amarelo
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Ácido Clorídrico (já existe, mas garantindo que esteja na categoria certa)
+  // { id: "11", sku: "AGRO-003", nome: "Ácido Clorídrico", preco: 38.9,
+  // estoque: 200, classificacao: "Ácidos Inorgânicos", codigoCor: "bg-orange-600", image: "/hydrochloric-acid-bottle.jpg" },
+  {
+    id: "12",
+    sku: "AGRO-004",
+    nome: "Ácido Fosfórico (alimentício)",
+    preco: 55.0,
+    estoque: 200,
+    classificacao: "Ácidos Inorgânicos",
+    codigoCor: "bg-orange-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "13",
+    sku: "AGRO-005",
+    nome: "Ácido Nítrico",
+    preco: 60.0,
+    estoque: 200,
+    classificacao: "Ácidos Inorgânicos Oxidantes/Manuseio Especial",
+    codigoCor: "bg-blue-600", // Azul
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Ácido Sulfúrico (já existe)
+  {
+    id: "14",
+    sku: "AGRO-006",
+    nome: "Basefloc (Agente Floculante)",
+    preco: 80.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Agente de tratamento, uso condicionado
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "15",
+    sku: "AGRO-007",
+    nome: "Borax (Tetraborato de Sódio)",
+    preco: 30.0,
+    estoque: 200,
+    classificacao: "Tóxicos", // Uso restrito por toxicidade
+    codigoCor: "bg-purple-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "16",
+    sku: "AGRO-008",
+    nome: "Cloreto Férrico",
+    preco: 48.0,
+    estoque: 200,
+    classificacao: "Ácidos Inorgânicos Oxidantes/Manuseio Especial", // Tratamento de água
+    codigoCor: "bg-blue-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "17",
+    sku: "AGRO-009",
+    nome: "Enxofre",
+    preco: 20.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Fungicida, fertilizante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "18",
+    sku: "AGRO-010",
+    nome: "Formaldeído",
+    preco: 42.0,
+    estoque: 200,
+    classificacao: "Tóxicos", // Proibido/Restrito por toxicidade
+    codigoCor: "bg-purple-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "19",
+    sku: "AGRO-011",
+    nome: "Hidróxido de Potássio",
+    preco: 37.0,
+    estoque: 200,
+    classificacao: "Bases",
+    codigoCor: "bg-green-700",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Hidróxido de Sódio (já existe)
+  {
+    id: "20",
+    sku: "AGRO-012",
+    nome: "Hipoclorito de Sódio",
+    preco: 18.0,
+    estoque: 200,
+    classificacao: "Oxidantes", // Desinfetante, alvejante
+    codigoCor: "bg-lime-500",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "21",
+    sku: "AGRO-013",
+    nome: "Metabissulfito de Sódio",
+    preco: 28.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Conservante/antioxidante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Peróxido de Hidrogênio (já existe)
+  {
+    id: "22",
+    sku: "AGRO-014",
+    nome: "Sulfato de Alumínio Ferroso",
+    preco: 52.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Tratamento de água
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "23",
+    sku: "AGRO-015",
+    nome: "Sulfato de Amônia",
+    preco: 22.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Fertilizante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "24",
+    sku: "AGRO-016",
+    nome: "Sulfato de Zinco",
+    preco: 33.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Micronutriente
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "25",
+    sku: "AGRO-017",
+    nome: "Ureia",
+    preco: 16.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Fertilizante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+
+  // --- Produtos da Indústria de Transformação ---
+  // Ácido Sulfúrico (já existe)
+  // Hidróxido de Sódio (já existe)
+  // Acetona (já existe)
+  {
+    id: "26",
+    sku: "TRANS-001",
+    nome: "Tolueno",
+    preco: 45.0,
+    estoque: 200,
+    classificacao: "Inflamáveis", // Solvente orgânico
+    codigoCor: "bg-red-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "27",
+    sku: "TRANS-002",
+    nome: "Etanol (Industrial)",
+    preco: 29.0,
+    estoque: 200,
+    classificacao: "Inflamáveis",
+    codigoCor: "bg-red-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "28",
+    sku: "TRANS-003",
+    nome: "Isopropanol",
+    preco: 38.0,
+    estoque: 200,
+    classificacao: "Inflamáveis",
+    codigoCor: "bg-red-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "29",
+    sku: "TRANS-004",
+    nome: "Polietileno (PE) Granulado",
+    preco: 75.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Polímero, matéria-prima
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "30",
+    sku: "TRANS-005",
+    nome: "Resina Epóxi",
+    preco: 120.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Resina termofixa
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-resin.jpg",
+  },
+  {
+    id: "31",
+    sku: "TRANS-006",
+    nome: "Plastificante DOP",
+    preco: 90.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Aditivo para plásticos
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "32",
+    sku: "TRANS-007",
+    nome: "Antioxidante BHT",
+    preco: 65.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Aditivo químico
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "33",
+    sku: "TRANS-008",
+    nome: "Dióxido de Titânio (Pigmento)",
+    preco: 88.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Pigmento
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-pigment.jpg",
+  },
+  {
+    id: "34",
+    sku: "TRANS-009",
+    nome: "Lauril Éter Sulfato de Sódio",
+    preco: 50.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Tensoativo
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "35",
+    sku: "TRANS-010",
+    nome: "Catalisador para Polímeros",
+    preco: 150.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Catalisador
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Peróxido de Hidrogênio (já existe)
+  // Metabissulfito de Sódio (já existe)
+  {
+    id: "36",
+    sku: "TRANS-011",
+    nome: "PAC (Policloreto de Alumínio)",
+    preco: 60.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Coagulante/Floculante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "37",
+    sku: "TRANS-012",
+    nome: "Óleo Lubrificante Industrial",
+    preco: 70.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Lubrificante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-oil.jpg",
+  },
+  {
+    id: "38",
+    sku: "TRANS-013",
+    nome: "Agente Antiespumante",
+    preco: 85.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Antiespumante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "39",
+    sku: "TRANS-014",
+    nome: "Carbonato de Cálcio (Carga Mineral)",
+    preco: 25.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Carga mineral
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "40",
+    sku: "TRANS-015",
+    nome: "Agente de Cura para Resinas",
+    preco: 95.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Agente de cura
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "41",
+    sku: "TRANS-016",
+    nome: "Cloreto de Metileno",
+    preco: 58.0,
+    estoque: 200,
+    classificacao: "Tóxicos", // Composto halogenado, solvente
+    codigoCor: "bg-purple-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "42",
+    sku: "TRANS-017",
+    nome: "Aditivo Antiestático",
+    preco: 72.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Aditivo
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "43",
+    sku: "TRANS-018",
+    nome: "Dimeticona (Silicone)",
+    preco: 110.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Silicone
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "44",
+    sku: "TRANS-019",
+    nome: "Biocida Isotiazolinona",
+    preco: 80.0,
+    estoque: 200,
+    classificacao: "Tóxicos", // Biocida
+    codigoCor: "bg-purple-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+
+  // --- Produtos da Indústria Farmacêutica & Cosmética ---
+  {
+    id: "45",
+    sku: "FARMA-001",
+    nome: "Lactose Monohidratada",
+    preco: 40.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Excipiente
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "46",
+    sku: "FARMA-002",
+    nome: "Celulose Microcristalina",
+    preco: 45.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Excipiente
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "47",
+    sku: "FARMA-003",
+    nome: "Lauril Sulfato de Sódio (LSS)",
+    preco: 35.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Surfactante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "48",
+    sku: "FARMA-004",
+    nome: "Carbopol 940 (Espessante)",
+    preco: 70.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Espessante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "49",
+    sku: "FARMA-005",
+    nome: "Propilenoglicol",
+    preco: 30.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Solvente
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "50",
+    sku: "FARMA-006",
+    nome: "Glicerina Bi-destilada",
+    preco: 28.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Solvente/Umectante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "51",
+    sku: "FARMA-007",
+    nome: "Fenoxietanol (Conservante)",
+    preco: 60.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Conservante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Ácido Cítrico (já existe)
+  {
+    id: "52",
+    sku: "FARMA-008",
+    nome: "Ácido Lático",
+    preco: 42.0,
+    estoque: 200,
+    classificacao: "Ácidos Orgânicos",
+    codigoCor: "bg-yellow-500",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Hidróxido de Sódio (já existe)
+  {
+    id: "53",
+    sku: "FARMA-009",
+    nome: "Vitamina E (Tocoferol)",
+    preco: 85.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Antioxidante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "54",
+    sku: "FARMA-010",
+    nome: "Óleo de Amêndoas Doces (Emoliente)",
+    preco: 50.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Emoliente
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-oil.jpg",
+  },
+  {
+    id: "55",
+    sku: "FARMA-011",
+    nome: "Sorbitol (Umectante)",
+    preco: 25.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Umectante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Dióxido de Titânio (já existe)
+  {
+    id: "56",
+    sku: "FARMA-012",
+    nome: "Óxido de Zinco (Filtro UV)",
+    preco: 55.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Filtro UV
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "57",
+    sku: "FARMA-013",
+    nome: "Essência Floral (Fragrância)",
+    preco: 75.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Fragrância
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-fragrance.jpg",
+  },
+  // Dimeticona (já existe)
+  {
+    id: "58",
+    sku: "FARMA-014",
+    nome: "Vitamina C (Ácido Ascórbico)",
+    preco: 90.0,
+    estoque: 200,
+    classificacao: "Ácidos Orgânicos", // Vitamina funcional
+    codigoCor: "bg-yellow-500",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "59",
+    sku: "FARMA-015",
+    nome: "Ácido Salicílico",
+    preco: 50.0,
+    estoque: 200,
+    classificacao: "Ácidos Orgânicos", // Queratolítico
+    codigoCor: "bg-yellow-500",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  // Ureia (já existe)
+  {
+    id: "60",
+    sku: "FARMA-016",
+    nome: "EDTA Dissódico (Quelante)",
+    preco: 48.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Agente quelante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "61",
+    sku: "FARMA-017",
+    nome: "Creme Base Neutra",
+    preco: 38.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Base cosmética
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-cream-base.jpg",
+  },
+  {
+    id: "62",
+    sku: "FARMA-018",
+    nome: "Cocamidopropil Betaína",
+    preco: 40.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Agente espumante
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "63",
+    sku: "FARMA-019",
+    nome: "Ibuprofeno em Pó (API)",
+    preco: 180.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // API
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "64",
+    sku: "FARMA-020",
+    nome: "Ácido Hialurônico (Grau Cosmético)",
+    preco: 250.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Agente umectante cutâneo
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+
+  // --- Produtos da Indústria de Limpeza e Saneamento ---
+  // Ácido Clorídrico (já existe)
+  // Ácido Fosfórico (já existe)
+  // Ácido Nítrico (já existe)
+  // Ácido Sulfúrico (já existe)
+  {
+    id: "65",
+    sku: "LIMPEZA-001",
+    nome: "Barrilha Leve (Carbonato de Sódio)",
+    preco: 22.0,
+    estoque: 200,
+    classificacao: "Bases", // Usado em detergentes, controle de pH
+    codigoCor: "bg-green-700",
+    image: "/placeholder-raw-material.jpg",
+  },
+  // PAC (Policloreto de Alumínio) (já existe)
+  {
+    id: "66",
+    sku: "LIMPEZA-002",
+    nome: "Bifluoreto de Amônio",
+    preco: 55.0,
+    estoque: 200,
+    classificacao: "Ácidos Inorgânicos Oxidantes/Manuseio Especial", // Desincrustante ácido
+    codigoCor: "bg-blue-600",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "67",
+    sku: "LIMPEZA-003",
+    nome: "Bissulfito de Sódio",
+    preco: 30.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Agente redutor
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  // Borax (Borato de Sódio) (já existe)
+  // Formaldeído (já existe)
+  // Hidróxido de Potássio (já existe)
+  // Hidróxido de Sódio (já existe)
+  // Hipoclorito de Sódio (já existe)
+  // Metabissulfito de Sódio (já existe)
+  {
+    id: "68",
+    sku: "LIMPEZA-004",
+    nome: "Percarbonato de Sódio",
+    preco: 38.0,
+    estoque: 200,
+    classificacao: "Oxidantes", // Alvejante, agente de limpeza
+    codigoCor: "bg-lime-500",
+    image: "/placeholder-raw-material.jpg",
+  },
+  // Peróxido de Hidrogênio (já existe)
+  {
+    id: "69",
+    sku: "LIMPEZA-005",
+    nome: "Silicato de Sódio Alcalino",
+    preco: 45.0,
+    estoque: 200,
+    classificacao: "Bases", // Anticorrosivo, detergente
+    codigoCor: "bg-green-700",
+    image: "/placeholder-chemical-bottle.jpg",
+  },
+  {
+    id: "70",
+    sku: "LIMPEZA-006",
+    nome: "Sulfato de Alumínio Isento de Ferro",
+    preco: 50.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Tratamento de água
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+  {
+    id: "71",
+    sku: "LIMPEZA-007",
+    nome: "Sulfato de Sódio",
+    preco: 15.0,
+    estoque: 200,
+    classificacao: "Químicos Gerais", // Carga em detergentes
+    codigoCor: "bg-gray-200",
+    image: "/placeholder-raw-material.jpg",
+  },
+];

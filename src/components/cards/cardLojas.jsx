@@ -22,17 +22,17 @@ export function CardLojas({ loja, onEdit, onDelete }) {
                 <div className="flex items-center gap-3 flex-1 min-w-0 flex-wrap">
                   <div
                     className={`p-2.5 rounded-xl transition-colors ${
-                      loja.tipo === "matriz"
+                      loja.tipo === "Matriz"
                         ? "bg-purple-500/10 group-hover:bg-purple-500/20"
                         : "bg-primary/10 group-hover:bg-primary/20"
                     }`}
                   >
-                    <Building2 className={`h-5 w-5 ${loja.tipo === "matriz" ? "text-purple-500" : "text-primary"}`} />
+                    <Building2 className={`h-5 w-5 ${loja.tipo === "Matriz" ? "text-purple-500" : "text-primary"}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <CardTitle className="text-lg truncate">{loja.nome}</CardTitle>
-                      <Badge variant={loja.tipo === "matriz" ? "default" : "secondary"} className="text-xs">
+                      <Badge variant={loja.tipo === "Matriz" ? "default" : "secondary"} className="text-xs">
                         {loja.tipo}
                       </Badge>
                     </div>
@@ -47,7 +47,7 @@ export function CardLojas({ loja, onEdit, onDelete }) {
                   >
                     <Edit2 className="h-4 w-4" />
                   </Button>
-                  {loja.tipo !== "matriz" && (
+                  {loja.tipo !== "Matriz" && (
                     <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button

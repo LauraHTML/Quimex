@@ -1,235 +1,297 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useAuth } from "@/app/contexts/auth-context"
-import { canAccessPDV } from "@/lib/utils/permissions"
-import { mockProdutos } from "@/lib/mock-data"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Search, ShoppingCart, Trash2, Plus, Minus, DollarSign, Package } from "lucide-react"
+import { useState } from "react";
+import {
+  Search,
+  Filter,
+  X,
+  CreditCard,
+  Banknote,
+  Smartphone,
+  Plus,
+  Minus,
+} from "lucide-react";
 
-export default function PDVPage() {
-  const { user } = useAuth()
-  const [searchTerm, setSearchTerm] = useState("")
-  const [carrinho, setCarrinho] = useState([])
+import { mockProdutos, mockLojas } from "@/lib/mock-data";
 
-  if (!user || !canAccessPDV(user)) {
-    return (
-      <div className="text-center py-12">
-        <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-        <p className="text-muted-foreground">Você não tem permissão para acessar o PDV.</p>
-      </div>
-    )
-  }
+export default function PDV() {
+  const [produtos, setProdutos] = useState(mockProdutos);
+  const [cart, setCart] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todos");
+  const [showPayment, setShowPayment] = useState(false);
 
-  const produtos = user.role === "admin_matriz" ? mockProdutos : mockProdutos.filter((p) => p.lojaId === user.lojaId)
+  // Categorias atualizadas para corresponder à tabela e em português
+ const classificacao = [...new Set(produtos.map(produto => produto.classificacao.toLowerCase()))];
 
-  const filteredProdutos = produtos.filter(
-    (p) =>
-      p.nome.toLowerCase().includes(searchTerm.toLowerCase()) || p.sku.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  const produtoFiltrado = produtos.filter((produto) => {
+    const matchesSearch =
+      produto.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      produto.code.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      categoriaSelecionada === "Todos" || produto.classificacao.toLowerCase() === categoriaSelecionada.toLowerCase();
+    return matchesSearch && matchesCategory;
+  });
 
-  const adicionarAoCarrinho = (produto) => {
-    const itemExistente = carrinho.find((item) => item.id === produto.id)
-    if (itemExistente) {
-      if (itemExistente.quantidade < produto.estoque) {
-        setCarrinho(
-          carrinho.map((item) => (item.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item)),
-        )
+  const addToCart = (produto) => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === produto.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === produto.id
+            ? { ...item, quantidade: item.quantidade + 1 }
+            : item
+        );
       }
-    } else {
-      setCarrinho([...carrinho, { ...produto, quantidade: 1 }])
-    }
-  }
+      return [...prev, { ...produto, quantidade: 1 }];
+    });
+  };
 
-  const removerDoCarrinho = (produtoId) => {
-    setCarrinho(carrinho.filter((item) => item.id !== produtoId))
-  }
+  const removeFromCart = (id) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
 
-  const alterarQuantidade = (produtoId, delta) => {
-    setCarrinho(
-      carrinho
-        .map((item) => {
-          if (item.id === produtoId) {
-            const novaQuantidade = item.quantidade + delta
-            if (novaQuantidade <= 0) return null
-            if (novaQuantidade > item.estoque) return item
-            return { ...item, quantidade: novaQuantidade }
-          }
-          return item
-        })
-        .filter(Boolean),
-    )
-  }
+  const updateQuantidade = (id, change) => {
+    setCart((prev) =>
+      prev.map((item) => {
+        if (item.id === id) {
+          const newQuantidade = item.quantidade + change;
+          return newQuantidade > 0 ? { ...item, quantidade: newQuantidade } : item;
+        }
+        return item;
+      })
+    );
+  };
 
-  const calcularTotal = () => {
-    return carrinho.reduce((total, item) => total + item.preco * item.quantidade, 0)
-  }
+  const total = cart.reduce((soma, item) => soma + parseFloat(item.preco) * item.quantidade, 0);
 
-  const finalizarVenda = () => {
-    if (carrinho.length === 0) {
-      alert("Adicione produtos ao carrinho!")
-      return
-    }
-    const total = calcularTotal()
-    alert(`Venda finalizada! Total: R$ ${total.toFixed(2)}`)
-    setCarrinho([])
-  }
+  const handlePayment = (method) => {
+    alert(`Pagamento de R$ ${total.toFixed(2)} realizado via ${method}`);
+    setCart([]);
+    setShowPayment(false);
+  };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-bold">PDV - Ponto de Venda</h1>
-        <p className="text-muted-foreground mt-1">Sistema de vendas da Quimx</p>
-      </div>
+    <div className="flex h-screen bg-background">
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Header */}
+        <header className="border-b border-border bg-card px-6 py-4">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-3xl font-bold text-primary">QUIMEX</h1>
+              <p className="text-sm text-muted-foreground">
+                Sistema de Caixa - Produtos Químicos
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-muted-foreground">Operador</p>
+              <p className="text-sm font-medium">Caixa 01</p>
+            </div>
+          </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+          <div className="flex gap-3">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Buscar por nome ou código do produto..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+          </div>
+        </header>
+
+        {/* Filtro */}
+        <div className="px-6 py-3 border-b border-border bg-card/50">
+          <div className="flex items-center gap-2">
+            <Filter className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm font-medium text-foreground mr-2">
+              Filtrar:
+            </span>
+            <div className="flex gap-2 flex-wrap">
+              {classificacao.map((categoria) => (
+                <button
+                  key={categoria}
+                  onClick={() => setCategoriaSelecionada(categoria)}
+                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    categoriaSelecionada === categoria ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"}`}>
+                  {categoria}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Produtos */}
-        <div className="lg:col-span-2 space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Produtos Disponíveis</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Buscar produtos..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
+        <div className="flex-1 overflow-auto p-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {produtoFiltrado.map((produto) => (
+              <button
+                key={produto.id}
+                onClick={() => addToCart(produto)}
+                className="bg-card border border-border rounded-lg p-0 hover:border-primary hover:shadow-lg transition-all text-left"
+              >
+                {/* Faixa de cor da categoria */}
+                <div
+                  className={`${produto.codigoCor} w-full h-2 rounded-t-lg`}
+                ></div>
 
-              <div className="space-y-2 max-h-[500px] overflow-y-auto">
-                {filteredProdutos.map((produto) => (
-                  <div
-                    key={produto.id}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg border hover:bg-accent transition-colors"
-                  >
-                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <div className="p-2 rounded-lg bg-primary/10">
-                        <Package className="h-4 w-4 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium truncate">{produto.nome}</p>
-                        <div className="flex flex-wrap items-center gap-2 mt-1">
-                          <p className="text-sm text-muted-foreground">{produto.sku}</p>
-                          <Badge variant={produto.estoque > 10 ? "default" : "secondary"} className="text-xs">
-                            Estoque: {produto.estoque}
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between sm:justify-end gap-3">
-                      <p className="text-lg font-bold text-green-600">R$ {produto.preco.toFixed(2)}</p>
-                      <Button
-                        size="sm"
-                        onClick={() => adicionarAoCarrinho(produto)}
-                        disabled={produto.estoque === 0}
-                        className="gap-2"
-                      >
-                        <Plus className="h-4 w-4" />
-                        <span className="hidden sm:inline">Adicionar</span>
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-                {filteredProdutos.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">Nenhum produto encontrado</div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Carrinho */}
-        <div className="space-y-4">
-          <Card className="sticky top-4">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <ShoppingCart className="h-5 w-5" />
-                Carrinho ({carrinho.length})
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {carrinho.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <ShoppingCart className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                  <p className="text-sm">Carrinho vazio</p>
+                <div className="p-4 space-y-1">
+                  <p className="text-xs text-muted-foreground font-mono">
+                    {produto.code}
+                  </p>
+                  <h3 className="font-semibold text-sm text-foreground leading-tight">
+                    {produto.nome}
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    {produto.classificacao}
+                  </p>
+                  <p className="text-lg font-bold text-primary">
+                    R$ {produto.preco.toFixed(2)}
+                  </p>
                 </div>
-              ) : (
-                <>
-                  <div className="space-y-3 max-h-[300px] overflow-y-auto">
-                    {carrinho.map((item) => (
-                      <div key={item.id} className="space-y-2 p-3 rounded-lg border bg-card">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm truncate">{item.nome}</p>
-                            <p className="text-xs text-muted-foreground">R$ {item.preco.toFixed(2)}</p>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => removerDoCarrinho(item.id)}
-                            className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              onClick={() => alterarQuantidade(item.id, -1)}
-                              className="h-7 w-7"
-                            >
-                              <Minus className="h-3 w-3" />
-                            </Button>
-                            <span className="w-8 text-center font-medium">{item.quantidade}</span>
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              onClick={() => alterarQuantidade(item.id, 1)}
-                              className="h-7 w-7"
-                              disabled={item.quantidade >= item.estoque}
-                            >
-                              <Plus className="h-3 w-3" />
-                            </Button>
-                          </div>
-                          <p className="font-bold">R$ {(item.preco * item.quantidade).toFixed(2)}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Separator />
-
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Subtotal</span>
-                      <span>R$ {calcularTotal().toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between text-lg font-bold">
-                      <span>Total</span>
-                      <span className="text-green-600">R$ {calcularTotal().toFixed(2)}</span>
-                    </div>
-                  </div>
-
-                  <Button onClick={finalizarVenda} className="w-full gap-2" size="lg">
-                    <DollarSign className="h-5 w-5" />
-                    Finalizar Venda
-                  </Button>
-                </>
-              )}
-            </CardContent>
-          </Card>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Carrinho */}
+      <div className="w-[450px] border-l border-border bg-card flex flex-col">
+        <div className="flex-1 overflow-auto p-4">
+          <h2 className="text-lg font-bold text-foreground mb-4">
+            Carrinho de Compras
+          </h2>
+
+          {cart.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-64 text-muted-foreground">
+              <p className="text-sm">Nenhum item no carrinho</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {cart.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-background border border-border rounded-lg p-3"
+                >
+                  <div className="flex gap-3">
+                    <img
+                      src={item.image || "/placeholder.svg"}
+                      alt={item.name}
+                      className="w-16 h-16 object-contain rounded"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground font-mono">
+                        {item.code}
+                      </p>
+                      <h3 className="font-semibold text-sm text-foreground leading-tight">
+                        {item.name}
+                      </h3>
+                      <div className="flex items-center justify-between mt-2">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => updateQuantidade(item.id, -1)}
+                            disabled={item.quantidade <= 1}
+                            className="h-7 w-7 flex items-center justify-center rounded-md bg-secondary hover:bg-secondary/80 disabled:opacity-50 transition-colors"
+                          >
+                            <Minus className="h-4 w-4" />
+                          </button>
+                          <span className="font-bold text-sm text-foreground min-w-[3ch] text-center">
+                            {item.quantidade}x
+                          </span>
+                          <button
+                            onClick={() => updateQuantidade(item.id, 1)}
+                            className="h-7 w-7 flex items-center justify-center rounded-md bg-secondary hover:bg-secondary/80 transition-colors"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <p className="text-sm font-bold text-primary">
+                          R$ {(item.preco * item.quantidade).toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="h-8 w-8 flex items-center justify-center rounded-md bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Total e Pagamento */}
+        <div className="border-t border-border p-4 bg-muted/30">
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-lg font-semibold text-foreground">Total:</span>
+            <span className="text-2xl font-bold text-primary">
+              R$ {total.toFixed(2)}
+            </span>
+          </div>
+
+          <button
+            onClick={() => setShowPayment(true)}
+            disabled={cart.length === 0}
+            className="w-full bg-primary text-primary-foreground py-4 rounded-lg font-semibold text-lg hover:bg-primary/90 transition-colors disabled:opacity-50"
+          >
+            Finalizar Venda
+          </button>
+        </div>
+      </div>
+
+      {/* Modal de Pagamento */}
+      {showPayment && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-card border border-border rounded-lg p-6 w-[500px] max-w-[90vw]">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-foreground">
+                Forma de Pagamento
+              </h2>
+              <button
+                onClick={() => setShowPayment(false)}
+                className="h-8 w-8 flex items-center justify-center rounded-md hover:bg-muted transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="mb-6 p-4 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground mb-1">
+                Total a pagar:
+              </p>
+              <p className="text-3xl font-bold text-primary">
+                R$ {total.toFixed(2)}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { name: "Débito", icon: <CreditCard /> },
+                { name: "Crédito", icon: <CreditCard /> },
+                { name: "Dinheiro", icon: <Banknote /> },
+                { name: "PIX", icon: <Smartphone /> },
+              ].map((method) => (
+                <button
+                  key={method.name}
+                  onClick={() => handlePayment(method.name)}
+                  className="flex flex-col items-center gap-3 p-6 bg-background border-2 border-border rounded-lg hover:border-primary hover:bg-primary/5 transition-all"
+                >
+                  <div className="h-10 w-10 text-primary">{method.icon}</div>
+                  <span className="font-semibold text-foreground">
+                    {method.name}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
