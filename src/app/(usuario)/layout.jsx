@@ -4,10 +4,14 @@ import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "../contexts/auth-context"
 import { Sidebar } from "../../components/sidebar/sidebar"
+import { usePathname } from 'next/navigation'
 
 export default function DashboardLayout({ children }) {
   const router = useRouter()
   const { user, isLoading } = useAuth()
+  const nomeCaminho = usePathname()
+
+  const mostrarSidebar = nomeCaminho !== '/pdv'
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -29,9 +33,11 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar />
-      <main className="lg:pl-64">
-        <div className="p-4 lg:p-8 pt-16 lg:pt-8">{children}</div>
+      {mostrarSidebar && <Sidebar />}
+      <main className={` ${mostrarSidebar === true ? "lg:pl-64" : "lg"}`}>
+        <div className="p-4 lg:p-8 pt-16 lg:pt-8">
+          {children}
+          </div>
       </main>
     </div>
   )
