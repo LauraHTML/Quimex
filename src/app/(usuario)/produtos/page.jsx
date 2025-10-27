@@ -4,8 +4,8 @@ import { useState, useMemo } from "react";
 import { useAuth } from "@/app/contexts/auth-context";
 import { mockProdutos, mockLojas } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { MaskedInput } from '@/components/ui/masked-input';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -153,7 +153,7 @@ export default function ProdutosPage() {
   };
 
   //visualizar por setor
-  const classificacao = [...new Set(mockProdutos.map(produto => produto.classificacao.toLowerCase()))];
+  const classificacao = [...new Set(mockProdutos.map(produto => produto.setor.toLowerCase()))];
   const [classificacaoSelecionados, setClassificacaoSelecionados] = useState([]);
 
   const handleClassificacaoChange = (classificacao, checked) => {
@@ -267,16 +267,13 @@ export default function ProdutosPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="preco">Preço (R$)</Label>
-                  <Input
-                    id="preco"
-                    type="number"
-                    step="0.01"
-                    value={formData.preco}
-                    onChange={(e) =>
-                      setFormData({ ...formData, preco: e.target.value })
-                    }
-                    placeholder="0.00"
-                  />
+                  <MaskedInput
+                  id="valor"
+                  type="currency"
+                  value={formData.preco}
+                  onChange={(value) => setFormData({ ...formData, preco: value })}
+                  placeholder="R$ 0,00"
+                />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="estoque">Estoque</Label>

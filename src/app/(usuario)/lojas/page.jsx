@@ -5,9 +5,9 @@ import { useAuth } from "@/app/contexts/auth-context"
 import { canManageLojas } from "@/lib/utils/permissions"
 import { mockLojas } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { MaskedInput } from '@/components/ui/masked-input'
 import {
   Dialog,
   DialogContent,
@@ -17,8 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Plus, Search,Building2, Phone, MapPin, Trash2, Edit2 } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Plus, Search } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -213,10 +212,11 @@ export default function LojasPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cnpj">CNPJ</Label>
-                <Input
+                <MaskedInput
                   id="cnpj"
+                  mask="00.000.000/0000-00"
                   value={formData.cnpj}
-                  onChange={(e) => setFormData({ ...formData, cnpj: e.target.value })}
+                  onChange={(value) => setFormData({ ...formData, cnpj: value })}
                   placeholder="00.000.000/0000-00"
                 />
               </div>
@@ -252,11 +252,12 @@ export default function LojasPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="telefone">Telefone</Label>
-                <Input
+                <MaskedInput
                   id="telefone"
+                  mask="(00) 00000-0000"
                   value={formData.telefone}
-                  onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                  placeholder="(11) 3000-0000"
+                  onChange={(value) => setFormData({ ...formData, telefone: value })}
+                  placeholder="(11) 98765-4321"
                 />
               </div>
               <div className="space-y-2">

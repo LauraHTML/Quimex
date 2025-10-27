@@ -5,6 +5,7 @@ import { useAuth } from "@/app/contexts/auth-context"
 import { mockFornecedores } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { MaskedInput } from '@/components/ui/masked-input'
 import { Label } from "@/components/ui/label"
 import {
   Dialog,
@@ -122,7 +123,7 @@ export default function FornecedoresPage() {
   }
 
   //visualizar por setor
-  const setores = ["Agroindústria", "Indústria e transformação", "Farmacêutica", "Cosmética", "Limpeza", "Saneamento"];
+  const setores = [...new Set(mockFornecedores.map(setor => setor.setor.toLowerCase()))];
 
   const [setoresSelecionados, setSetoresSelecionados] = useState([]);
 
@@ -141,7 +142,7 @@ export default function FornecedoresPage() {
     // Se houver algum setor selecionado, filtre por ele
     if (setoresSelecionados.length > 0) {
       listaFiltrada = listaFiltrada.filter(fornecedor =>
-        setoresSelecionados.includes(fornecedor.setor)
+        setoresSelecionados.includes(fornecedor.setor.toLowerCase())
       );
     }
 
@@ -205,10 +206,11 @@ export default function FornecedoresPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cnpj">CNPJ</Label>
-                <Input
+                <MaskedInput
                   id="cnpj"
+                  mask="00.000.000/0000-00"
                   value={formData.cnpj}
-                  onChange={(e) => setFormData({ ...formData, cnpj: e.target.value })}
+                  onChange={(value) => setFormData({ ...formData, cnpj: value })}
                   placeholder="00.000.000/0000-00"
                 />
               </div>
@@ -223,11 +225,12 @@ export default function FornecedoresPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="telefone">Telefone</Label>
-                <Input
+                <MaskedInput
                   id="telefone"
+                  mask="(00) 00000-0000"
                   value={formData.telefone}
-                  onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                  placeholder="(11) 4000-0000"
+                  onChange={(value) => setFormData({ ...formData, telefone: value })}
+                  placeholder="(11) 98765-4321"
                 />
               </div>
               <div className="space-y-2">

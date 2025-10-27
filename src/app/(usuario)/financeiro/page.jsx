@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { MaskedInput } from '@/components/ui/masked-input'
 import { Label } from "@/components/ui/label"
 import {
   Dialog,
@@ -194,12 +195,13 @@ export default function FinancialDashboard() {
  
                 <div className="space-y-2">
                   <Label>Valor (R$)</Label>
-                  <Input
-                    type="number"
-                    placeholder="0.00"
-                    value={formData.valor}
-                    onChange={(e) => setFormData({ ...formData, valor: e.target.value })}
-                  />
+                  <MaskedInput
+                  id="valor"
+                  type="currency"
+                  value={formData.valor}
+                  onChange={(value) => setFormData({ ...formData, valor: value })}
+                  placeholder="R$ 0,00"
+                />
                 </div>
  
                 <div className="space-y-2">

@@ -6,6 +6,7 @@ import { mockUsers, mockLojas } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { MaskedInput } from '@/components/ui/masked-input';
 import { Label } from "@/components/ui/label"
 import {
   Dialog,
@@ -16,7 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, Trash2, UserCircle, Mail, Phone, Building2, Edit2 } from "lucide-react";
+import { Plus, Search, UserCircle } from "lucide-react";
 // import { getRoleName } from "@/lib/utils/permissions";
 
 import {
@@ -70,14 +71,14 @@ export default function FuncionariosPage() {
         funcionarios.map((f) =>
           f.id === editingFuncionario.id
             ? {
-                ...f,
-                nome: formData.nome,
-                email: formData.email,
-                cpf: formData.cpf,
-                telefone: formData.telefone,
-                role: formData.role,
-                lojaId: formData.lojaId || (user.role === "admin_matriz" ? null : user.lojaId),
-              }
+              ...f,
+              nome: formData.nome,
+              email: formData.email,
+              cpf: formData.cpf,
+              telefone: formData.telefone,
+              role: formData.role,
+              lojaId: formData.lojaId || (user.role === "admin_matriz" ? null : user.lojaId),
+            }
             : f,
         ),
       )
@@ -109,7 +110,7 @@ export default function FuncionariosPage() {
   }
 
   const handleDeleteFuncionario = (id) => {
-      setFuncionarios(funcionarios.filter((f) => f.id !== id))
+    setFuncionarios(funcionarios.filter((f) => f.id !== id))
   }
 
   const handleCloseDialog = (open) => {
@@ -149,30 +150,30 @@ export default function FuncionariosPage() {
 
   const filteredByRole = funcionarios.role === "admin_matriz" ? funcionarios : funcionarios.filter((f) => f.lojaId === user.lojaId)
 
-    const filteredFuncionarios = useMemo(() => {
-      // Comece com a lista filtrada por role de acesso do usuário logado
-      let listaFiltrada = funcionarios;
-      // Se houver algum setor (role) selecionado, filtra por ele
-      if (roleFuncionarioSelecionados.length > 0) {
-        listaFiltrada = listaFiltrada.filter(funcionario =>
-          roleFuncionarioSelecionados.includes(funcionario.role)
-        );
-      }
-    
-      // Se houver texto na barra de busca, filtra por nome, email ou CPF
-      if (searchTerm.trim() !== "") {
-        const lowerCaseSearch = searchTerm.toLowerCase();
-    
-        listaFiltrada = listaFiltrada.filter(funcionario =>
-          funcionario.nome.toLowerCase().includes(lowerCaseSearch) ||
-          funcionario.email.toLowerCase().includes(lowerCaseSearch) ||
-          funcionario.cpf.toLowerCase().includes(searchTerm)
-        );
-      }
-    
-      // Retorna a lista final filtrada
-      return listaFiltrada;
-    }, [filteredByRole, roleFuncionarioSelecionados, searchTerm]);
+  const filteredFuncionarios = useMemo(() => {
+    // Comece com a lista filtrada por role de acesso do usuário logado
+    let listaFiltrada = funcionarios;
+    // Se houver algum setor (role) selecionado, filtra por ele
+    if (roleFuncionarioSelecionados.length > 0) {
+      listaFiltrada = listaFiltrada.filter(funcionario =>
+        roleFuncionarioSelecionados.includes(funcionario.role)
+      );
+    }
+
+    // Se houver texto na barra de busca, filtra por nome, email ou CPF
+    if (searchTerm.trim() !== "") {
+      const lowerCaseSearch = searchTerm.toLowerCase();
+
+      listaFiltrada = listaFiltrada.filter(funcionario =>
+        funcionario.nome.toLowerCase().includes(lowerCaseSearch) ||
+        funcionario.email.toLowerCase().includes(lowerCaseSearch) ||
+        funcionario.cpf.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    // Retorna a lista final filtrada
+    return listaFiltrada;
+  }, [filteredByRole, roleFuncionarioSelecionados, searchTerm]);
 
   return (
     <div className="space-y-6">
@@ -180,6 +181,8 @@ export default function FuncionariosPage() {
         <div>
           <h1 className="text-3xl font-bold">Funcionários</h1>
           <p className="text-muted-foreground mt-1">Gerencie os funcionários da Quimex</p>
+        </div>
+        <div>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
           <DialogTrigger asChild>
@@ -217,20 +220,22 @@ export default function FuncionariosPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cpf">CPF</Label>
-                <Input
+                <MaskedInput
                   id="cpf"
+                  mask="000.000.000-00"
                   value={formData.cpf}
-                  onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
+                  onChange={(value) => setFormData({ ...formData, cpf: value })}
                   placeholder="000.000.000-00"
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="telefone">Telefone</Label>
-                <Input
+                <MaskedInput
                   id="telefone"
+                  mask="(00) 00000-0000"
                   value={formData.telefone}
-                  onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                  placeholder="(11) 99999-9999"
+                  onChange={(value) => setFormData({ ...formData, telefone: value })}
+                  placeholder="(11) 98765-4321"
                 />
               </div>
               <div className="space-y-2">
@@ -279,7 +284,7 @@ export default function FuncionariosPage() {
 
       {/* Search */}
       <div className="flex flex-col md:flex-row gap-2">
-      <DropdownMenu>
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="w-fit">Visualizar por função</Button>
           </DropdownMenuTrigger>
@@ -299,15 +304,15 @@ export default function FuncionariosPage() {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-      <div className="flex flex-row gap-2 flex-wrap relative w-full">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Buscar por nome, email ou CPF..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10"
-        />
-      </div>
+        <div className="flex flex-row gap-2 flex-wrap relative w-full">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por nome, email ou CPF..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
       </div>
 
       {/* Lista de Funcionários */}
@@ -315,13 +320,13 @@ export default function FuncionariosPage() {
         items={filteredFuncionarios}
         renderItem={(funcionario) => (
           <CardFuncionarios
-          key={funcionario.id}
-          funcionario={funcionario}
-          onEdit={handleEditFuncionario}
-          onDelete={handleDeleteFuncionario}
-          roleNome={funcionario.role}
-          lojaNome={getLojaNome}
-        />
+            key={funcionario.id}
+            funcionario={funcionario}
+            onEdit={handleEditFuncionario}
+            onDelete={handleDeleteFuncionario}
+            roleNome={funcionario.role}
+            lojaNome={getLojaNome}
+          />
         )}
         itemsPerPage={9}
       />
