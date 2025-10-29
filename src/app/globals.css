@@ -3,6 +3,22 @@
 
 @custom-variant dark (&:is(.dark *));
 
+h1{
+  font-size: clamp(1rem,calc(1vw + 1rem),3rem);
+}
+
+h2{
+  font-size: clamp(1rem,calc(1vw + 1rem),4rem);
+}
+
+h3{
+  font-size: clamp(1rem,calc(1vw + 1rem),1rem);
+}
+
+h4{
+  font-size: clamp(1rem,calc(1vw + 1rem),1.2rem);
+}
+
 :root {
   --background: #f5f5f5;
   --foreground: #1a1a1a;
@@ -55,7 +71,8 @@
   --shadow-xl: 2.5px 5px 12px -11.5px hsl(0 63% 18% / 0.18), 2.5px 8px 10px -12.5px hsl(0 63% 18% / 0.18);
   --shadow-2xl: 2.5px 5px 12px -11.5px hsl(0 63% 18% / 0.45);
   --tracking-normal: 0em;
-  --spacing: 0.2rem;
+  /* largura itens: sidebar */
+  --spacing: 0.2rem; 
 }
 
 .dark {

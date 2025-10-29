@@ -24,6 +24,7 @@ import {
 
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
+import { ArrowRight } from "lucide-react"
 
 export default function Home() {
   return (
@@ -274,18 +275,24 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="contato"
-        className="contato flex flex-col items-center justify-center h-full mt-6 pt-15 pb-15"
-      >
-        <h2 className="text-3xl text-center">Entre em Contato</h2>
-        <div className="flex flex-row justify-center p-3">
-          <div className="">
-            <p className="text-center">
+      <section id="contato" className="flex flex-col md:flex-row items-center justify-center h-full mt-6 pt-15 pb-15">
+        <div className="flex flex-col gap-3 w-full md:w-1/3">
+          <h2 className="text-primary font-bold">Entre em Contato</h2>
+            <p>
               Estamos ansiosos para ouvir você e explorar novas oportunidades de
               parceria.
             </p>
-            <div className="w-full">
+            <div>
+              <h4 className="text-primary font-bold">Email:</h4>
+              <p>Email@gmail?.com</p>
+            </div>
+            <div>
+              <h4 className="text-primary font-bold">Telefone:</h4>
+            <p>+1 2345-5643</p>
+            </div>           
+            <small>Disponível para contato de <span className="font-bold text-secondary"> Segunda a Sexta, 9h - 17h (BRT)</span></small>
+        </div> 
+        <div className="flex flex-row px-4 pb-10 w-full md:w-1/2 bg-accent rounded-lg ">
               <FieldGroup>
                 <FieldSet>
                   <FieldLegend></FieldLegend>
@@ -295,7 +302,7 @@ export default function Home() {
                       <FieldLabel htmlFor="checkout-7j9-card-name-43j">
                         Nome completo
                       </FieldLabel>
-                      <Input id="" placeholder="Seu nome" required />
+                      <Input id="" className="bg-background" placeholder="Seu nome" required />
                     </Field>
                     <Field>
                       <FieldLabel htmlFor="checkout-7j9-card-number-uw1">
@@ -303,6 +310,7 @@ export default function Home() {
                       </FieldLabel>
                       <Input
                         id="email"
+                        className="bg-background"
                         placeholder="seu.email@exemplo.com"
                         required
                       />
@@ -318,17 +326,15 @@ export default function Home() {
                       <Textarea
                         id="mensagem"
                         placeholder="Sua mensagem..."
-                        className="resize-none md:resize-y"
+                        className="resize-none md:resize-y bg-background"
                       />
                     </Field>
                   </FieldGroup>
                 </FieldSet>
-                <Field orientation="horizontal">
-                  <Button type="submit">Enviar</Button>
+                <Field orientation="responsive">
+                  <Button type="submit">Enviar <ArrowRight /></Button>
                 </Field>
               </FieldGroup>
-            </div>
-          </div>
         </div>
       </section>
       {/* Footer */}

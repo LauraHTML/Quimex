@@ -9,6 +9,7 @@ export const mockLojas = [
     telefone: "(11) 3000-0000",
     tipo: "Matriz",
     ativo: true,
+    gerente: "Suelen"
   },
   {
     id: "2",
@@ -20,6 +21,7 @@ export const mockLojas = [
     telefone: "(11) 3000-0001",
     tipo: "Filial",
     ativo: true,
+    gerente: "Claudio"
   },
   {
     id: "3",
@@ -31,6 +33,7 @@ export const mockLojas = [
     telefone: "(11) 3000-0002",
     tipo: "Filial",
     ativo: true,
+    gerente: "Leandro"
   },
   {
     id: "4",
@@ -42,6 +45,7 @@ export const mockLojas = [
     telefone: "(19) 3000-0003",
     tipo: "Filial",
     ativo: true,
+    gerente: "Aguiar"
   },
   {
     id: "5",
@@ -53,6 +57,7 @@ export const mockLojas = [
     telefone: "(11) 3000-0004",
     tipo: "Filial",
     ativo: true,
+    gerente: "Bob Espnja"
   },
   {
     id: "6",
@@ -64,6 +69,7 @@ export const mockLojas = [
     telefone: "(11) 3000-0005",
     tipo: "Filial",
     ativo: true,
+    gerente: "Anhanguera"
   },
   {
     id: "7",
@@ -75,6 +81,7 @@ export const mockLojas = [
     telefone: "(11) 3000-0006",
     tipo: "Filial",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "8",
@@ -86,6 +93,7 @@ export const mockLojas = [
     telefone: "(15) 3000-0007",
     tipo: "Filial",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "9",
@@ -97,6 +105,7 @@ export const mockLojas = [
     telefone: "(16) 3000-0008",
     tipo: "Filial",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "10",
@@ -108,6 +117,7 @@ export const mockLojas = [
     telefone: "(13) 3000-0009",
     tipo: "Filial",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "11",
@@ -119,6 +129,7 @@ export const mockLojas = [
     telefone: "(31) 3000-0010",
     tipo: "Filial",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "12",
@@ -130,6 +141,7 @@ export const mockLojas = [
     telefone: "(41) 3000-0011",
     tipo: "Filial",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "13",
@@ -141,6 +153,7 @@ export const mockLojas = [
     telefone: "(21) 3000-0012",
     tipo: "Filial",
     ativo: true,
+    gerente: "gerente Claudio"
   },
 ];
 
@@ -155,6 +168,7 @@ export const mockUsers = [
     role: "admin_matriz",
     lojaId: null,
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "2",
@@ -165,6 +179,7 @@ export const mockUsers = [
     role: "gerente",
     lojaId: "2",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "3",
@@ -175,6 +190,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "2",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "4",
@@ -185,6 +201,7 @@ export const mockUsers = [
     role: "gerente",
     lojaId: "3",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "5",
@@ -195,6 +212,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "3",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "6",
@@ -205,6 +223,7 @@ export const mockUsers = [
     role: "gerente",
     lojaId: "4",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "7",
@@ -215,6 +234,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "4",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "8",
@@ -225,6 +245,7 @@ export const mockUsers = [
     role: "gerente",
     lojaId: "5",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "9",
@@ -235,6 +256,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "5",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "10",
@@ -245,6 +267,7 @@ export const mockUsers = [
     role: "gerente",
     lojaId: "6",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "11",
@@ -255,6 +278,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "6",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "12",
@@ -265,6 +289,7 @@ export const mockUsers = [
     role: "gerente",
     lojaId: "7",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "13",
@@ -275,6 +300,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "7",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "14",
@@ -285,6 +311,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "1",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "15",
@@ -295,6 +322,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "2",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "16",
@@ -305,6 +333,7 @@ export const mockUsers = [
     role: "gerente",
     lojaId: "1",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "17",
@@ -315,6 +344,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "3",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "18",
@@ -325,6 +355,7 @@ export const mockUsers = [
     role: "vendedor",
     lojaId: "8",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "19",
@@ -335,6 +366,7 @@ export const mockUsers = [
     role: "gerente",
     lojaId: "8",
     ativo: true,
+    gerente: "gerente Claudio"
   },
 ];
 
@@ -348,6 +380,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0000",
     email: "contato@quimicaindustrial.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "2",
@@ -358,6 +391,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0001",
     email: "vendas@reagentescientificos.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "3",
@@ -368,6 +402,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0002",
     email: "comercial@labchem.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "4",
@@ -378,6 +413,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0003",
     email: "contato@biosolquimicos.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "5",
@@ -388,6 +424,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0004",
     email: "vendas@tecnolab.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "6",
@@ -408,6 +445,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0006",
     email: "suporte@nanotech.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "8",
@@ -418,6 +456,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0007",
     email: "ambiental@ecopurificacao.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "9",
@@ -438,6 +477,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0009",
     email: "contato@alfareagentes.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "11",
@@ -448,6 +488,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0010",
     email: "import@globalchem.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "12",
@@ -458,6 +499,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0011",
     email: "atendimento@purelab.com",
     ativo: true,
+    gerente: "gerente Claudio"
   },
   {
     id: "13",
@@ -468,6 +510,7 @@ export const mockFornecedores = [
     telefone: "(11) 4000-0012",
     email: "contato@bionature.com",
     ativo: true,
+    gerente: "gerente Claudio"
   }
 ]
 
@@ -540,6 +583,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
     image: "/sulfuric-acid-bottle.jpg",
+    filial: "São Caetano"
   },
   {
     id: "2",
@@ -550,6 +594,7 @@ export const mockProdutos = [
     classificacao: "Bases",
     codigoCor: "bg-green-700",
     image: "/sodium-hydroxide-bottle.jpg",
+    filial: "São Paulo"
   },
   {
     id: "3",
@@ -560,6 +605,7 @@ export const mockProdutos = [
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
     image: "/ethanol-bottle.jpg",
+    filial: "São Bernardo"
   },
   {
     id: "4",
@@ -570,6 +616,7 @@ export const mockProdutos = [
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
     image: "/acetone-bottle.jpg",
+    filial: "São Paulo"
   },
   {
     id: "5",
@@ -580,6 +627,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais",
     codigoCor: "bg-gray-200",
     image: "/sodium-chloride-bottle.jpg",
+    filial: "São Caetano"
   },
   {
     id: "6",
@@ -590,6 +638,7 @@ export const mockProdutos = [
     classificacao: "Oxidantes",
     codigoCor: "bg-lime-500",
     image: "/hydrogen-peroxide-bottle.jpg",
+    filial: "São Paulo"
   },
   {
     id: "7",
@@ -600,6 +649,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
     image: "/hydrochloric-acid-bottle.jpg",
+    filial: "São Caetano"
   },
   {
     id: "8",
@@ -610,6 +660,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais",
     codigoCor: "bg-gray-200",
     image: "/calcium-carbonate-bottle.jpg",
+    filial: "São Paulo"
   },
   
   // --- Produtos da Agroindústria ---
@@ -622,6 +673,7 @@ export const mockProdutos = [
     classificacao: "Tóxicos", // Uso condicionado devido à toxicidade
     codigoCor: "bg-purple-600", // Roxo
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Bernardo"
   },
   {
     id: "10",
@@ -632,6 +684,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Orgânicos",
     codigoCor: "bg-yellow-500", // Amarelo
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Salvador"
   },
   // Ácido Clorídrico (já existe, mas garantindo que esteja na categoria certa)
   // { id: "11", sku: "AGRO-003", nome: "Ácido Clorídrico", preco: 38.9,
@@ -645,6 +698,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Salvador"
   },
   {
     id: "13",
@@ -655,6 +709,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos Oxidantes/Manuseio Especial",
     codigoCor: "bg-blue-600", // Azul
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Salvador"
   },
   // Ácido Sulfúrico (já existe)
   {
@@ -666,6 +721,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Agente de tratamento, uso condicionado
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Fortaleza"
   },
   {
     id: "15",
@@ -676,6 +732,7 @@ export const mockProdutos = [
     classificacao: "Tóxicos", // Uso restrito por toxicidade
     codigoCor: "bg-purple-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Palmas"
   },
   {
     id: "16",
@@ -686,6 +743,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos Oxidantes/Manuseio Especial", // Tratamento de água
     codigoCor: "bg-blue-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Manaus"
   },
   {
     id: "17",
@@ -696,6 +754,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Fungicida, fertilizante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
   {
     id: "18",
@@ -706,6 +765,7 @@ export const mockProdutos = [
     classificacao: "Tóxicos", // Proibido/Restrito por toxicidade
     codigoCor: "bg-purple-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Natal",
   },
   {
     id: "19",
@@ -716,6 +776,7 @@ export const mockProdutos = [
     classificacao: "Bases",
     codigoCor: "bg-green-700",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Salvador"
   },
   // Hidróxido de Sódio (já existe)
   {
@@ -727,6 +788,7 @@ export const mockProdutos = [
     classificacao: "Oxidantes", // Desinfetante, alvejante
     codigoCor: "bg-lime-500",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Salvador"
   },
   {
     id: "21",
@@ -737,6 +799,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Conservante/antioxidante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
   // Peróxido de Hidrogênio (já existe)
   {
@@ -748,6 +811,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Tratamento de água
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
   {
     id: "23",
@@ -758,6 +822,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Fertilizante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
   {
     id: "24",
@@ -768,6 +833,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Micronutriente
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
   {
     id: "25",
@@ -778,6 +844,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Fertilizante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
 
   // --- Produtos da Indústria de Transformação ---
@@ -793,6 +860,7 @@ export const mockProdutos = [
     classificacao: "Inflamáveis", // Solvente orgânico
     codigoCor: "bg-red-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
   {
     id: "27",
@@ -803,6 +871,7 @@ export const mockProdutos = [
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "28",
@@ -813,6 +882,7 @@ export const mockProdutos = [
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "29",
@@ -823,6 +893,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Polímero, matéria-prima
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "Acre"
   },
   {
     id: "30",
@@ -833,6 +904,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Resina termofixa
     codigoCor: "bg-gray-200",
     image: "/placeholder-resin.jpg",
+    filial: "Rio Grande do Norte"
   },
   {
     id: "31",
@@ -843,6 +915,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Aditivo para plásticos
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "32",
@@ -853,6 +926,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Aditivo químico
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "33",
@@ -863,6 +937,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Pigmento
     codigoCor: "bg-gray-200",
     image: "/placeholder-pigment.jpg",
+    filial: "São Paulo"
   },
   {
     id: "34",
@@ -873,6 +948,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Tensoativo
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Manaus"
   },
   {
     id: "35",
@@ -883,6 +959,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Catalisador
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Rio de Janeiro"
   },
   // Peróxido de Hidrogênio (já existe)
   // Metabissulfito de Sódio (já existe)
@@ -895,6 +972,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Coagulante/Floculante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Rio de Janeiro"
   },
   {
     id: "37",
@@ -905,6 +983,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Lubrificante
     codigoCor: "bg-gray-200",
     image: "/placeholder-oil.jpg",
+    filial: "São Caetano"
   },
   {
     id: "38",
@@ -915,6 +994,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Antiespumante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Salvador"
   },
   {
     id: "39",
@@ -925,6 +1005,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Carga mineral
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "Distrito Federal"
   },
   {
     id: "40",
@@ -935,6 +1016,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Agente de cura
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo"
   },
   {
     id: "41",
@@ -945,6 +1027,7 @@ export const mockProdutos = [
     classificacao: "Tóxicos", // Composto halogenado, solvente
     codigoCor: "bg-purple-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "42",
@@ -955,6 +1038,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Aditivo
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "43",
@@ -965,6 +1049,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Silicone
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "44",
@@ -975,6 +1060,7 @@ export const mockProdutos = [
     classificacao: "Tóxicos", // Biocida
     codigoCor: "bg-purple-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
 
   // --- Produtos da Indústria Farmacêutica & Cosmética ---
@@ -987,6 +1073,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Excipiente
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "São Paulo",
   },
   {
     id: "46",
@@ -997,6 +1084,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Excipiente
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "São Paulo"
   },
   {
     id: "47",
@@ -1007,6 +1095,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Surfactante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo"
   },
   {
     id: "48",
@@ -1017,6 +1106,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Espessante
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "São Paulo"
   },
   {
     id: "49",
@@ -1027,6 +1117,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Solvente
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "50",
@@ -1037,6 +1128,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Solvente/Umectante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   {
     id: "51",
@@ -1047,6 +1139,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Conservante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais",
   },
   // Ácido Cítrico (já existe)
   {
@@ -1058,6 +1151,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Orgânicos",
     codigoCor: "bg-yellow-500",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais"
   },
   // Hidróxido de Sódio (já existe)
   {
@@ -1069,6 +1163,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Antioxidante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais",
   },
   {
     id: "54",
@@ -1079,6 +1174,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Emoliente
     codigoCor: "bg-gray-200",
     image: "/placeholder-oil.jpg",
+    filial: "Minas Gerais",
   },
   {
     id: "55",
@@ -1089,6 +1185,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Umectante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais",
   },
   // Dióxido de Titânio (já existe)
   {
@@ -1100,6 +1197,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Filtro UV
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "Minas Gerais",
   },
   {
     id: "57",
@@ -1110,6 +1208,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Fragrância
     codigoCor: "bg-gray-200",
     image: "/placeholder-fragrance.jpg",
+    filial: "Minas Gerais",
   },
   // Dimeticona (já existe)
   {
@@ -1131,6 +1230,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Orgânicos", // Queratolítico
     codigoCor: "bg-yellow-500",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais",
   },
   // Ureia (já existe)
   {
@@ -1142,6 +1242,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Agente quelante
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "Minas Gerais",
   },
   {
     id: "61",
@@ -1152,6 +1253,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Base cosmética
     codigoCor: "bg-gray-200",
     image: "/placeholder-cream-base.jpg",
+    filial: "São Paulo"
   },
   {
     id: "62",
@@ -1162,6 +1264,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Agente espumante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo",
   },
   {
     id: "63",
@@ -1172,6 +1275,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // API
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "São Paulo"
   },
   {
     id: "64",
@@ -1182,6 +1286,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Agente umectante cutâneo
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "São Paulo"
   },
 
   // --- Produtos da Indústria de Limpeza e Saneamento ---
@@ -1198,6 +1303,7 @@ export const mockProdutos = [
     classificacao: "Bases", // Usado em detergentes, controle de pH
     codigoCor: "bg-green-700",
     image: "/placeholder-raw-material.jpg",
+    filial: "Minas Gerais"
   },
   // PAC (Policloreto de Alumínio) (já existe)
   {
@@ -1209,6 +1315,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos Oxidantes/Manuseio Especial", // Desincrustante ácido
     codigoCor: "bg-blue-600",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "São Paulo"
   },
   {
     id: "67",
@@ -1219,6 +1326,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Agente redutor
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "Minas Gerais",
   },
   // Borax (Borato de Sódio) (já existe)
   // Formaldeído (já existe)
@@ -1235,6 +1343,7 @@ export const mockProdutos = [
     classificacao: "Oxidantes", // Alvejante, agente de limpeza
     codigoCor: "bg-lime-500",
     image: "/placeholder-raw-material.jpg",
+    filial: "Minas Gerais",
   },
   // Peróxido de Hidrogênio (já existe)
   {
@@ -1246,6 +1355,7 @@ export const mockProdutos = [
     classificacao: "Bases", // Anticorrosivo, detergente
     codigoCor: "bg-green-700",
     image: "/placeholder-chemical-bottle.jpg",
+    filial: "Minas Gerais",
   },
   {
     id: "70",
@@ -1256,6 +1366,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Tratamento de água
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "São Paulo"
   },
   {
     id: "71",
@@ -1266,5 +1377,6 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Carga em detergentes
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
+    filial: "Minas Gerais"
   },
 ];

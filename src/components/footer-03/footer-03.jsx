@@ -97,12 +97,12 @@ const Footer03Page = () => {
   
   return (
     <div className="flex flex-col">
-      <footer className="bg-accent text-white">
-        <div className="max-w-(--breakpoint-xl) mx-auto">
-          <div className="py-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-x-8 gap-y-10 px-6 xl:px-0">
+      <footer className=" px-5 md:px-10 pb-5 md:pb-10">
+        <div className="bg-background text-primary rounded-xl max-w-(--breakpoint-xl) mx-auto shadow-xl/20">
+          <div className="py-16 flex flex-row gap-30 px-6 xl:px-0 items-center">
             <div className="col-span-full xl:col-span-2">
               <Image
-                src="/logotipo-branca.png"
+                src="/logotipo.png"
                 alt="Logotipo Quimex"
                 width={200}
                 height={80}
@@ -114,13 +114,13 @@ const Footer03Page = () => {
             </div>
 
             {footerSections.map(({ title, links }) => (
-              <div key={title}>
-                <h6 className="font-bold">{title}</h6>
-                <ul className="mt-6 space-y-4">
+              <div key={title}className="flex flex-col gap-5" >
+                <h1 className="font-bold">{title}</h1>
+                <ul className="space-y-4 flex flex-row gap-4">
                   {links.map(({ title, href }) => (
-                    <li key={title} className="">
+                    <li key={title} >
                       <Link
-                      to={href} spy={true} smooth={true} offset={-70} duration={500} className="hover:text-primary cursor-pointer"
+                      to={href} spy={true} smooth={true} offset={-70} duration={500} className="hover:text-accent cursor-pointer"
                       >
                         {title}
                       </Link>

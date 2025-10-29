@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Plus, Search } from "lucide-react"
+import { Plus, Search, Building2 } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -39,6 +39,7 @@ export default function LojasPage() {
   const [editingLoja, setEditingLoja] = useState(null)
   const [formData, setFormData] = useState({
     nome: "",
+    id: "",
     cnpj: "",
     endereco: "",
     cidade: "",
@@ -47,6 +48,7 @@ export default function LojasPage() {
     tipo: "filial",
   })
 
+ 
   // if (!user || !canManageLojas(user)) {
   //   return (
   //     <div className="text-center py-12">

@@ -38,7 +38,7 @@ import {
 import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardProdutos } from "@/components/cards/CardProdutos";
 
-export default function ProdutosPage() {
+export default function EstoquePage() {
   const { user } = useAuth();
   const [produtos, setProdutos] = useState(mockProdutos);
   const [searchTerm, setSearchTerm] = useState("");
@@ -50,18 +50,16 @@ export default function ProdutosPage() {
     sku: "",
     preco: "",
     estoque: "",
-    lojaId: "",
+    filial: "",
     classificacao: "",
   });
 
   if (!user) return null;
 
-  console.log(produtos)
-
   const filteredByRole =
     user.role === "admin_matriz"
       ? produtos
-      : produtos.filter((p) => p.lojaId === user.lojaId);
+      : produtos.filter((p) => p.filial === user.filial);
 
   const handleEditProduto = (produto) => {
     setEditingProduto(produto);
@@ -71,7 +69,7 @@ export default function ProdutosPage() {
       sku: produto.sku,
       preco: produto.preco.toString(),
       estoque: produto.estoque.toString(),
-      lojaId: produto.lojaId,
+      filial: produto.filial,
       classificacao: produto.classificacao,
     });
     setIsDialogOpen(true);
@@ -90,7 +88,7 @@ export default function ProdutosPage() {
               classificacao: formData.classificacao,
               preco: Number.parseFloat(formData.preco),
               estoque: Number.parseInt(formData.estoque),
-              lojaId: formData.lojaId || user.lojaId || "1",
+              filial: formData.filial || user.filial || "1",
             }
             : p
         )
@@ -104,7 +102,7 @@ export default function ProdutosPage() {
         sku: formData.sku,
         preco: Number.parseFloat(formData.preco),
         estoque: Number.parseInt(formData.estoque),
-        lojaId: formData.lojaId || user.lojaId || "1",
+        filial: formData.filial || user.filial || "1",
         ativo: true,
       };
       setProdutos([...produtos, newProduto]);
@@ -118,7 +116,7 @@ export default function ProdutosPage() {
       sku: "",
       preco: "",
       estoque: "",
-      lojaId: "",
+      filial: "",
       classificacao: "",
     });
   };
@@ -137,14 +135,15 @@ export default function ProdutosPage() {
         sku: "",
         preco: "",
         estoque: "",
-        lojaId: "",
+        filial: "",
         classificacao: "",
       });
     }
   };
 
-  const getLojaNome = (lojaId) => {
-    const loja = mockLojas.find((l) => l.id === lojaId);
+  const getLojaNome = (filial) => {
+    const loja = mockLojas.find((l) => l.id === filial);
+    console.log(mockLojas.filial)
     return loja?.nome || "N/A";
   };
 
@@ -155,22 +154,21 @@ export default function ProdutosPage() {
   };
 
   //visualizar por classificação
-  const classificacao = [...new Set(mockProdutos.map(produto => produto.classificacao.toLowerCase()))];
-  const [classificacaoSelecionados, setClassificacaoSelecionados] = useState([]);
+  const filial = [...new Set(mockProdutos.map(produto => produto.filial.toLowerCase()))];
+  const [filialSelecionados, setFilialSelecionados] = useState([]);
 
-  const handleClassificacaoChange = (classificacao, checked) => {
+  const handleFilialChange = (filial, checked) => {
     if (checked) {
-      setClassificacaoSelecionados([...classificacaoSelecionados, classificacao]);
+      setFilialSelecionados([...filialSelecionados, filial]);
     } else {
-      setClassificacaoSelecionados(classificacaoSelecionados.filter((c) => c !== classificacao));
+      setFilialSelecionados(filialSelecionados.filter((c) => c !== filial));
     }
   };
-  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
     const filteredProdutos = useMemo(() => {
-  
      let listaFiltrada = produtos;
-  
+     
+
       if (classificacaoSelecionados.length > 0) {
         listaFiltrada = listaFiltrada.filter(produtos =>
           classificacaoSelecionados.includes(produtos.classificacao.toLowerCase())
@@ -185,21 +183,21 @@ export default function ProdutosPage() {
           produto.nome.toLowerCase().includes(lowerCaseSearch) ||
           produto.descricao.toLowerCase().includes(lowerCaseSearch) ||
           produto.sku.toLowerCase().includes(lowerCaseSearch) ||
-          produto.classificacao.toLowerCase().includes(lowerCaseSearch) 
+          produto.classificacao.toLowerCase().includes(lowerCaseSearch.toLowerCase()) 
         );
       }
       // lista final filtrada
       return listaFiltrada;
   
-    }, [filteredByRole, classificacaoSelecionados, searchTerm]);
+    }, [filteredByRole, filialSelecionados, searchTerm]);
     
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Produtos Químicos</h1>
+          <h1 className="text-3xl font-bold">Estoque</h1>
           <p className="text-muted-foreground mt-1">
-            Gerencie o catálogo de produtos químicos
+            Gerencie o estoque de produtos químicos
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
@@ -294,9 +292,9 @@ export default function ProdutosPage() {
                 <div className="space-y-2">
                   <Label htmlFor="loja">Loja</Label>
                   <Select
-                    value={formData.lojaId}
+                    value={formData.filial}
                     onValueChange={(value) =>
-                      setFormData({ ...formData, lojaId: value })
+                      setFormData({ ...formData, filial: value })
                     }
                   >
                     <SelectTrigger>
@@ -332,10 +330,10 @@ export default function ProdutosPage() {
       <div className="flex flex-col md:flex-row gap-2 w-full">
       <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-fit">Visualizar por categoria</Button>
+            <Button variant="outline" className="w-fit">Visualizar por local da filial</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-44">
-            <DropdownMenuLabel>Selecione categoria</DropdownMenuLabel>
+            <DropdownMenuLabel>Selecione filial</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {classificacao.map((classificacao) => (
               <DropdownMenuCheckboxItem
@@ -345,7 +343,7 @@ export default function ProdutosPage() {
                 // Prevent the dropdown menu from closing when the checkbox is clicked
                 onSelect={(e) => e.preventDefault()}
               >
-                {capitalize(classificacao)}
+                {classificacao}
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
@@ -371,7 +369,6 @@ export default function ProdutosPage() {
             onEdit={handleEditProduto}
             onDelete={handleDeleteProduto}
             badgeVariant={getStockBadgeVariant}
-            lojaId={produto.lojaId}
           />
         )}
         itemsPerPage={9}
