@@ -27,7 +27,7 @@ export default function PDV() {
   const produtoFiltrado = produtos.filter((produto) => {
     const matchesSearch =
       produto.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      produto.code.toLowerCase().includes(searchTerm.toLowerCase());
+      produto.sku.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory =
       categoriaSelecionada === "Todos" || produto.classificacao.toLowerCase() === categoriaSelecionada.toLowerCase();
     return matchesSearch && matchesCategory;
@@ -140,7 +140,7 @@ export default function PDV() {
 
                 <div className="p-4 space-y-1">
                   <p className="text-xs text-muted-foreground font-mono">
-                    {produto.code}
+                    {produto.sku}
                   </p>
                   <h3 className="font-semibold text-sm text-foreground leading-tight">
                     {produto.nome}
@@ -184,7 +184,7 @@ export default function PDV() {
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs text-muted-foreground font-mono">
-                        {item.code}
+                        {item.sku}
                       </p>
                       <h3 className="font-semibold text-sm text-foreground leading-tight">
                         {item.name}

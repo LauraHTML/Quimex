@@ -152,8 +152,8 @@ export default function ProdutosPage() {
     return "destructive";
   };
 
-  //visualizar por setor
-  const classificacao = [...new Set(mockProdutos.map(produto => produto.setor.toLowerCase()))];
+  //visualizar por classificação
+  const classificacao = [...new Set(mockProdutos.map(produto => produto.classificacao.toLowerCase()))];
   const [classificacaoSelecionados, setClassificacaoSelecionados] = useState([]);
 
   const handleClassificacaoChange = (classificacao, checked) => {
