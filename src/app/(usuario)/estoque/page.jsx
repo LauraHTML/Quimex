@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Search,} from "lucide-react";
+import { Plus, Search, } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -36,7 +36,7 @@ import {
 
 //paginação
 import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
-import { CardProdutos } from "@/components/cards/CardProdutos";
+import { CardEstoque } from "@/components/cards/CardEstoque";
 
 export default function EstoquePage() {
   const { user } = useAuth();
@@ -53,6 +53,9 @@ export default function EstoquePage() {
     filial: "",
     classificacao: "",
   });
+
+  //primeira letra maiuscula
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   if (!user) return null;
 
@@ -154,6 +157,17 @@ export default function EstoquePage() {
   };
 
   //visualizar por classificação
+  const classificacao = [...new Set(mockProdutos.map(produto => produto.classificacao.toLowerCase()))];
+  const [classificacaoSelecionados, setClassificacaoSelecionados] = useState([]);
+
+  const handleClassificacaoChange = (classificacao, checked) => {
+    if (checked) {
+      setClassificacaoSelecionados([...classificacaoSelecionados, classificacao]);
+    } else {
+      setClassificacaoSelecionados(classificacaoSelecionados.filter((c) => c !== classificacao));
+    }
+  };
+
   const filial = [...new Set(mockProdutos.map(produto => produto.filial.toLowerCase()))];
   const [filialSelecionados, setFilialSelecionados] = useState([]);
 
@@ -165,32 +179,34 @@ export default function EstoquePage() {
     }
   };
 
-    const filteredProdutos = useMemo(() => {
-     let listaFiltrada = produtos;
-     
+  const filteredProdutos = useMemo(() => {
+    let listaFiltrada = produtos;
 
-      if (classificacaoSelecionados.length > 0) {
-        listaFiltrada = listaFiltrada.filter(produtos =>
-          classificacaoSelecionados.includes(produtos.classificacao.toLowerCase())
-        );
-      }
-  
-      //filtrar resultados
-      if (searchTerm.trim() !== "") {
-        const lowerCaseSearch = searchTerm.toLowerCase();
-  
-        listaFiltrada = listaFiltrada.filter(produto =>
-          produto.nome.toLowerCase().includes(lowerCaseSearch) ||
-          produto.descricao.toLowerCase().includes(lowerCaseSearch) ||
-          produto.sku.toLowerCase().includes(lowerCaseSearch) ||
-          produto.classificacao.toLowerCase().includes(lowerCaseSearch.toLowerCase()) 
-        );
-      }
-      // lista final filtrada
-      return listaFiltrada;
-  
-    }, [filteredByRole, filialSelecionados, searchTerm]);
-    
+    if (classificacaoSelecionados.length > 0) {
+      listaFiltrada = listaFiltrada.filter(produtos =>
+        classificacaoSelecionados.includes(produtos.classificacao.toLowerCase())
+      );
+    }
+    if (filialSelecionados.length > 0) {
+      listaFiltrada = listaFiltrada.filter(produto =>
+        filialSelecionados.includes(produto.filial.toLowerCase())
+      );
+    }
+    //filtrar resultados
+    if (searchTerm.trim() !== "") {
+      const lowerCaseSearch = searchTerm.toLowerCase();
+
+      listaFiltrada = listaFiltrada.filter(produto =>
+        produto.nome.toLowerCase().includes(lowerCaseSearch) ||
+        produto.filial.toLowerCase().includes(lowerCaseSearch) ||
+        produto.sku.toLowerCase().includes(lowerCaseSearch) ||
+        produto.classificacao.toLowerCase().includes(lowerCaseSearch)
+      );
+    }
+    // lista final filtrada
+    return listaFiltrada;
+  }, [filteredByRole, classificacaoSelecionados, filialSelecionados, searchTerm]);
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start sm:items-center gap-4">
@@ -268,12 +284,12 @@ export default function EstoquePage() {
                 <div className="space-y-2">
                   <Label htmlFor="preco">Preço (R$)</Label>
                   <MaskedInput
-                  id="valor"
-                  type="currency"
-                  value={formData.preco}
-                  onChange={(value) => setFormData({ ...formData, preco: value })}
-                  placeholder="R$ 0,00"
-                />
+                    id="valor"
+                    type="currency"
+                    value={formData.preco}
+                    onChange={(value) => setFormData({ ...formData, preco: value })}
+                    placeholder="R$ 0,00"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="estoque">Estoque</Label>
@@ -328,12 +344,33 @@ export default function EstoquePage() {
 
 
       <div className="flex flex-col md:flex-row gap-2 w-full">
-      <DropdownMenu>
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="w-fit">Visualizar por local da filial</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-44">
             <DropdownMenuLabel>Selecione filial</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {filial.map((filial) => (
+              <DropdownMenuCheckboxItem
+                checked={filialSelecionados.includes(filial)}
+                key={filial}
+                onCheckedChange={(checked) => handleFilialChange(filial, checked)}
+                // Prevent the dropdown menu from closing when the checkbox is clicked
+                onSelect={(e) => e.preventDefault()}
+              >
+                {capitalize(filial)}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-fit">Visualizar por categoria</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-44">
+            <DropdownMenuLabel>Selecione a categoria</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {classificacao.map((classificacao) => (
               <DropdownMenuCheckboxItem
@@ -341,28 +378,27 @@ export default function EstoquePage() {
                 key={classificacao}
                 onCheckedChange={(checked) => handleClassificacaoChange(classificacao, checked)}
                 // Prevent the dropdown menu from closing when the checkbox is clicked
-                onSelect={(e) => e.preventDefault()}
-              >
-                {classificacao}
+                onSelect={(e) => e.preventDefault()}>
+                {capitalize(classificacao)}
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-      <div className="flex flex-row gap-2 flex-wrap relative w-full">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Buscar por nome, SKU ou descrição..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10"
-        />
+        <div className="flex flex-row gap-2 flex-wrap relative w-full">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por nome, SKU ou descrição..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
       </div>
-    </div>
 
       <ControlePaginacao
         items={filteredProdutos}
         renderItem={(produto) => (
-          <CardProdutos
+          <CardEstoque
             key={produto.id}
             nomeLoja={getLojaNome}
             produto={produto}

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 
-export function CardProdutos({
+export function CardEstoque({
   produto,
   onEdit,
   onDelete,
@@ -48,13 +48,13 @@ export function CardProdutos({
 
         <div className="flex items-center justify-between pt-2">
           <div className="flex items-baseline gap-1">
-            <DollarSign className="h-4 w-4 text-green-500" />
+            
             <span className="text-2xl font-bold">
-              R$ {produto.preco.toFixed(2)}
+             Estoque: {produto.estoque}
             </span>
           </div>
           <Badge variant={badgeVariant(produto.estoque)}>
-            Estoque: {produto.estoque}
+            R$ {produto.preco.toFixed(2)}
           </Badge>
         </div>
         <div className="flex items-center gap-1 text-sm bg-accent p-1 rounded-md">
@@ -63,7 +63,7 @@ export function CardProdutos({
           </div>
         <div className="flex flex-row justify-between items-center pt-2 border-t">
           <p className="text-xs text-muted-foreground">
-             {produto.filial}
+            {produto.filial}
           </p>
           <div className="flex flex-wrap gap-1">
             <Button

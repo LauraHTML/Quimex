@@ -583,7 +583,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
     image: "/sulfuric-acid-bottle.jpg",
-    filial: "São Caetano"
+    filial: "Rio de Janeiro"
   },
   {
     id: "2",
@@ -605,7 +605,7 @@ export const mockProdutos = [
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
     image: "/ethanol-bottle.jpg",
-    filial: "São Bernardo"
+    filial: "São Paulo"
   },
   {
     id: "4",
@@ -627,7 +627,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais",
     codigoCor: "bg-gray-200",
     image: "/sodium-chloride-bottle.jpg",
-    filial: "São Caetano"
+    filial: "São Paulo"
   },
   {
     id: "6",
@@ -649,7 +649,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
     image: "/hydrochloric-acid-bottle.jpg",
-    filial: "São Caetano"
+    filial: "Rio de Janeiro"
   },
   {
     id: "8",
@@ -673,7 +673,7 @@ export const mockProdutos = [
     classificacao: "Tóxicos", // Uso condicionado devido à toxicidade
     codigoCor: "bg-purple-600", // Roxo
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "São Bernardo"
+    filial: "Bahia"
   },
   {
     id: "10",
@@ -684,11 +684,19 @@ export const mockProdutos = [
     classificacao: "Ácidos Orgânicos",
     codigoCor: "bg-yellow-500", // Amarelo
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Salvador"
+    filial: "Bahia"
   },
   // Ácido Clorídrico (já existe, mas garantindo que esteja na categoria certa)
-  // { id: "11", sku: "AGRO-003", nome: "Ácido Clorídrico", preco: 38.9,
-  // estoque: 200, classificacao: "Ácidos Inorgânicos", codigoCor: "bg-orange-600", image: "/hydrochloric-acid-bottle.jpg" },
+  { id: "11", 
+    sku: "AGRO-003", 
+    nome: "Ácido Clorídrico", 
+    preco: 38.9,
+    estoque: 200, 
+    classificacao: "Ácidos Inorgânicos", 
+    codigoCor: "bg-orange-600", 
+    image: "/hydrochloric-acid-bottle.jpg",
+    filial: "Bahia"
+   },
   {
     id: "12",
     sku: "AGRO-004",
@@ -698,7 +706,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Salvador"
+    filial: "Bahia"
   },
   {
     id: "13",
@@ -709,7 +717,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos Oxidantes/Manuseio Especial",
     codigoCor: "bg-blue-600", // Azul
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Salvador"
+    filial: "Bahia"
   },
   // Ácido Sulfúrico (já existe)
   {
@@ -721,7 +729,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Agente de tratamento, uso condicionado
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Fortaleza"
+    filial: "Amazonas"
   },
   {
     id: "15",
@@ -732,7 +740,7 @@ export const mockProdutos = [
     classificacao: "Tóxicos", // Uso restrito por toxicidade
     codigoCor: "bg-purple-600",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Palmas"
+    filial: "Amazonas"
   },
   {
     id: "16",
@@ -743,7 +751,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Inorgânicos Oxidantes/Manuseio Especial", // Tratamento de água
     codigoCor: "bg-blue-600",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Manaus"
+    filial: "Amazonas"
   },
   {
     id: "17",
@@ -765,7 +773,7 @@ export const mockProdutos = [
     classificacao: "Tóxicos", // Proibido/Restrito por toxicidade
     codigoCor: "bg-purple-600",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Natal",
+    filial: "São Paulo",
   },
   {
     id: "19",
@@ -776,7 +784,7 @@ export const mockProdutos = [
     classificacao: "Bases",
     codigoCor: "bg-green-700",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Salvador"
+    filial: "Bahia"
   },
   // Hidróxido de Sódio (já existe)
   {
@@ -788,7 +796,7 @@ export const mockProdutos = [
     classificacao: "Oxidantes", // Desinfetante, alvejante
     codigoCor: "bg-lime-500",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Salvador"
+    filial: "Bahia"
   },
   {
     id: "21",
@@ -893,7 +901,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Polímero, matéria-prima
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
-    filial: "Acre"
+    filial: "Minas Gerais"
   },
   {
     id: "30",
@@ -904,7 +912,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Resina termofixa
     codigoCor: "bg-gray-200",
     image: "/placeholder-resin.jpg",
-    filial: "Rio Grande do Norte"
+    filial: "Minas Gerais"
   },
   {
     id: "31",
@@ -948,7 +956,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Tensoativo
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Manaus"
+    filial: "São Paulo"
   },
   {
     id: "35",
@@ -983,7 +991,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Lubrificante
     codigoCor: "bg-gray-200",
     image: "/placeholder-oil.jpg",
-    filial: "São Caetano"
+    filial: "Rio de Janeiro"
   },
   {
     id: "38",
@@ -994,7 +1002,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Antiespumante
     codigoCor: "bg-gray-200",
     image: "/placeholder-chemical-bottle.jpg",
-    filial: "Salvador"
+    filial: "Bahia"
   },
   {
     id: "39",
@@ -1005,7 +1013,7 @@ export const mockProdutos = [
     classificacao: "Químicos Gerais", // Carga mineral
     codigoCor: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
-    filial: "Distrito Federal"
+    filial: "Rio de Janeiro"
   },
   {
     id: "40",
@@ -1220,6 +1228,7 @@ export const mockProdutos = [
     classificacao: "Ácidos Orgânicos", // Vitamina funcional
     codigoCor: "bg-yellow-500",
     image: "/placeholder-raw-material.jpg",
+    filial: "Bahia",
   },
   {
     id: "59",
