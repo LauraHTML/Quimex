@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, UserCircle } from "lucide-react";
+import { Plus, Search, UserCircle, Users, UserRoundPlus, UserRoundMinus, ChartLine } from "lucide-react";
 // import { getRoleName } from "@/lib/utils/permissions";
 
 import {
@@ -48,8 +48,29 @@ export default function FuncionariosPage() {
     lojaId: "",
   })
 
-  if (!user) return null
 
+  const infoFuncionarios = [{
+    titulo: "Total de Funcionários",
+    valor: "1,234",
+    icon: Users,
+  },
+  {
+    titulo: "Contratações esse mês",
+    valor: "1,234",
+    icon: UserRoundPlus,
+  },
+  {
+    titulo: "Desligamentos",
+    valor: "1,234",
+    icon: UserRoundMinus,
+  },
+  {
+    titulo: "Taxa de retenção",
+    valor: "1,234",
+    icon: ChartLine,
+  }]
+
+  if (!user) return null
 
   const handleEditFuncionario = (funcionario) => {
     setEditingFuncionario(funcionario)
@@ -182,8 +203,6 @@ export default function FuncionariosPage() {
           <h1 className="text-3xl font-bold">Funcionários</h1>
           <p className="text-muted-foreground mt-1">Gerencie os funcionários da Quimex</p>
         </div>
-        <div>
-        </div>
         <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
           <DialogTrigger asChild>
             <Button className="gap-2">
@@ -280,6 +299,24 @@ export default function FuncionariosPage() {
             </div>
           </DialogContent>
         </Dialog>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {infoFuncionarios.map((info,index) => {
+          const Icon = info.icon;
+          return (
+            <div
+            key={index}
+            className="rounded-xl p-6 border bg-card border-border shadow-sm hover:shadow-md transition"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-medium text-muted-foreground">{info.titulo}</h3>
+              <Icon className="w-5 h-5 text-foreground/60" />
+            </div>
+            <div className="text-3xl font-bold mb-1">{info.valor}</div>
+          </div>
+          )
+        })}
       </div>
 
       {/* Search */}
