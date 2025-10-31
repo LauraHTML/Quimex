@@ -95,6 +95,10 @@ export function CardLojas({ loja, onEdit, onDelete }) {
                 <Phone className="h-4 w-4 flex-shrink-0" />
                 {loja.telefone}
               </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Phone className="h-4 w-4 flex-shrink-0" />
+                <p>gerente</p>
+              </div>
               <div className="pt-2 border-t">
                 <p className="text-xs text-muted-foreground">CNPJ: {loja.cnpj}</p>
               </div>

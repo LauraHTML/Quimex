@@ -60,7 +60,7 @@ export default function DashboardPage() {
   const totalInvoices = invoiceData.reduce((a, b) => a + b.value, 0)
  
   return (
-    <main className="w-full px-6 py-8 bg-transparent text-foreground transition-colors duration-500">
+    <main className="container mx-auto px-4 py-8 max-w-7xl bg-background text-foreground transition-colors duration-500">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Bem-vindo ao Sistema</h1>
@@ -107,6 +107,69 @@ export default function DashboardPage() {
           </div>
         ))}
       </div>
+ 
+      {/* Ações rápidas e atividades recentes */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+        {/* Ações Rápidas */}
+        <div className="rounded-xl border bg-card border-border shadow-sm p-6">
+          <h2 className="text-xl font-bold mb-2">Ações Rápidas</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Acesse as funcionalidades principais
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { title: "Produtos", icon: Package },
+              { title: "Vendas", icon: ShoppingCart },
+              { title: "Clientes", icon: Users },
+              { title: "Relatórios", icon: TrendingUp },
+            ].map(({ title, icon: Icon }) => (
+              <button
+                key={title}
+                onClick={() => router.push(`/${title.toLowerCase()}`)}
+                className="flex flex-col items-center justify-center p-6 bg-muted hover:bg-muted/80 rounded-xl transition shadow-sm border border-border"
+              >
+                <Icon className="w-6 h-6 mb-2 text-primary" />
+                <span className="text-sm font-medium">{title}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+ 
+        {/* Atividades Recentes */}
+        <div className="rounded-xl border bg-card border-border shadow-sm p-6">
+          <h2 className="text-xl font-bold mb-2">Atividades Recentes</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Últimas movimentações do sistema
+          </p>
+ 
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-base font-semibold">Nova venda registrada</h3>
+              <p className="text-sm text-muted-foreground">
+                Cliente: Indústria ABC – R$ 3.450,00
+              </p>
+              <p className="text-xs text-muted-foreground">Há 15 minutos</p>
+            </div>
+ 
+            <div>
+              <h3 className="text-base font-semibold">Produto atualizado</h3>
+              <p className="text-sm text-muted-foreground">
+                Ácido Sulfúrico 98% – Estoque atualizado
+              </p>
+              <p className="text-xs text-muted-foreground">Há 1 hora</p>
+            </div>
+ 
+            <div>
+              <h3 className="text-base font-semibold">Novo cliente cadastrado</h3>
+              <p className="text-sm text-muted-foreground">
+                Laboratório XYZ Ltda
+              </p>
+              <p className="text-xs text-muted-foreground">Há 2 horas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
  
       {/* Gráficos */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
