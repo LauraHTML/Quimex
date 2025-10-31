@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { useAuth } from "@/app/contexts/auth-context"
-import { canManageLojas } from "@/lib/utils/permissions"
-import { mockLojas } from "@/lib/mock-data"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { MaskedInput } from '@/components/ui/masked-input'
+import { useState, useMemo } from "react";
+import { useAuth } from "@/app/contexts/auth-context";
+import { canManageLojas } from "@/lib/utils/permissions";
+import { mockLojas } from "@/lib/mock-data";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { MaskedInput } from "@/components/ui/masked-input";
 import {
   Dialog,
   DialogContent,
@@ -15,9 +15,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Plus, Search, Building2 } from "lucide-react"
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Plus, Search, Building2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -32,13 +38,15 @@ import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardLojas } from "@/components/cards/cardLojas";
 
 export default function LojasPage() {
-  const { user } = useAuth()
-  const [lojas, setLojas] = useState(mockLojas)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [editingLoja, setEditingLoja] = useState(null)
+  const { user } = useAuth();
+  const [lojas, setLojas] = useState(mockLojas);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingLoja, setEditingLoja] = useState(null);
   const [formData, setFormData] = useState({
     nome: "",
+    nomeGerente: "",
+    cpfGerente: "",
     id: "",
     cnpj: "",
     endereco: "",
@@ -46,9 +54,8 @@ export default function LojasPage() {
     estado: "",
     telefone: "",
     tipo: "filial",
-  })
+  });
 
- 
   // if (!user || !canManageLojas(user)) {
   //   return (
   //     <div className="text-center py-12">
@@ -59,18 +66,20 @@ export default function LojasPage() {
   // }
 
   const handleEditLoja = (loja) => {
-    setEditingLoja(loja)
+    setEditingLoja(loja);
     setFormData({
       nome: loja.nome,
+      nomeGerente: loja.gerenteLoja,
+      cpfGerente: loja.cpfGerente,
       cnpj: loja.cnpj,
       endereco: loja.endereco,
       cidade: loja.cidade,
       estado: loja.estado,
       telefone: loja.telefone,
       tipo: loja.tipo,
-    })
-    setIsDialogOpen(true)
-  }
+    });
+    setIsDialogOpen(true);
+  };
 
   const handleSaveLoja = () => {
     if (editingLoja) {
@@ -80,6 +89,8 @@ export default function LojasPage() {
             ? {
                 ...l,
                 nome: formData.nome,
+                nomeGerente: formData.nomeGerente,
+                cpfGerente: formData.cpfGerente,
                 cnpj: formData.cnpj,
                 endereco: formData.endereco,
                 cidade: formData.cidade,
@@ -87,13 +98,15 @@ export default function LojasPage() {
                 telefone: formData.telefone,
                 tipo: formData.tipo,
               }
-            : l,
-        ),
-      )
+            : l
+        )
+      );
     } else {
       const newLoja = {
         id: String(Date.now()),
         nome: formData.nome,
+        nomeGerente: formData.nomeGerente,
+        cpfGerente: formData.cpfGerente,
         cnpj: formData.cnpj,
         endereco: formData.endereco,
         cidade: formData.cidade,
@@ -101,52 +114,59 @@ export default function LojasPage() {
         telefone: formData.telefone,
         tipo: formData.tipo,
         ativo: true,
-      }
-      setLojas([...lojas, newLoja])
+      };
+      setLojas([...lojas, newLoja]);
     }
 
-    setIsDialogOpen(false)
-    setEditingLoja(null)
+    setIsDialogOpen(false);
+    setEditingLoja(null);
     setFormData({
       nome: "",
+      nomeGerente: "",
+      cpfGerente: "",
       cnpj: "",
       endereco: "",
       cidade: "",
       estado: "",
       telefone: "",
       tipo: "filial",
-    })
-  }
+    });
+  };
 
   const handleDeleteLoja = (id) => {
-    const loja = lojas.find((l) => l.id === id)
+    const loja = lojas.find((l) => l.id === id);
     if (loja?.tipo === "Matriz") {
-      alert("Não é possível excluir a loja matriz!")
-      return
+      alert("Não é possível excluir a loja matriz!");
+      return;
     }
-      setLojas(lojas.filter((l) => l.id !== id))
-  }
+    setLojas(lojas.filter((l) => l.id !== id));
+  };
 
   const handleCloseDialog = (open) => {
-    setIsDialogOpen(open)
+    setIsDialogOpen(open);
     if (!open) {
-      setEditingLoja(null)
+      setEditingLoja(null);
       setFormData({
         nome: "",
+        nomeGerente: "",
+        cpfGerente: "",
         cnpj: "",
         endereco: "",
         cidade: "",
         estado: "",
         telefone: "",
         tipo: "filial",
-      })
+      });
     }
-  }
+  };
 
-  const tipoLoja = [...new Set(mockLojas.map(loja => loja.tipo.toLowerCase()))];
+  const tipoLoja = [
+    ...new Set(mockLojas.map((loja) => loja.tipo.toLowerCase())),
+  ];
   const [tipoLojaSelecionados, setTipoLojaSelecionados] = useState([]);
 
-  const handleLojaChange = (loja, checked) => {loja
+  const handleLojaChange = (loja, checked) => {
+    loja;
     if (checked) {
       setTipoLojaSelecionados([...tipoLojaSelecionados, loja]);
     } else {
@@ -155,38 +175,41 @@ export default function LojasPage() {
   };
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-    const filteredLojas = useMemo(() => {
-      // Comece com a lista completa
-      let listaFiltrada = lojas;
+  const filteredLojas = useMemo(() => {
+    // Comece com a lista completa
+    let listaFiltrada = lojas;
 
-      if (tipoLojaSelecionados.length > 0) {
-      listaFiltrada = listaFiltrada.filter(loja =>
-      tipoLojaSelecionados.includes(loja.tipo.toLowerCase()) 
-    );
-  }
-  
-      //filtrar resultados
-      if (searchTerm.trim() !== "") {
-        const lowerCaseSearch = searchTerm.toLowerCase();
-        listaFiltrada = listaFiltrada.filter(loja =>
+    if (tipoLojaSelecionados.length > 0) {
+      listaFiltrada = listaFiltrada.filter((loja) =>
+        tipoLojaSelecionados.includes(loja.tipo.toLowerCase())
+      );
+    }
+
+    //filtrar resultados
+    if (searchTerm.trim() !== "") {
+      const lowerCaseSearch = searchTerm.toLowerCase();
+      listaFiltrada = listaFiltrada.filter(
+        (loja) =>
           loja.nome.toLowerCase().includes(lowerCaseSearch) ||
           loja.estado.toLowerCase().includes(lowerCaseSearch) ||
           loja.cidade.toLowerCase().includes(lowerCaseSearch) ||
           loja.endereco.toLowerCase().includes(lowerCaseSearch)
-        );
-      }
-      // lista final filtrada
-      return listaFiltrada;
-  
-      // O 'useMemo' só vai rodar esta lógica quando um destes 3 estados mudar.
-    }, [lojas, tipoLojaSelecionados, searchTerm]);
+      );
+    }
+    // lista final filtrada
+    return listaFiltrada;
+
+    // O 'useMemo' só vai rodar esta lógica quando um destes 3 estados mudar.
+  }, [lojas, tipoLojaSelecionados, searchTerm]);
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start gap-4">
         <div>
           <h1 className="text-3xl font-bold">Lojas</h1>
-          <p className="text-muted-foreground mt-1">Gerencie as lojas da rede Quimx</p>
+          <p className="text-muted-foreground mt-1">
+            Gerencie as lojas da rede Quimx
+          </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
           <DialogTrigger asChild>
@@ -197,9 +220,13 @@ export default function LojasPage() {
           </DialogTrigger>
           <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingLoja ? "Editar Loja" : "Adicionar Loja"}</DialogTitle>
+              <DialogTitle>
+                {editingLoja ? "Editar Loja" : "Adicionar Loja"}
+              </DialogTitle>
               <DialogDescription>
-                {editingLoja ? "Atualize os dados da loja" : "Preencha os dados da nova loja"}
+                {editingLoja
+                  ? "Atualize os dados da loja"
+                  : "Preencha os dados da nova loja"}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
@@ -208,8 +235,31 @@ export default function LojasPage() {
                 <Input
                   id="nome"
                   value={formData.nome}
-                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, nome: e.target.value })
+                  }
                   placeholder="Quimx Centro"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="nome">Nome do gerente</Label>
+                <Input
+                  id="nomeGerente"
+                  value={formData.nomeGerente}
+                  onChange={(e) =>
+                    setFormData({ ...formData, nomeGerente: e.target.value })
+                  }
+                  placeholder="Nome gerente"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="cpf">CPF do gerente</Label>
+                <MaskedInput
+                  id="cpf"
+                  mask="000.000.000-00"
+                  value={formData.cpfGerente}
+                  onChange={(value) => setFormData({ ...formData, cpfGerente: value })}
+                  placeholder="000.000.000-00"
                 />
               </div>
               <div className="space-y-2">
@@ -218,7 +268,9 @@ export default function LojasPage() {
                   id="cnpj"
                   mask="00.000.000/0000-00"
                   value={formData.cnpj}
-                  onChange={(value) => setFormData({ ...formData, cnpj: value })}
+                  onChange={(value) =>
+                    setFormData({ ...formData, cnpj: value })
+                  }
                   placeholder="00.000.000/0000-00"
                 />
               </div>
@@ -227,7 +279,9 @@ export default function LojasPage() {
                 <Input
                   id="endereco"
                   value={formData.endereco}
-                  onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, endereco: e.target.value })
+                  }
                   placeholder="Rua Exemplo, 123"
                 />
               </div>
@@ -237,7 +291,9 @@ export default function LojasPage() {
                   <Input
                     id="cidade"
                     value={formData.cidade}
-                    onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, cidade: e.target.value })
+                    }
                     placeholder="São Paulo"
                   />
                 </div>
@@ -246,7 +302,9 @@ export default function LojasPage() {
                   <Input
                     id="estado"
                     value={formData.estado}
-                    onChange={(e) => setFormData({ ...formData, estado: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, estado: e.target.value })
+                    }
                     placeholder="SP"
                     maxLength={2}
                   />
@@ -258,13 +316,20 @@ export default function LojasPage() {
                   id="telefone"
                   mask="(00) 00000-0000"
                   value={formData.telefone}
-                  onChange={(value) => setFormData({ ...formData, telefone: value })}
+                  onChange={(value) =>
+                    setFormData({ ...formData, telefone: value })
+                  }
                   placeholder="(11) 98765-4321"
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="tipo">Tipo</Label>
-                <Select value={formData.tipo} onValueChange={(value) => setFormData({ ...formData, tipo: value })}>
+                <Select
+                  value={formData.tipo}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, tipo: value })
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -276,10 +341,15 @@ export default function LojasPage() {
               </div>
             </div>
             <div className="flex justify-end gap-3">
-              <Button variant="outline" onClick={() => handleCloseDialog(false)}>
+              <Button
+                variant="outline"
+                onClick={() => handleCloseDialog(false)}
+              >
                 Cancelar
               </Button>
-              <Button onClick={handleSaveLoja}>{editingLoja ? "Salvar" : "Adicionar"}</Button>
+              <Button onClick={handleSaveLoja}>
+                {editingLoja ? "Salvar" : "Adicionar"}
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -288,7 +358,9 @@ export default function LojasPage() {
       <div className="flex flex-col md:flex-row gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-fit">Visualizar por setor</Button>
+            <Button variant="outline" className="w-fit">
+              Visualizar por setor
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-44">
             <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
@@ -299,7 +371,8 @@ export default function LojasPage() {
                 key={lojas}
                 onCheckedChange={(checked) => handleLojaChange(lojas, checked)}
                 // Prevent the dropdown menu from closing when the checkbox is clicked
-                onSelect={(e) => e.preventDefault()}>
+                onSelect={(e) => e.preventDefault()}
+              >
                 {capitalize(lojas)}
               </DropdownMenuCheckboxItem>
             ))}
@@ -314,7 +387,7 @@ export default function LojasPage() {
             className="pl-10"
           />
         </div>
-        </div>
+      </div>
 
       <ControlePaginacao
         items={filteredLojas}
@@ -328,7 +401,6 @@ export default function LojasPage() {
         )}
         itemsPerPage={9}
       />
-
     </div>
-  )
+  );
 }

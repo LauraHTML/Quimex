@@ -1,5 +1,4 @@
-// components/ui/masked-input.jsx
-'use client'; // Se estiver usando App Router
+'use client'; 
 
 import React from 'react';
 

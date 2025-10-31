@@ -230,7 +230,6 @@ export default function FinancialDashboard() {
     })
   }
  
-  // --- NOVO COMPONENTE: Modal de Lançamento de Contas a Pagar ---
  
   const LancarContaAPagarDialog = () => (
     <Dialog open={isPayableDialogOpen} onOpenChange={setIsPayableDialogOpen}>
@@ -327,7 +326,6 @@ export default function FinancialDashboard() {
     </Dialog>
   )
  
-  // --- JSX PRINCIPAL (RENDER) ---
  
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">

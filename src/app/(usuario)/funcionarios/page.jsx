@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, UserCircle } from "lucide-react";
+import { Plus, Search, UserCircle, Users } from "lucide-react";
 // import { getRoleName } from "@/lib/utils/permissions";
 
 import {
@@ -47,9 +47,30 @@ export default function FuncionariosPage() {
     role: "vendedor",
     lojaId: "",
   })
-
   if (!user) return null
 
+  const cardsAdmFuncionario = [
+    {
+      titulo: "Total de funcionarios",
+      numero: 212,
+      icone: Users
+    },
+    {
+      titulo: "Contratação esse mês",
+      numero: 212,
+      icone: Users
+    },
+    {
+      titulo: "Desligamentos",
+      numero: 212,
+      icone: Users
+    },
+    {
+      titulo: "Taxa de rentenção",
+      numero: 212,
+      icone: Users
+    }
+  ]
 
   const handleEditFuncionario = (funcionario) => {
     setEditingFuncionario(funcionario)
@@ -145,8 +166,6 @@ export default function FuncionariosPage() {
       setRoleFuncionarioSelecionados(roleFuncionarioSelecionados.filter((f) => f !== funcionario));
     }
   };
-
-  console.log(formData.nome)
 
   const filteredByRole = funcionarios.role === "admin_matriz" ? funcionarios : funcionarios.filter((f) => f.lojaId === user.lojaId)
 
@@ -282,7 +301,6 @@ export default function FuncionariosPage() {
         </Dialog>
       </div>
 
-      {/* Search */}
       <div className="flex flex-col md:flex-row gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -314,6 +332,20 @@ export default function FuncionariosPage() {
           />
         </div>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
+      {cardsAdmFuncionario.map((item,index) => {
+        return(
+          <div key={index} className="rounded-xl p-6 border bg-card border-border shadow-sm hover:shadow-md transition">
+            <div className="flex items-center justify-between mb-4">
+              <h3>{item.titulo}</h3>
+              <Users className="w-5 h-5 text-foreground/60" />
+              <p>{item.numero}</p>
+            </div>           
+          </div>
+        )
+      })}
+      </div>
+
 
       {/* Lista de Funcionários */}
       <ControlePaginacao
