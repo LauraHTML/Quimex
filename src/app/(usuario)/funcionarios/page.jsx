@@ -17,11 +17,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-<<<<<<< HEAD
-import { Plus, Search, UserCircle, Users } from "lucide-react";
-=======
+
 import { Plus, Search, UserCircle, Users, UserRoundPlus, UserRoundMinus, ChartLine } from "lucide-react";
->>>>>>> cb72bef0d82cf511dfffd2dd98637896fe4ca8d7
 // import { getRoleName } from "@/lib/utils/permissions";
 
 import {
@@ -51,7 +48,6 @@ export default function FuncionariosPage() {
     role: "vendedor",
     lojaId: "",
   })
-<<<<<<< HEAD
   if (!user) return null
 
   const cardsAdmFuncionario = [
@@ -76,8 +72,6 @@ export default function FuncionariosPage() {
       icone: Users
     }
   ]
-=======
-
 
   const infoFuncionarios = [{
     titulo: "Total de Funcionários",
@@ -101,7 +95,6 @@ export default function FuncionariosPage() {
   }]
 
   if (!user) return null
->>>>>>> cb72bef0d82cf511dfffd2dd98637896fe4ca8d7
 
   const handleEditFuncionario = (funcionario) => {
     setEditingFuncionario(funcionario)
@@ -330,8 +323,6 @@ export default function FuncionariosPage() {
         </Dialog>
       </div>
 
-<<<<<<< HEAD
-=======
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {infoFuncionarios.map((info,index) => {
           const Icon = info.icon;
@@ -350,8 +341,6 @@ export default function FuncionariosPage() {
         })}
       </div>
 
-      {/* Search */}
->>>>>>> cb72bef0d82cf511dfffd2dd98637896fe4ca8d7
       <div className="flex flex-col md:flex-row gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

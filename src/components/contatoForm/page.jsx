@@ -61,7 +61,7 @@ export default function ContatoForm(){
             <small>Disponível para contato de <span className="font-bold text-secondary"> Segunda a Sexta, 9h - 17h (BRT)</span></small>
         </div> 
         <div className="flex flex-row px-4 pb-10 w-full md:w-1/2 bg-accent rounded-lg ">
-              <FieldGroup>
+              <FieldGroup >
                 <FieldSet>
                   <FieldLegend></FieldLegend>
                   <FieldDescription></FieldDescription>
@@ -70,7 +70,7 @@ export default function ContatoForm(){
                       <FieldLabel htmlFor="checkout-7j9-card-name-43j">
                         Nome completo
                       </FieldLabel>
-                      <Input id="" className="bg-background" placeholder="Seu nome" required />
+                      <Input id="nome" maxLength={50} className="bg-background" placeholder="Seu nome" required />
                     </Field>
                     <Field>
                       <FieldLabel htmlFor="checkout-7j9-card-number-uw1">
@@ -80,6 +80,7 @@ export default function ContatoForm(){
                         id="email"
                         className="bg-background"
                         placeholder="seu.email@exemplo.com"
+                        maxLength={80}
                         required
                       />
                     </Field>
@@ -94,13 +95,14 @@ export default function ContatoForm(){
                       <Textarea
                         id="mensagem"
                         placeholder="Sua mensagem..."
+                        rows={5}
                         className="resize-none md:resize-y bg-background"
                       />
                     </Field>
                   </FieldGroup>
                 </FieldSet>
                 <Field orientation="responsive">
-                  <Button type="submit">Enviar <ArrowRight /></Button>
+                  <Button onSubmit={handleSubmit} type="submit">Enviar <ArrowRight /></Button>
                 </Field>
               </FieldGroup>
         </div>

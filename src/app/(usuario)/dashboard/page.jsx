@@ -2,17 +2,10 @@
  
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-<<<<<<< HEAD
-import {
-  Package, ShoppingCart, Users, TrendingUp, Building2, Factory, FileText,
-} from "lucide-react"
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell,
-=======
+
 import { Package, ShoppingCart, Users, TrendingUp, Building2, Factory } from "lucide-react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, PieChart, Pie, Cell
->>>>>>> cb72bef0d82cf511dfffd2dd98637896fe4ca8d7
 } from "recharts"
 import { jsPDF } from "jspdf"
 import autoTable from "jspdf-autotable"  // <---- IMPORTAÇÃO CORRETA
