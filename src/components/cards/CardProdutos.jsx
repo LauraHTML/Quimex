@@ -63,7 +63,7 @@ export function CardProdutos({
           </div>
         <div className="flex flex-row justify-between items-center pt-2 border-t">
           <p className="text-xs text-muted-foreground">
-            {nomeLoja(lojaId)}
+             {produto.filial}
           </p>
           <div className="flex flex-wrap gap-1">
             <Button

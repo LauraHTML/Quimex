@@ -107,4 +107,8 @@ export function CardEstoque({
       </CardContent>
     </Card>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cb72bef0d82cf511dfffd2dd98637896fe4ca8d7

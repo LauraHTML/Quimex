@@ -17,16 +17,30 @@ import {
 
 export default function ContatoForm(){
 
-    async function handleSubmit(event) {
+      async function handleSubmit(event) {
+
         event.preventDefault();
-  
         const formData = new FormData(event.target)
+        try {
   
-        const response = await fetch('/api/contact', {
-            method: 'post',
-            body: formData,
-           });
-      };
+            const response = await fetch('/api/contact', {
+                method: 'post',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                console.log("falling over")
+                throw new Error(`response status: ${response.status}`);
+            }
+            const responseData = await response.json();
+            console.log(responseData['message'])
+    
+            alert('Message successfully sent');
+        } catch (err) {
+            console.error(err);
+            alert("Error, please try resubmitting the form");
+        }
+    };
 
     return(
         <>
