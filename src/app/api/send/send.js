@@ -11,7 +11,6 @@ export default async function handler(req, res) {
   }
 
   try {
-
     // Pegar os dados do body
     const { firstName, email, message } = req.body;
 

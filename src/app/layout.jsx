@@ -1,6 +1,5 @@
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "./contexts/theme-context"
-import { AuthProvider } from "./contexts/auth-context"
 import { Toaster } from "@/components/ui/sonner"
 import { Analytics } from "@vercel/analytics/react";
 
@@ -23,10 +22,8 @@ export default function RootLayout({ children }) {
     <html lang="pt-br">
       <body className={`${geist.variable}`}>
       <ThemeProvider>
-          <AuthProvider>
           <Toaster />
             {children}
-          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

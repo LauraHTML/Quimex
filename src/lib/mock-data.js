@@ -608,7 +608,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
-    image: "/sulfuric-acid-bottle.jpg",
+    image: "/produtos/Ácido_Sulfúrico.png",
     filial: "Rio de Janeiro"
   },
   {
@@ -619,7 +619,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Bases",
     codigoCor: "bg-green-700",
-    image: "/sodium-hydroxide-bottle.jpg",
+    image: "/Ácido Cítrico",
     filial: "São Paulo"
   },
   {
@@ -630,7 +630,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
-    image: "/ethanol-bottle.jpg",
+    image: "/BHT.png",
     filial: "São Paulo"
   },
   {
@@ -641,7 +641,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
-    image: "/acetone-bottle.jpg",
+    image: "/Borax.png",
     filial: "São Paulo"
   },
   {
@@ -652,7 +652,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Químicos Gerais",
     codigoCor: "bg-gray-200",
-    image: "/sodium-chloride-bottle.jpg",
+    image: "/Barbopol.png",
     filial: "São Paulo"
   },
   {
@@ -663,7 +663,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Oxidantes",
     codigoCor: "bg-lime-500",
-    image: "/hydrogen-peroxide-bottle.jpg",
+    image: "/Etanol.png",
     filial: "São Paulo"
   },
   {
@@ -674,7 +674,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
-    image: "/hydrochloric-acid-bottle.jpg",
+    image: "/Lactose.png",
     filial: "Rio de Janeiro"
   },
   {

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useAuth } from "@/app/contexts/auth-context";
 import { mockProdutos, mockLojas } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,7 +38,6 @@ import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardEstoque } from "@/components/cards/CardEstoque";
 
 export default function EstoquePage() {
-  const { user } = useAuth();
   const [produtos, setProdutos] = useState(mockProdutos);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -56,13 +54,6 @@ export default function EstoquePage() {
 
   //primeira letra maiuscula
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-
-  if (!user) return null;
-
-  const filteredByRole =
-    user.role === "admin_matriz"
-      ? produtos
-      : produtos.filter((p) => p.filial === user.filial);
 
   const handleEditProduto = (produto) => {
     setEditingProduto(produto);
@@ -205,7 +196,7 @@ export default function EstoquePage() {
     }
     // lista final filtrada
     return listaFiltrada;
-  }, [filteredByRole, classificacaoSelecionados, filialSelecionados, searchTerm]);
+  }, [classificacaoSelecionados, filialSelecionados, searchTerm]);
 
   return (
     <div className="space-y-6">
@@ -304,7 +295,7 @@ export default function EstoquePage() {
                   />
                 </div>
               </div>
-              {user.role === "admin_matriz" && (
+             {/* admin */}
                 <div className="space-y-2">
                   <Label htmlFor="loja">Loja</Label>
                   <Select
@@ -325,7 +316,7 @@ export default function EstoquePage() {
                     </SelectContent>
                   </Select>
                 </div>
-              )}
+           
             </div>
             <div className="flex justify-end gap-3">
               <Button

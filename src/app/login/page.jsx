@@ -2,7 +2,6 @@
  
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/app/contexts/auth-context"
 import { User, Lock, Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,10 +12,9 @@ import Image from "next/image"
  
 export default function LoginPage() {
   const router = useRouter()
-  const { login } = useAuth()
  
   const [theme, setTheme] = useState("dark")
-  const [email, setEmail] = useState("")
+  const [RE, setRE] = useState("")
   const [password, setPassword] = useState("")
   const [profile, setProfile] = useState("")
   const [error, setError] = useState("")
@@ -42,24 +40,67 @@ export default function LoginPage() {
   }
  
   // Envio do formulário
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   setError("")
+  //   setLoading(true)
+ 
+  //   if (!RE || !password || !profile) {
+  //     setError("Preencha todos os campos antes de continuar.")
+  //     setLoading(false)
+  //     return
+  //   }
+ 
+  //   const success = await login(RE, password)
+ 
+  //   if (success) {
+  //     router.push("/dashboard")
+  //   } else {
+  //     setError("RE ou senha inválidos.")
+  //     setLoading(false)
+  //   }
+  // }
+
+   const handleSubmit = async (e) => {
     e.preventDefault()
     setError("")
     setLoading(true)
  
-    if (!email || !password || !profile) {
-      setError("Preencha todos os campos antes de continuar.")
-      setLoading(false)
-      return
+    const res = await fetch(`http://localhost:8080/login`, {
+      method: "POST", // HTTP method
+      headers: {
+        "Content-Type": "application/json", // Sending JSON data
+      },
+      body: JSON.stringify({
+        RE: RE,
+        senha: password,
+        cargo: profile
+      }),
+      credentials: 'include'
+    });
+
+    if (!res.ok) {
+      if (res.status == 401) {
+        setError("Usuário/Senha errados");
+        setLoading(false);
+      }
+      if (res.status == 404) {
+        setError("Usuário não encontrado");
+        setLoading(false);
+      }
     }
- 
-    const success = await login(email, password)
- 
-    if (success) {
-      router.push("/dashboard")
-    } else {
-      setError("Email ou senha inválidos.")
-      setLoading(false)
+    else{
+      setLoading(false);
+    }
+
+    const data = await res.json();
+
+    if (data.cargo == "Administrador") {
+      window.location.href = "/dashboard";
+    } else if (data.cargo == "Gerente") {
+      window.location.href = "/dashboard";
+    } else if (data.cargo == "Vendedor") {
+      window.location.href = "/pdv";
     }
   }
  
@@ -113,14 +154,14 @@ export default function LoginPage() {
  
           {/* Formulário */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Campo Email */}
+            {/* Campo RE */}
             <div className="space-y-2">
               <Label
-                htmlFor="email"
+                htmlFor="RE"
                 className={`text-sm font-medium ${theme === "dark" ? "text-slate-300" : "text-slate-700"
                   }`}
               >
-                Email
+                RE
               </Label>
               <div className="relative">
                 <User
@@ -128,11 +169,11 @@ export default function LoginPage() {
                     }`}
                 />
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="RE"
+                  type="text"
+                  placeholder="xxxxxx"
+                  value={RE}
+                  onChange={(e) => setRE(e.target.value)}
                   required
                   className={`pl-10 h-12 rounded-lg transition-all duration-200 ${theme === "dark"
                       ? "bg-slate-950/50 border-slate-800 text-slate-200 placeholder:text-slate-600"
@@ -197,9 +238,9 @@ export default function LoginPage() {
                       : "bg-white border-slate-200"
                   }
                 >
-                  <SelectItem value="admin">Administrador</SelectItem>
-                  <SelectItem value="manager">Gerente</SelectItem>
-                  <SelectItem value="vendedor">Vendedor</SelectItem>
+                  <SelectItem value="Administrador">Administrador</SelectItem>
+                  <SelectItem value="Gerente">Gerente</SelectItem>
+                  <SelectItem value="Vendedor">Vendedor</SelectItem>
                   </SelectContent>
               </Select>
             </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useAuth } from "@/app/contexts/auth-context";
 import { mockProdutos, mockLojas } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,7 +38,6 @@ import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardProdutos } from "@/components/cards/CardProdutos";
 
 export default function ProdutosPage() {
-  const { user } = useAuth();
   const [produtos, setProdutos] = useState(mockProdutos);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -53,13 +51,6 @@ export default function ProdutosPage() {
     lojaId: "",
     classificacao: "",
   });
-
-  if (!user) return null;
-
-  const filteredByRole =
-    user.role === "admin_matriz"
-      ? produtos
-      : produtos.filter((p) => p.lojaId === user.lojaId);
 
   const handleEditProduto = (produto) => {
     setEditingProduto(produto);
@@ -183,7 +174,7 @@ export default function ProdutosPage() {
       // lista final filtrada
       return listaFiltrada;
   
-    }, [filteredByRole, classificacaoSelecionados, searchTerm]);
+    }, [classificacaoSelecionados, searchTerm]);
     
   return (
     <div className="space-y-6">
@@ -282,7 +273,7 @@ export default function ProdutosPage() {
                   />
                 </div>
               </div>
-              {user.role === "admin_matriz" && (
+              {/* admin */}
                 <div className="space-y-2">
                   <Label htmlFor="loja">Loja</Label>
                   <Select
@@ -303,7 +294,7 @@ export default function ProdutosPage() {
                     </SelectContent>
                   </Select>
                 </div>
-              )}
+              
             </div>
             <div className="flex justify-end gap-3">
               <Button

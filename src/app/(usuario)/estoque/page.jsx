@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useAuth } from "@/app/contexts/auth-context";
-import { mockProdutos, mockLojas } from "@/lib/mock-data";
+import { useState, useMemo, useEffect } from "react";
+// import { mockProdutos, mockLojas } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MaskedInput } from '@/components/ui/masked-input';
@@ -39,8 +38,7 @@ import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardEstoque } from "@/components/cards/CardEstoque";
 
 export default function EstoquePage() {
-  const { user } = useAuth();
-  const [produtos, setProdutos] = useState(mockProdutos);
+  const [produtos, setProdutos] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduto, setEditingProduto] = useState(null);
@@ -53,16 +51,56 @@ export default function EstoquePage() {
     filial: "",
     classificacao: "",
   });
+  const [imagem, setImagem] = useState("");
+  const [lojas, setLojas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/lojas", {
+      credentials: "include",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setLojas(data.lojas);
+      });
+  }, []);
+
+  useEffect(()=>{
+ fetch(`http://localhost:8080/produtos`, {
+      method: "get",
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          if (res.status === 404) {
+            console.warn("User data not found (404)");
+            return null;
+          } else if (res.status === 403) {
+            window.location.href = "/forbidden";
+            return null;
+          } else if (res.status === 401) {
+            window.location.href = "/unauthorized";
+            return null;
+          } else {
+            console.error("Houve um problema ao buscar usuário", res.status);
+            alert("Houve um problema ao buscar usuário");
+            return null;
+          }
+        }
+      })
+      .then((data) => {
+        setProdutos(data.produtos);
+      })
+      .catch((error) => {
+        setProdutos("");
+      });
+  }, []);
 
   //primeira letra maiuscula
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-
-  if (!user) return null;
-
-  const filteredByRole =
-    user.role === "admin_matriz"
-      ? produtos
-      : produtos.filter((p) => p.filial === user.filial);
 
   const handleEditProduto = (produto) => {
     setEditingProduto(produto);
@@ -157,28 +195,49 @@ export default function EstoquePage() {
   };
 
   //visualizar por classificação
-  const classificacao = [...new Set(mockProdutos.map(produto => produto.classificacao.toLowerCase()))];
+const [classificacao, setClassificacao] = useState([]);
+  const [filial, setFilial] = useState([]);
+
+  // 2. Define state for the selected filters
   const [classificacaoSelecionados, setClassificacaoSelecionados] = useState([]);
-
-  const handleClassificacaoChange = (classificacao, checked) => {
-    if (checked) {
-      setClassificacaoSelecionados([...classificacaoSelecionados, classificacao]);
-    } else {
-      setClassificacaoSelecionados(classificacaoSelecionados.filter((c) => c !== classificacao));
-    }
-  };
-
-  const filial = [...new Set(mockProdutos.map(produto => produto.filial.toLowerCase()))];
   const [filialSelecionados, setFilialSelecionados] = useState([]);
 
-  const handleFilialChange = (filial, checked) => {
-    if (checked) {
-      setFilialSelecionados([...filialSelecionados, filial]);
+  // --- useEffect to calculate derived data ---
+  // This runs ONLY when 'produtos' changes
+  useEffect(() => {
+    // 3. Check if 'produtos' is valid and not empty
+    if (produtos && produtos.length > 0) {
+      // Calculate and set the unique classifications
+      const uniqueClassificacoes = [...new Set(produtos.map(produto => produto.classificacao.toLowerCase()))];
+      setClassificacao(uniqueClassificacoes);
+
+      // Calculate and set the unique filials
+      const uniqueFiliais = [...new Set(produtos.map(produto => produto.filial.toLowerCase()))];
+      setFilial(uniqueFiliais);
     } else {
-      setFilialSelecionados(filialSelecionados.filter((c) => c !== filial));
+      // Optionally reset if products become empty (e.g., during a refresh)
+      setClassificacao([]);
+      setFilial([]);
+    }
+  }, [produtos]); // Dependency array: runs when 'produtos' changes
+
+  // --- Filter Handler Functions (Keep these as they were) ---
+
+  const handleClassificacaoChange = (c, checked) => {
+    if (checked) {
+      setClassificacaoSelecionados([...classificacaoSelecionados, c]);
+    } else {
+      setClassificacaoSelecionados(classificacaoSelecionados.filter((selectedC) => selectedC !== c));
     }
   };
 
+  const handleFilialChange = (f, checked) => {
+    if (checked) {
+      setFilialSelecionados([...filialSelecionados, f]);
+    } else {
+      setFilialSelecionados(filialSelecionados.filter((selectedF) => selectedF !== f));
+    }
+  };
   const filteredProdutos = useMemo(() => {
     let listaFiltrada = produtos;
 
@@ -205,7 +264,7 @@ export default function EstoquePage() {
     }
     // lista final filtrada
     return listaFiltrada;
-  }, [filteredByRole, classificacaoSelecionados, filialSelecionados, searchTerm]);
+  }, [classificacaoSelecionados, filialSelecionados, searchTerm]);
 
   return (
     <div className="space-y-6">
@@ -304,7 +363,7 @@ export default function EstoquePage() {
                   />
                 </div>
               </div>
-              {user.role === "admin_matriz" && (
+              {/* admin */}
                 <div className="space-y-2">
                   <Label htmlFor="loja">Loja</Label>
                   <Select
@@ -317,15 +376,24 @@ export default function EstoquePage() {
                       <SelectValue placeholder="Selecione uma loja" />
                     </SelectTrigger>
                     <SelectContent>
-                      {mockLojas.map((loja) => (
+                      {lojas 
+                      ?(
+                        <>
+                        {lojas.map((loja) => (
                         <SelectItem key={loja.id} value={loja.id}>
                           {loja.nome}
                         </SelectItem>
                       ))}
+                        </>
+                      ):(
+                        <>
+                        Não foi encontrado nenhuma loja
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
-              )}
+                {/* admin */}
             </div>
             <div className="flex justify-end gap-3">
               <Button

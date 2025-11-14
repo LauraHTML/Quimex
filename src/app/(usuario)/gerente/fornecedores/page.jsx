@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
-import { useAuth } from "@/app/contexts/auth-context"
 import { mockFornecedores } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -31,8 +30,6 @@ import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardFornecedor } from "@/components/cards/CardFornecedor";
 
 export default function FornecedoresPage() {
-
-  const { user } = useAuth()
   const [fornecedores, setFornecedores] = useState(mockFornecedores)
   const [searchTerm, setSearchTerm] = useState("")
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -46,7 +43,6 @@ export default function FornecedoresPage() {
     setor: "",
   })
 
-  if (!user) return null
 
   const handleEditFornecedor = (fornecedor) => {
     setEditingFornecedor(fornecedor)

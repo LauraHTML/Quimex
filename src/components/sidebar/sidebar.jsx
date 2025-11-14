@@ -1,6 +1,6 @@
 "use client"
  
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "../../lib/utils"
@@ -25,11 +25,30 @@ const menuItems = [
  
 export function Sidebar() {
   const pathname = usePathname()
-  const { user, logout } = useAuth()
+  const [user, setUser ] = useState([])
   const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState(false)
+
+  const getUser = async () =>{
+    const achaUser = await fetch("http://localhost:8080/dashboard", {
+      credentials: "include"
+    })
+
+    const user = await achaUser.json();
+
+    
+    if (!user) return null
+    setUser(user)
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
  
-  const getUserRole = () => {
+  const getUserRole = async () => {
+
+    
+
     if (!user) return null
     const role = user.perfil || user.role || user.cargo
     return role ? String(role).toLowerCase() : null
@@ -84,6 +103,7 @@ export function Sidebar() {
  
       <ScrollArea className="flex-1 px-3 py-4">
         <nav className="space-y-1">
+          <Link href={"/produtos"} onClick={() => setOpen(false)} />
           {filteredMenuItems.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
@@ -110,9 +130,7 @@ export function Sidebar() {
       <div className="border-t border-sidebar-border p-4">
         <Button
           variant="ghost"
-          className="w-full justify-start text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-          onClick={logout}
-        >
+          className="w-full justify-start text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground">
           <LogOut className="mr-3 h-5 w-5" />
           Sair
         </Button>

@@ -7,17 +7,8 @@ import { Package, ShoppingCart, Users, TrendingUp, Building2, Factory, FileText 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,LineChart, Line, PieChart, Pie, Cell} from "recharts"
 import { jsPDF } from "jspdf"
 import autoTable from "jspdf-autotable" 
-import { useAuth } from "../../contexts/auth-context"
  
 export default function DashboardPage() {
-  const { user } = useAuth()
-    const getUserRole = () => {
-    if (!user) return null
-    const role = user.perfil || user.role || user.cargo
-    return role ? String(role).toLowerCase() : null
-  }
-  if (!user) return false
-    const perfil = getUserRole()
 
   const router = useRouter()
  
@@ -338,7 +329,6 @@ export default function DashboardPage() {
             </div>
             <div className="text-3xl font-bold">128</div>
         </div>
-        {perfil === "admin" && (
         <div className="rounded-xl p-6 border bg-card border-border shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-medium text-muted-foreground">Total de Lojas</h3>
@@ -346,7 +336,6 @@ export default function DashboardPage() {
             </div>
             <div className="text-3xl font-bold">12</div>
         </div>
-        )}
         <div className="rounded-xl p-6 border bg-card border-border shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-medium text-muted-foreground">Total de Fornecedores</h3>

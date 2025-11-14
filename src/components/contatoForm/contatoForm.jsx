@@ -77,6 +77,18 @@ export default function Contato() {
                         id="email"
                         name="email"
                         type="email"
+                        placeholder="quimex05@email.com"
+                        required
+                        className="bg-background"
+                    />
+                </div>
+
+                <div>
+                    <FieldLabel htmlFor="email">Seu email:</FieldLabel>
+                    <Input
+                        id="emailUser"
+                        name="emailUser"
+                        type="email"
                         placeholder="seu@email.com"
                         required
                         className="bg-background"
