@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useAuth } from "@/app/contexts/auth-context";
-import { canManageLojas } from "@/lib/utils/permissions";
-import { mockLojas } from "@/lib/mock-data";
+import { useState, useMemo, useEffect } from "react";
+// import { useAuth } from "@/app/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,98 +36,94 @@ import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardLojas } from "@/components/cards/cardLojas";
 
 export default function LojasPage() {
-  const { user } = useAuth();
-  const [lojas, setLojas] = useState(mockLojas);
+  const [lojas, setLojas] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingLoja, setEditingLoja] = useState(null);
   const [formData, setFormData] = useState({
     nome: "",
-    nomeGerente: "",
-    cpfGerente: "",
-    id: "",
     cnpj: "",
-    endereco: "",
-    cidade: "",
+    localizacao: "",
     estado: "",
-    telefone: "",
+    contato: "",
     tipo: "filial",
+    horario_abertura: "",
+    horario_fechamento: "",
   });
 
-  // if (!user || !canManageLojas(user)) {
-  //   return (
-  //     <div className="text-center py-12">
-  //       <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-  //       <p className="text-muted-foreground">Você não tem permissão para acessar esta página.</p>
-  //     </div>
-  //   )
-  // }
+  useEffect(() => {
+    const buscaLojas = async () => {
+      const busca_lojas = await fetch("http://localhost:8080/lojas");
+
+      const res = await busca_lojas.json();
+
+      const lojasBuscadas = res.lojas;
+
+      setLojas(lojasBuscadas);
+    };
+    buscaLojas();
+  }, []);
 
   const handleEditLoja = (loja) => {
     setEditingLoja(loja);
     setFormData({
       nome: loja.nome,
-      nomeGerente: loja.gerenteLoja,
-      cpfGerente: loja.cpfGerente,
       cnpj: loja.cnpj,
-      endereco: loja.endereco,
-      cidade: loja.cidade,
+      localizacao: loja.localizacao,
       estado: loja.estado,
-      telefone: loja.telefone,
+      contato: loja.contato,
       tipo: loja.tipo,
+      horario_abertura: loja.horario_abertura,
+      horario_fechamento: loja.horario_fechamento,
     });
     setIsDialogOpen(true);
   };
 
-  const handleSaveLoja = () => {
+  const handleSaveLoja = async () => {
     if (editingLoja) {
-      setLojas(
-        lojas.map((l) =>
-          l.id === editingLoja.id
-            ? {
-                ...l,
-                nome: formData.nome,
-                nomeGerente: formData.nomeGerente,
-                cpfGerente: formData.cpfGerente,
-                cnpj: formData.cnpj,
-                endereco: formData.endereco,
-                cidade: formData.cidade,
-                estado: formData.estado,
-                telefone: formData.telefone,
-                tipo: formData.tipo,
-              }
-            : l
-        )
-      );
+      console.log(editingLoja)
+
+      await fetch(`http://localhost:8080/lojas/${editingLoja.id}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome: formData.nome,
+          cnpj: formData.cnpj,
+          localizacao: formData.localizacao,
+          estado: formData.estado,
+          contato: formData.contato,
+          tipo: formData.tipo,
+          horario_abertura: formData.horario_abertura,
+          horario_fechamento: formData.horario_fechamento,
+        }),
+      });
     } else {
-      const newLoja = {
-        id: String(Date.now()),
-        nome: formData.nome,
-        nomeGerente: formData.nomeGerente,
-        cpfGerente: formData.cpfGerente,
-        cnpj: formData.cnpj,
-        endereco: formData.endereco,
-        cidade: formData.cidade,
-        estado: formData.estado,
-        telefone: formData.telefone,
-        tipo: formData.tipo,
-        ativo: true,
-      };
-      setLojas([...lojas, newLoja]);
+      console.log(formData);
+
+      await fetch("http://localhost:8080/lojas", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
     }
 
     setIsDialogOpen(false);
     setEditingLoja(null);
     setFormData({
       nome: "",
-      nomeGerente: "",
-      cpfGerente: "",
       cnpj: "",
-      endereco: "",
-      cidade: "",
+      localizacao: "",
       estado: "",
-      telefone: "",
+      contato: "",
       tipo: "filial",
+      horario_abertura: "",
+      horario_fechamento: "",
     });
   };
 
@@ -148,59 +142,56 @@ export default function LojasPage() {
       setEditingLoja(null);
       setFormData({
         nome: "",
-        nomeGerente: "",
-        cpfGerente: "",
         cnpj: "",
-        endereco: "",
-        cidade: "",
+        localizacao: "",
         estado: "",
-        telefone: "",
+        contato: "",
         tipo: "filial",
+        horario_abertura: "",
+        horario_fechamento: "",
       });
     }
   };
 
-  const tipoLoja = [
-    ...new Set(mockLojas.map((loja) => loja.tipo.toLowerCase())),
-  ];
-  const [tipoLojaSelecionados, setTipoLojaSelecionados] = useState([]);
+  // const tipoLoja = [...new Set(lojas.map((loja) => loja.tipo.toLowerCase()))];
+  // const [tipoLojaSelecionados, setTipoLojaSelecionados] = useState([]);
 
-  const handleLojaChange = (loja, checked) => {
-    loja;
-    if (checked) {
-      setTipoLojaSelecionados([...tipoLojaSelecionados, loja]);
-    } else {
-      setTipoLojaSelecionados(tipoLojaSelecionados.filter((l) => l !== loja));
-    }
-  };
-  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+  // const handleLojaChange = (loja, checked) => {
+  //   loja;
+  //   if (checked) {
+  //     setTipoLojaSelecionados([...tipoLojaSelecionados, loja]);
+  //   } else {
+  //     setTipoLojaSelecionados(tipoLojaSelecionados.filter((l) => l !== loja));
+  //   }
+  // };
+  // const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-  const filteredLojas = useMemo(() => {
-    // Comece com a lista completa
-    let listaFiltrada = lojas;
+  // const filteredLojas = useMemo(() => {
+  //   // Comece com a lista completa
+  //   let listaFiltrada = lojas;
 
-    if (tipoLojaSelecionados.length > 0) {
-      listaFiltrada = listaFiltrada.filter((loja) =>
-        tipoLojaSelecionados.includes(loja.tipo.toLowerCase())
-      );
-    }
+  //   if (tipoLojaSelecionados.length > 0) {
+  //     listaFiltrada = listaFiltrada.filter((loja) =>
+  //       tipoLojaSelecionados.includes(loja.tipo.toLowerCase())
+  //     );
+  //   }
 
-    //filtrar resultados
-    if (searchTerm.trim() !== "") {
-      const lowerCaseSearch = searchTerm.toLowerCase();
-      listaFiltrada = listaFiltrada.filter(
-        (loja) =>
-          loja.nome.toLowerCase().includes(lowerCaseSearch) ||
-          loja.estado.toLowerCase().includes(lowerCaseSearch) ||
-          loja.cidade.toLowerCase().includes(lowerCaseSearch) ||
-          loja.endereco.toLowerCase().includes(lowerCaseSearch)
-      );
-    }
-    // lista final filtrada
-    return listaFiltrada;
+  //   //filtrar resultados
+  //   if (searchTerm.trim() !== "") {
+  //     const lowerCaseSearch = searchTerm.toLowerCase();
+  //     listaFiltrada = listaFiltrada.filter(
+  //       (loja) =>
+  //         loja.nome.toLowerCase().includes(lowerCaseSearch) ||
+  //         loja.localizacao.toLowerCase().includes(lowerCaseSearch) ||
+  //         loja.tipo.toLowerCase().includes(lowerCaseSearch) ||
+  //         loja.estado.toLowerCase().includes(lowerCaseSearch)
+  //     );
+  //   }
+  //   // lista final filtrada
+  //   return listaFiltrada;
 
-    // O 'useMemo' só vai rodar esta lógica quando um destes 3 estados mudar.
-  }, [lojas, tipoLojaSelecionados, searchTerm]);
+  //   // O 'useMemo' só vai rodar esta lógica quando um destes 3 estados mudar.
+  // }, [lojas, tipoLojaSelecionados, searchTerm]);
 
   return (
     <div className="space-y-6">
@@ -208,7 +199,7 @@ export default function LojasPage() {
         <div>
           <h1 className="text-3xl font-bold">Lojas</h1>
           <p className="text-muted-foreground mt-1">
-            Gerencie as lojas da rede Quimx
+            Gerencie as lojas da rede Quimex
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
@@ -242,27 +233,6 @@ export default function LojasPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="nome">Nome do gerente</Label>
-                <Input
-                  id="nomeGerente"
-                  value={formData.nomeGerente}
-                  onChange={(e) =>
-                    setFormData({ ...formData, nomeGerente: e.target.value })
-                  }
-                  placeholder="Nome gerente"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="cpf">CPF do gerente</Label>
-                <MaskedInput
-                  id="cpf"
-                  mask="000.000.000-00"
-                  value={formData.cpfGerente}
-                  onChange={(value) => setFormData({ ...formData, cpfGerente: value })}
-                  placeholder="000.000.000-00"
-                />
-              </div>
-              <div className="space-y-2">
                 <Label htmlFor="cnpj">CNPJ</Label>
                 <MaskedInput
                   id="cnpj"
@@ -274,25 +244,14 @@ export default function LojasPage() {
                   placeholder="00.000.000/0000-00"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="endereco">Endereço</Label>
-                <Input
-                  id="endereco"
-                  value={formData.endereco}
-                  onChange={(e) =>
-                    setFormData({ ...formData, endereco: e.target.value })
-                  }
-                  placeholder="Rua Exemplo, 123"
-                />
-              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="cidade">Cidade</Label>
                   <Input
                     id="cidade"
-                    value={formData.cidade}
+                    value={formData.localizacao}
                     onChange={(e) =>
-                      setFormData({ ...formData, cidade: e.target.value })
+                      setFormData({ ...formData, localizacao: e.target.value })
                     }
                     placeholder="São Paulo"
                   />
@@ -311,16 +270,46 @@ export default function LojasPage() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="telefone">Telefone</Label>
+                <Label htmlFor="telefone">Contato</Label>
                 <MaskedInput
                   id="telefone"
                   mask="(00) 00000-0000"
-                  value={formData.telefone}
+                  value={formData.contato}
                   onChange={(value) =>
-                    setFormData({ ...formData, telefone: value })
+                    setFormData({ ...formData, contato: value })
                   }
                   placeholder="(11) 98765-4321"
                 />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="cidade">Abre as</Label>
+                  <Input
+                    id="estado"
+                    value={formData.horario_abertura}
+                    type="time"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        horario_abertura: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="estado">Fecha as</Label>
+                  <Input
+                    id="estado"
+                    value={formData.horario_fechamento}
+                    type="time"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        horario_fechamento: e.target.value,
+                      })
+                    }
+                  />
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="tipo">Tipo</Label>
@@ -365,7 +354,7 @@ export default function LojasPage() {
           <DropdownMenuContent className="w-44">
             <DropdownMenuLabel>Selecione setor</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {tipoLoja.map((lojas) => (
+            {/* {tipoLoja.map((lojas) => (
               <DropdownMenuCheckboxItem
                 checked={tipoLojaSelecionados.includes(lojas)}
                 key={lojas}
@@ -375,7 +364,7 @@ export default function LojasPage() {
               >
                 {capitalize(lojas)}
               </DropdownMenuCheckboxItem>
-            ))}
+            ))} */}
           </DropdownMenuContent>
         </DropdownMenu>
         <div className="flex flex-row gap-2 flex-wrap relative w-full">

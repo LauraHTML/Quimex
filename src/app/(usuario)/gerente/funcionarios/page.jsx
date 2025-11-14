@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { useAuth } from "@/app/contexts/auth-context"
 import { mockUsers, mockLojas } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -35,7 +34,6 @@ import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardFuncionarios } from "@/components/cards/CardFuncionarios";
 
 export default function FuncionariosPage() {
-  const { user } = useAuth()
   const [funcionarios, setFuncionarios] = useState(mockUsers)
   const [searchTerm, setSearchTerm] = useState("")
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -48,7 +46,6 @@ export default function FuncionariosPage() {
     role: "vendedor",
     lojaId: "",
   })
-  if (!user) return null
 
   const cardsAdmFuncionario = [
     {
@@ -94,7 +91,6 @@ export default function FuncionariosPage() {
     icon: ChartLine,
   }]
 
-  if (!user) return null
 
   const handleEditFuncionario = (funcionario) => {
     setEditingFuncionario(funcionario)
@@ -122,7 +118,7 @@ export default function FuncionariosPage() {
               cpf: formData.cpf,
               telefone: formData.telefone,
               role: formData.role,
-              lojaId: formData.lojaId || (user.role === "admin_matriz" ? null : user.lojaId),
+              lojaId: formData.lojaId,
             }
             : f,
         ),
@@ -136,7 +132,7 @@ export default function FuncionariosPage() {
         cpf: formData.cpf,
         telefone: formData.telefone,
         role: formData.role,
-        lojaId: formData.lojaId || (user.role === "admin_matriz" ? null : user.lojaId),
+        lojaId: formData.lojaId,
         ativo: true,
       }
       setFuncionarios([...funcionarios, newFuncionario])
@@ -191,7 +187,6 @@ export default function FuncionariosPage() {
     }
   };
 
-  const filteredByRole = funcionarios.role === "admin_matriz" ? funcionarios : funcionarios.filter((f) => f.lojaId === user.lojaId)
 
   const filteredFuncionarios = useMemo(() => {
     // Comece com a lista filtrada por role de acesso do usuário logado
@@ -216,7 +211,7 @@ export default function FuncionariosPage() {
 
     // Retorna a lista final filtrada
     return listaFiltrada;
-  }, [filteredByRole, roleFuncionarioSelecionados, searchTerm]);
+  }, [roleFuncionarioSelecionados, searchTerm]);
 
   return (
     <div className="space-y-6">
@@ -279,7 +274,7 @@ export default function FuncionariosPage() {
                   placeholder="(11) 98765-4321"
                 />
               </div>
-                {user.role === "admin_matriz" && (
+
               <div>
                 <div className="space-y-2">
                 <Label htmlFor="role">Cargo</Label>
@@ -288,7 +283,7 @@ export default function FuncionariosPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {user.role === "admin_matriz" && <SelectItem value="admin_matriz">Administrador Matriz</SelectItem>}
+                    <SelectItem value="admin_matriz">Administrador Matriz</SelectItem>
                     <SelectItem value="gerente_filial">Gerente de Filial</SelectItem>
                     <SelectItem value="vendedor">Vendedor</SelectItem>
                   </SelectContent>
@@ -313,7 +308,7 @@ export default function FuncionariosPage() {
                   </Select>
                 </div>
               </div>
-               )}
+              
             </div>
             <div className="flex justify-end gap-3">
               <Button variant="outline" onClick={() => handleCloseDialog(false)}>
@@ -325,7 +320,7 @@ export default function FuncionariosPage() {
         </Dialog>
       </div>
 
-      {user.role === "admin_matriz" && (
+    
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {infoFuncionarios.map((info, index) => {
             const Icon = info.icon;
@@ -343,7 +338,7 @@ export default function FuncionariosPage() {
             );
           })}
         </div>
-      )}
+     
 
       <div className="flex flex-col md:flex-row gap-2">
         <DropdownMenu>

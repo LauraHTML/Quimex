@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Search,
   Filter,
@@ -12,6 +12,9 @@ import {
   Minus,
 } from "lucide-react";
 
+// ================================
+// Lista de produtos químicos - COMPLETA 
+// ================================
 const chemicalProducts = [
   {
     id: "1",
@@ -601,12 +604,6 @@ const chemicalProducts = [
     colorCode: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
   },
-
-  // --- Produtos da Indústria de Limpeza e Saneamento ---
-  // Ácido Clorídrico (já existe)
-  // Ácido Fosfórico (já existe)
-  // Ácido Nítrico (já existe)
-  // Ácido Sulfúrico (já existe)
   {
     id: "65",
     code: "LIMPEZA-001",
@@ -635,12 +632,6 @@ const chemicalProducts = [
     colorCode: "bg-gray-200",
     image: "/placeholder-raw-material.jpg",
   },
-  // Borax (Borato de Sódio) (já existe)
-  // Formaldeído (já existe)
-  // Hidróxido de Potássio (já existe)
-  // Hidróxido de Sódio (já existe)
-  // Hipoclorito de Sódio (já existe)
-  // Metabissulfito de Sódio (já existe)
   {
     id: "68",
     code: "LIMPEZA-004",
@@ -701,6 +692,21 @@ export default function QuimexPOS() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [showPayment, setShowPayment] = useState(false);
+  const [valorInicial, setValorInicial] = useState(0);
+
+  // Ao abrir o sistema, define o valor inicial do caixa se ainda não existir
+  useEffect(() => {
+    const hoje = new Date().toISOString().split("T")[0];
+    const dataCaixa = localStorage.getItem("caixaData");
+    const valorSalvo = localStorage.getItem("caixaAbertura");
+
+    if (dataCaixa === hoje && valorSalvo) {
+      setValorInicial(parseFloat(valorSalvo));
+    } else {
+      // Redireciona para a página de abertura de caixa se não houver valor para hoje
+      window.location.href = "/"; 
+    }
+  }, []);
 
   const filteredProducts = chemicalProducts.filter((product) => {
     const matchesSearch =
@@ -744,10 +750,97 @@ export default function QuimexPOS() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handlePayment = (method) => {
+    const novaVenda = {
+      id: Date.now(),
+      dataHora: new Date().toLocaleString(),
+      itens: cart,
+      total,
+      metodo: method,
+      vendedor: "Hemerson", // Adiciona o nome do vendedor
+    };
+
+    // Salvar venda no histórico diário
+    const vendas = JSON.parse(localStorage.getItem("vendas") || "[]");
+    vendas.push(novaVenda);
+    localStorage.setItem("vendas", JSON.stringify(vendas));
+
+    // Gerar comprovante
+    gerarComprovanteCliente(novaVenda);
+
     alert(`Pagamento de R$ ${total.toFixed(2)} realizado via ${method}`);
     setCart([]);
     setShowPayment(false);
   };
+
+  const gerarComprovanteCliente = (venda) => {
+    const conteudoItens = venda.itens.map(
+      (i) =>
+        `Produto: ${i.name}\n` +
+        `Quantidade: ${i.quantity}x\n` +
+        `Preço Unitário: R$ ${i.price.toFixed(2)}\n` +
+        `Preço Total do Produto: R$ ${(i.price * i.quantity).toFixed(2)}\n`
+    ).join("-----------------------------\n");
+
+    const conteudo = `
+      *** COMPROVANTE DE VENDA ***
+      Rua Nazaret, 1445 Bairro Barcelona - SP
+      CNPJ: 72.395.047/1152-63
+      IE: 654.998.172
+      Data: ${venda.dataHora}
+      Forma de Pagamento: ${venda.metodo}
+      Vendedor: ${venda.vendedor}
+      -----------------------------
+      ${conteudoItens}
+      -----------------------------
+      TOTAL DA COMPRA: R$ ${venda.total.toFixed(2)}
+      Obrigado pela preferência!
+    `;
+
+    const novaJanela = window.open("", "_blank");
+    novaJanela.document.write(`<pre>${conteudo}</pre>`);
+    novaJanela.print();
+  };
+
+  const gerarFechamentoCaixa = () => {
+    const hoje = new Date().toISOString().split("T")[0];
+    const vendas = JSON.parse(localStorage.getItem("vendas") || "[]")
+      .filter((v) => v.dataHora.startsWith(new Date(hoje).toLocaleDateString())); // Filtra vendas do dia atual
+
+    const totalDia = vendas.reduce((acc, v) => acc + v.total, 0);
+    const conteudoVendas = vendas.map(
+      (v) =>
+        `  - Venda ID: ${v.id}\n` +
+        `    Data/Hora: ${v.dataHora}\n` +
+        `    Método de Pagamento: ${v.metodo}\n` +
+        `    Itens:\n` +
+        `${v.itens.map(item => `      - ${item.name} (${item.quantity}x) R$ ${item.price.toFixed(2)} = R$ ${(item.price * item.quantity).toFixed(2)}`).join('\n')}\n` +
+        `    Total da Venda: R$ ${v.total.toFixed(2)}\n`
+    ).join("-----------------------------\n");
+
+    const conteudo = `
+      *** FECHAMENTO DO CAIXA ***
+      Data: ${new Date().toLocaleDateString()}
+      Vendedor: Hemerson
+      -----------------------------
+      Valor Inicial do Caixa: R$ ${valorInicial.toFixed(2)}
+      -----------------------------
+      Detalhes das Vendas do Dia (${vendas.length} vendas):
+      -----------------------------
+      ${conteudoVendas || 'Nenhuma venda realizada hoje.'}
+      -----------------------------
+      TOTAL ARRECADADO EM VENDAS: R$ ${totalDia.toFixed(2)}
+      -----------------------------
+      SALDO FINAL DO CAIXA (Inicial + Vendas): R$ ${(valorInicial + totalDia).toFixed(2)}
+      -----------------------------
+      Quimex
+    `;
+
+    const novaJanela = window.open("", "_blank");
+    novaJanela.document.write(`<pre>${conteudo}</pre>`);
+    novaJanela.print();
+  };
+  
+
 
   return (
     <div className="flex h-screen bg-background">
@@ -763,8 +856,17 @@ export default function QuimexPOS() {
             </div>
             <div className="text-right">
               <p className="text-xs text-primary-foreground">Operador</p>
-              <p className="text-sm font-medium text-primary-foreground">Caixa 01</p>
+              <p className="text-sm font-medium text-primary-foreground">Hemerson</p>
+              <p className="text-xs text-primary-foreground mt-1">Valor inicial: <span className="font-semibold">R$ {valorInicial.toFixed(2)}</span></p>
+
             </div>
+            <button
+              onClick={() => gerarFechamentoCaixa()}
+              className="ml-4 px-3 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition"
+            >
+              Fechar Caixa
+            </button>
+
           </div>
 
           <div className="flex gap-3">

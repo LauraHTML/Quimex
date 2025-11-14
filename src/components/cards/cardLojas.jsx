@@ -23,8 +23,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import { mockUsers } from "@/lib/mock-data";
+import { mockUsers, mockFornecedores } from "@/lib/mock-data";
 import Tabela from "../tabelaPaginacao/tabelaPaginacao";
+import TabelaFornecedores from "../tabelaPaginacao/tabelaPaginacao";
 
 export function CardLojas({ loja, onEdit, onDelete }) {
   return (
@@ -119,6 +120,35 @@ export function CardLojas({ loja, onEdit, onDelete }) {
                 </AlertDialogHeader>
                 {/* TABELAAA */}
                 <Tabela data={mockUsers} />
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogAction>
+                    Confirmar
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  title="Visualizar Detalhes"
+                >
+                  <Eye className="h-4 w-4 text-primary" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="max-w-6xl max-h-[90vh] overflow-y-automax-w-[95vw] sm:max-w-2xl md:max-w-4xl lg:max-w-6xl"> 
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Tabela de funcionários
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Visualização de funcionários
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                {/* TABELAAA */}
+                <TabelaFornecedores data={mockFornecedores} />
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancelar</AlertDialogCancel>
                   <AlertDialogAction>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useAuth } from "@/app/contexts/auth-context";
 import { canManageLojas } from "@/lib/utils/permissions";
 import { mockLojas } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
@@ -38,7 +37,6 @@ import { ControlePaginacao } from "@/components/paginacao/controlePaginacao";
 import { CardLojas } from "@/components/cards/cardLojas";
 
 export default function LojasPage() {
-  const { user } = useAuth();
   const [lojas, setLojas] = useState(mockLojas);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -55,15 +53,6 @@ export default function LojasPage() {
     telefone: "",
     tipo: "filial",
   });
-
-  // if (!user || !canManageLojas(user)) {
-  //   return (
-  //     <div className="text-center py-12">
-  //       <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-  //       <p className="text-muted-foreground">Você não tem permissão para acessar esta página.</p>
-  //     </div>
-  //   )
-  // }
 
   const handleEditLoja = (loja) => {
     setEditingLoja(loja);

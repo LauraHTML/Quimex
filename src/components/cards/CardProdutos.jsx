@@ -13,6 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 export function CardProdutos({
   produto,
@@ -24,8 +25,12 @@ export function CardProdutos({
 }) {
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 hover:border-primary/50">
-      <CardHeader className="pb-3">
+      <CardHeader className="flex flex-col pb-3">
+        <div className="flex items-center justify-center flex-shrink min-w-0 flex-wrap">
+            <Image src={produto.image} width={200} height={260} alt={`imagem do ${produto.nome}`} className="aspect-video h-70 rounded-t-xl object-cover" />
+          </div>
         <div className="flex items-start justify-between gap-3 flex-wrap">
+
           <div className="flex items-center gap-3 flex-shrink min-w-0 flex-wrap">
             <div className="p-2.5 rounded-xl bg-green-500/10 group-hover:bg-green-500/20 transition-colors">
               <Package className="h-5 w-5 text-green-500" />
