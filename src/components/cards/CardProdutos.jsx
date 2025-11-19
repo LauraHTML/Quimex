@@ -22,12 +22,15 @@ export function CardProdutos({
   badgeVariant,
   nomeLoja,
   lojaId
-}) {
+})
+
+{
+
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 hover:border-primary/50">
-      <CardHeader className="flex flex-col pb-3">
-        <div className="flex items-center justify-center flex-shrink min-w-0 flex-wrap">
-            <Image src={produto.image} width={200} height={260} alt={`imagem do ${produto.nome}`} className="aspect-video h-70 rounded-t-xl object-cover" />
+      <CardHeader className="flex flex-col ">
+        <div className="w-full relative t rounded-md py-4">
+            <Image src={produto.image} layout="responsive" width={400} height={160} alt={`imagem do produto: ${produto.nome}`} className="aspect-video object-cover bg-center w-full h-full top-0 left-0 rounded-2xl" />
           </div>
         <div className="flex items-start justify-between gap-3 flex-wrap">
 

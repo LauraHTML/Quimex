@@ -88,7 +88,7 @@ const salesPoints = [
 
 export default function QuimexMap() {
   return (
-    <div className="w-full h-[350px] rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+    <div className="w-full h-[350px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 z-0 ">
       <MapContainer
         center={[-14.235, -51.9253]} // centro aproximado do Brasil
         zoom={4}

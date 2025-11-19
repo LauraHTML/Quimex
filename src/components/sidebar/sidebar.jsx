@@ -8,7 +8,6 @@ import { Button } from "../../components/ui/button"
 import { ScrollArea } from "../../components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "../../components/ui/sheet"
 import { LayoutDashboard, Store, Users, Package, Truck, ShoppingCart, DollarSign, PackageOpen, Menu, LogOut, Moon, Sun } from "lucide-react"
-import { useAuth } from "../../app/contexts/auth-context"
 import { useTheme } from "../../app/contexts/theme-context"
 import { canManageLojas, canManageFuncionarios, canAccessPDV, canAccessFinanceiro } from "../../lib/utils/permissions"
  
@@ -46,9 +45,6 @@ export function Sidebar() {
   }, [])
  
   const getUserRole = async () => {
-
-    
-
     if (!user) return null
     const role = user.perfil || user.role || user.cargo
     return role ? String(role).toLowerCase() : null

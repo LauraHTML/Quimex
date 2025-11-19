@@ -97,8 +97,8 @@ const Footer03Page = () => {
   
   return (
     <div className="flex flex-col">
-      <footer className=" px-5 md:px-10 pb-5">
-        <div className="bg-primary text-background rounded-xl max-w-(--breakpoint-xl) mx-auto shadow-xl/20">
+      <footer className=" px-5 md:px-10 pb-5 ">
+        <div className="bg-primary text-white rounded-xl max-w-(--breakpoint-xl) mx-auto shadow-xl/20">
           <div className="py-16 flex flex-col md:flex-row gap-30 px-6 items-center">
             <div className="col-span-full xl:col-span-2">
               <Image
@@ -116,7 +116,7 @@ const Footer03Page = () => {
             {footerSections.map(({ title, links }) => (
               <div key={title}className="flex flex-col gap-5" >
                 <h1 className="font-bold">{title}</h1>
-                <ul className="space-y-4 flex flex-row gap-4">
+                <ul className="space-y-4 flex flex-col md:flex-row gap-4">
                   {links.map(({ title, href }) => (
                     <li key={title} >
                       <Link

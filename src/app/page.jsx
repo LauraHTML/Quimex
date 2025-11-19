@@ -1,8 +1,6 @@
 "use client";
 
-import "./styles/page.css";
 import Image from "next/image";
-
 import { Link } from 'react-scroll';
 
 import Navbar02Page from "@/components/navbar-02/navbar-02";
@@ -63,7 +61,7 @@ export default function Home() {
 
           <div className="flex flex-col md:flex-row md:flex-wrap gap-6 justify-center md:items-stretch w-full items-center">
            
-            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105 text-black">
               <Image
                 className="p-1 mx-auto"
                 src="/icones/icon-confiavel.svg"
@@ -78,7 +76,7 @@ export default function Home() {
             </div>
 
   
-            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105 text-black">
               <Image
                 className="p-1 mx-auto"
                 src="/icones/icon-inovadora.svg"
@@ -93,7 +91,7 @@ export default function Home() {
             </div>
 
         
-            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105 text-black">
               <Image
                 className="p-1 mx-auto"
                 src="/icones/icon-parceria.svg"
@@ -220,16 +218,10 @@ export default function Home() {
       </section>
       {/* Marcas de Parceria Section */}
       <section id="parcerias" className="parcerias flex flex-col justify-center items-center h-full m-10  overflow-hidden">
-        <div className="flex flex-col h-full w-full max-w-6xl bg-accent p-10 gap-4">
+        <div className="flex flex-col h-full w-full max-w-6xl bg-accent p-10 gap-4 items-center justify-center">
           <h2 className="text-3xl text-center">Nossas Marcas Parceiras</h2>
           <div className="w-full max-w-7xl mx-auto px-4">
             <EmblaCarousel />
-          </div>
-          
-          <div className="text-center">
-            <Button>
-              <Link to="contato" smooth={true} duration={500} spy={true} offset={-70}>Seja Nosso Parceiro</Link>
-            </Button>
           </div>
         </div>
       </section>
@@ -245,11 +237,11 @@ export default function Home() {
             </p>
             <div className="flex flex-row items-center gap-2">
               <Mail className="text-secondary h-5 w-5" />
-              <p>Email@gmail?.com</p>
+              <p>quimex05@gmail.com</p>
             </div>
             <div className="flex flex-row items-center gap-2"> 
               <PhoneCall className="text-secondary h-5 w-5" />
-            <p>+1 2345-5643</p>
+            <p>11 2345-5643</p>
             </div>
             <div className="flex flex-row items-center gap-2">
             <Clock4 className="text-secondary h-5 w-5" />          
