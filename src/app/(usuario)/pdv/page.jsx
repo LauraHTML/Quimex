@@ -11,10 +11,21 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-// ================================
-// Lista de produtos químicos - COMPLETA 
-// ================================
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 const chemicalProducts = [
   {
     id: "1",
@@ -693,20 +704,21 @@ export default function QuimexPOS() {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [showPayment, setShowPayment] = useState(false);
   const [valorInicial, setValorInicial] = useState(0);
+  let [comprovBaixado, setComprovBaixado] = useState(false);
 
-  // Ao abrir o sistema, define o valor inicial do caixa se ainda não existir
-  useEffect(() => {
-    const hoje = new Date().toISOString().split("T")[0];
-    const dataCaixa = localStorage.getItem("caixaData");
-    const valorSalvo = localStorage.getItem("caixaAbertura");
+  // // Ao abrir o sistema, define o valor inicial do caixa se ainda não existir
+  // useEffect(() => {
+  //   const hoje = new Date().toISOString().split("T")[0];
+  //   const dataCaixa = localStorage.getItem("caixaData");
+  //   const valorSalvo = localStorage.getItem("caixaAbertura");
 
-    if (dataCaixa === hoje && valorSalvo) {
-      setValorInicial(parseFloat(valorSalvo));
-    } else {
-      // Redireciona para a página de abertura de caixa se não houver valor para hoje
-      window.location.href = "/"; 
-    }
-  }, []);
+  //   if (dataCaixa === hoje && valorSalvo) {
+  //     setValorInicial(parseFloat(valorSalvo));
+  //   } else {
+  //     // Redireciona para a página de abertura de caixa se não houver valor para hoje
+  //     window.location.href = "/";
+  //   }
+  // }, []);
 
   const filteredProducts = chemicalProducts.filter((product) => {
     const matchesSearch =
@@ -773,13 +785,15 @@ export default function QuimexPOS() {
   };
 
   const gerarComprovanteCliente = (venda) => {
-    const conteudoItens = venda.itens.map(
-      (i) =>
-        `Produto: ${i.name}\n` +
-        `Quantidade: ${i.quantity}x\n` +
-        `Preço Unitário: R$ ${i.price.toFixed(2)}\n` +
-        `Preço Total do Produto: R$ ${(i.price * i.quantity).toFixed(2)}\n`
-    ).join("-----------------------------\n");
+    const conteudoItens = venda.itens
+      .map(
+        (i) =>
+          `Produto: ${i.name}\n` +
+          `Quantidade: ${i.quantity}x\n` +
+          `Preço Unitário: R$ ${i.price.toFixed(2)}\n` +
+          `Preço Total do Produto: R$ ${(i.price * i.quantity).toFixed(2)}\n`
+      )
+      .join("-----------------------------\n");
 
     const conteudo = `
       *** COMPROVANTE DE VENDA ***
@@ -802,20 +816,26 @@ export default function QuimexPOS() {
   };
 
   const gerarFechamentoCaixa = () => {
+    comprovBaixado = true;
+    console.log(comprovBaixado)
+
     const hoje = new Date().toISOString().split("T")[0];
-    const vendas = JSON.parse(localStorage.getItem("vendas") || "[]")
-      .filter((v) => v.dataHora.startsWith(new Date(hoje).toLocaleDateString())); // Filtra vendas do dia atual
+    const vendas = JSON.parse(localStorage.getItem("vendas") || "[]").filter(
+      (v) => v.dataHora.startsWith(new Date(hoje).toLocaleDateString())
+    ); // Filtra vendas do dia atual
 
     const totalDia = vendas.reduce((acc, v) => acc + v.total, 0);
-    const conteudoVendas = vendas.map(
-      (v) =>
-        `  - Venda ID: ${v.id}\n` +
-        `    Data/Hora: ${v.dataHora}\n` +
-        `    Método de Pagamento: ${v.metodo}\n` +
-        `    Itens:\n` +
-        `${v.itens.map(item => `      - ${item.name} (${item.quantity}x) R$ ${item.price.toFixed(2)} = R$ ${(item.price * item.quantity).toFixed(2)}`).join('\n')}\n` +
-        `    Total da Venda: R$ ${v.total.toFixed(2)}\n`
-    ).join("-----------------------------\n");
+    const conteudoVendas = vendas
+      .map(
+        (v) =>
+          `  - Venda ID: ${v.id}\n` +
+          `    Data/Hora: ${v.dataHora}\n` +
+          `    Método de Pagamento: ${v.metodo}\n` +
+          `    Itens:\n` +
+          `${v.itens.map((item) => `      - ${item.name} (${item.quantity}x) R$ ${item.price.toFixed(2)} = R$ ${(item.price * item.quantity).toFixed(2)}`).join("\n")}\n` +
+          `    Total da Venda: R$ ${v.total.toFixed(2)}\n`
+      )
+      .join("-----------------------------\n");
 
     const conteudo = `
       *** FECHAMENTO DO CAIXA ***
@@ -826,7 +846,7 @@ export default function QuimexPOS() {
       -----------------------------
       Detalhes das Vendas do Dia (${vendas.length} vendas):
       -----------------------------
-      ${conteudoVendas || 'Nenhuma venda realizada hoje.'}
+      ${conteudoVendas || "Nenhuma venda realizada hoje."}
       -----------------------------
       TOTAL ARRECADADO EM VENDAS: R$ ${totalDia.toFixed(2)}
       -----------------------------
@@ -839,8 +859,6 @@ export default function QuimexPOS() {
     novaJanela.document.write(`<pre>${conteudo}</pre>`);
     novaJanela.print();
   };
-  
-
 
   return (
     <div className="flex h-screen bg-background">
@@ -849,24 +867,13 @@ export default function QuimexPOS() {
         <header className="border-b border-border bg-primary px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-primary-foreground">QUIMEX</h1>
+              <h1 className="text-3xl font-bold text-primary-foreground">
+                QUIMEX
+              </h1>
               <p className="text-sm text-primary-foreground">
                 Sistema de Caixa - Produtos Químicos
               </p>
             </div>
-            <div className="text-right">
-              <p className="text-xs text-primary-foreground">Operador</p>
-              <p className="text-sm font-medium text-primary-foreground">Hemerson</p>
-              <p className="text-xs text-primary-foreground mt-1">Valor inicial: <span className="font-semibold">R$ {valorInicial.toFixed(2)}</span></p>
-
-            </div>
-            <button
-              onClick={() => gerarFechamentoCaixa()}
-              className="ml-4 px-3 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition"
-            >
-              Fechar Caixa
-            </button>
-
           </div>
 
           <div className="flex gap-3">
@@ -881,6 +888,46 @@ export default function QuimexPOS() {
               />
             </div>
           </div>
+          <div className="flex flex-col md:flex-row justify-between my-4 p-2 bg-background rounded-md">
+            <div className="text-left text-black">
+              <p className="text-xs ">Operador</p>
+              <p className="text-sm font-medium ">Hemerson</p>
+              <p className="text-xs mt-1">
+                Valor inicial:{" "}
+                <span className="font-semibold">
+                  R$ {valorInicial.toFixed(2)}
+                </span>
+              </p>
+            </div>
+            <div></div>
+          </div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Fechar Caixa</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Fechar Caixa</DialogTitle>
+                <DialogDescription>Ações para encerrar o dia</DialogDescription>
+              </DialogHeader>
+              <div className="border border-primary border-dashed p-3 rounded-md bg-muted">
+                <p>
+                  Para encerrar o dia, primeiro baixe o comprovante de vendas da
+                  seção
+                </p>
+              </div>
+              <Button onClick={() => gerarFechamentoCaixa()}>
+                Baixar comprovante de vendas
+              </Button>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button variant="outline">Cancelar</Button>
+                </DialogClose>
+                {comprovBaixado &&(
+                <Button>Encerrar dia</Button>)}
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </header>
 
         {/* Filtro */}
@@ -898,7 +945,8 @@ export default function QuimexPOS() {
                   "Ácidos Inorgânicos": "bg-orange-600",
                   "Ácidos Orgânicos": "bg-yellow-500",
                   Bases: "bg-green-700",
-                  "Ácidos Inorgânicos Oxidantes/Manuseio Especial": "bg-blue-600",
+                  "Ácidos Inorgânicos Oxidantes/Manuseio Especial":
+                    "bg-blue-600",
                   Oxidantes: "bg-lime-500",
                   Tóxicos: "bg-purple-600",
                   Inflamáveis: "bg-red-600",
@@ -914,12 +962,15 @@ export default function QuimexPOS() {
                     key={category}
                     onClick={() => setSelectedCategory(category)}
                     className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium transition-all border
-              ${isSelected
-                        ? "border-primary bg-muted-foreground/20 text-pink"
-                        : "border-border bg-background text-background-foreground hover:bg-background/80"
-                      }`}
+              ${
+                isSelected
+                  ? "border-primary bg-muted-foreground/20 text-pink"
+                  : "border-border bg-background text-background-foreground hover:bg-background/80"
+              }`}
                   >
-                    <span className={`w-3.5 h-3.5 rounded-full ${color} border border-border`}></span>
+                    <span
+                      className={`w-3.5 h-3.5 rounded-full ${color} border border-border`}
+                    ></span>
                     {category}
                   </button>
                 );
@@ -927,7 +978,6 @@ export default function QuimexPOS() {
             </div>
           </div>
         </div>
-
 
         {/* Produtos */}
         <div className="flex-1 overflow-auto p-6">
@@ -941,9 +991,12 @@ export default function QuimexPOS() {
                 {/* Faixa de cor da categoria */}
                 <div
                   className={`${product.colorCode} h-2 w-full rounded-t-md`}
-                  style={{ marginTop: "0px", borderTopLeftRadius: "0.5rem", borderTopRightRadius: "0.5rem" }}
+                  style={{
+                    marginTop: "0px",
+                    borderTopLeftRadius: "0.5rem",
+                    borderTopRightRadius: "0.5rem",
+                  }}
                 ></div>
-
 
                 <div className="p-4 space-y-1">
                   <p className="text-xs text-muted-foreground font-mono">
@@ -1036,7 +1089,9 @@ export default function QuimexPOS() {
         {/* Total e Pagamento */}
         <div className="border-t border-border p-4 bg-muted/30">
           <div className="flex justify-between items-center mb-4">
-            <span className="text-lg font-semibold text-foreground">Total:</span>
+            <span className="text-lg font-semibold text-foreground">
+              Total:
+            </span>
             <span className="text-2xl font-bold text-primary">
               R$ {total.toFixed(2)}
             </span>

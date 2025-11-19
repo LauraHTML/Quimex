@@ -43,7 +43,7 @@ export default function EmblaCarousel() {
                 className="pl-4 basis-full md:basis-1/3 lg:basis-1/5"
               >
                 <div className="p-1">
-                  <Card className="flex items-center justify-center h-full w-full">
+                  <Card className="flex items-center justify-center h-full w-full bg-[#f5f5f4]">
                     <CardContent className="flex items-center justify-center p-3 h-[100px] w-full">
                       {" "}
                       <img

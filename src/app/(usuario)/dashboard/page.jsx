@@ -1,6 +1,6 @@
 "use client"
  
-import { useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { Package, ShoppingCart, Users, TrendingUp, Building2, Factory, FileText } from "lucide-react"
@@ -9,10 +9,9 @@ import { jsPDF } from "jspdf"
 import autoTable from "jspdf-autotable" 
  
 export default function DashboardPage() {
-
+  const [user, setUser ] = useState([])
   const router = useRouter()
- 
-  const colors = ["#20532A", "#0F703A", "#1B8742", "#279D49", "#2EAF4A", "#7CC472", "#BEE2B9"]
+  const colors = ["#20532A", "#0F703A", "#1B8742", "#279D49", "#2EAF4A", "#7CC472", "#BEE2B9"];
  
   const revenueData = [
     { name: "Jan", revenue: 3000 },
@@ -103,6 +102,13 @@ export default function DashboardPage() {
  
     doc.save("relatorio_geral_produtos_quimicos.pdf")
   }
+
+  const getUserRole = async () => {
+    if (!user) return null
+    const role = user.perfil || user.role || user.cargo
+    return role ? String(role).toLowerCase() : null
+  }
+ 
  
   return (
     <main className="container mx-auto px-4 py-8 max-w-7xl bg-background text-foreground transition-colors duration-500">
@@ -329,6 +335,7 @@ export default function DashboardPage() {
             </div>
             <div className="text-3xl font-bold">128</div>
         </div>
+        {getUserRole !== "Gerente" && (
         <div className="rounded-xl p-6 border bg-card border-border shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-medium text-muted-foreground">Total de Lojas</h3>
@@ -336,6 +343,7 @@ export default function DashboardPage() {
             </div>
             <div className="text-3xl font-bold">12</div>
         </div>
+        )} 
         <div className="rounded-xl p-6 border bg-card border-border shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-medium text-muted-foreground">Total de Fornecedores</h3>

@@ -97,8 +97,8 @@ const Footer03Page = () => {
   
   return (
     <div className="flex flex-col">
-      <footer className=" px-5 md:px-10 pb-5">
-        <div className="bg-primary text-background rounded-xl max-w-(--breakpoint-xl) mx-auto shadow-xl/20">
+      <footer className=" px-5 md:px-10 pb-5 ">
+        <div className="bg-primary text-white rounded-xl max-w-(--breakpoint-xl) mx-auto shadow-xl/20">
           <div className="py-16 flex flex-col md:flex-row gap-30 px-6 items-center">
             <div className="col-span-full xl:col-span-2">
               <Image

@@ -12,7 +12,6 @@ import Image from "next/image"
  
 export default function LoginPage() {
   const router = useRouter()
- 
   const [theme, setTheme] = useState("dark")
   const [RE, setRE] = useState("")
   const [password, setPassword] = useState("")
@@ -102,6 +101,7 @@ export default function LoginPage() {
     } else if (data.cargo == "Vendedor") {
       window.location.href = "/pdv";
     }
+   
   }
  
   return (
@@ -135,7 +135,7 @@ export default function LoginPage() {
         >
           {/* Logo e título */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-600/30">
+            <div className="w-16 h-16 py-4 bg-accent rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-600/30">
               <Image src="/logo.png" width={60} height={60} alt="Logo" />
             </div>
             <h1

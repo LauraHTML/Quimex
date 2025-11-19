@@ -1,8 +1,6 @@
 "use client";
 
-import "./styles/page.css";
 import Image from "next/image";
-
 import { Link } from 'react-scroll';
 
 import Navbar02Page from "@/components/navbar-02/navbar-02";
@@ -63,7 +61,7 @@ export default function Home() {
 
           <div className="flex flex-col md:flex-row md:flex-wrap gap-6 justify-center md:items-stretch w-full items-center">
            
-            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105 text-black">
               <Image
                 className="p-1 mx-auto"
                 src="/icones/icon-confiavel.svg"
@@ -78,7 +76,7 @@ export default function Home() {
             </div>
 
   
-            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105 text-black">
               <Image
                 className="p-1 mx-auto"
                 src="/icones/icon-inovadora.svg"
@@ -93,7 +91,7 @@ export default function Home() {
             </div>
 
         
-            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105">
+            <div className="flex-1 min-w-[250px] max-w-sm bg-secondary-foreground border border-accent rounded-md shadow-sm p-6 text-center transition-transform duration-300 hover:scale-105 text-black">
               <Image
                 className="p-1 mx-auto"
                 src="/icones/icon-parceria.svg"

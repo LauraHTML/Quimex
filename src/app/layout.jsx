@@ -1,10 +1,7 @@
 import { Geist } from "next/font/google";
-import { ThemeProvider } from "./contexts/theme-context"
-import { Toaster } from "@/components/ui/sonner"
-import { Analytics } from "@vercel/analytics/react";
-
+import { ThemeProvider } from "./contexts/theme-context";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
-import "./styles/page.css"
 
 const geist = Geist({
   variable: "--font-geist",

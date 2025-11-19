@@ -608,7 +608,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
-    image: "/produtos/Ácido_Sulfúrico.png",
+    image: "/produtos/Ácido_Bórico.png",
     filial: "Rio de Janeiro"
   },
   {
@@ -619,7 +619,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Bases",
     codigoCor: "bg-green-700",
-    image: "/Ácido Cítrico",
+    image: "/produtos/Ácido Cítrico",
     filial: "São Paulo"
   },
   {
@@ -630,7 +630,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
-    image: "/BHT.png",
+    image: "/produtos/BHT.png",
     filial: "São Paulo"
   },
   {
@@ -641,7 +641,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Inflamáveis",
     codigoCor: "bg-red-600",
-    image: "/Borax.png",
+    image: "/produtos/Borax.png",
     filial: "São Paulo"
   },
   {
@@ -652,7 +652,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Químicos Gerais",
     codigoCor: "bg-gray-200",
-    image: "/Barbopol.png",
+    image: "/produtos/Barbopol.png",
     filial: "São Paulo"
   },
   {
@@ -663,7 +663,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Oxidantes",
     codigoCor: "bg-lime-500",
-    image: "/Etanol.png",
+    image: "/produtos/Etanol.png",
     filial: "São Paulo"
   },
   {
@@ -674,7 +674,7 @@ export const mockProdutos = [
     estoque: 200,
     classificacao: "Ácidos Inorgânicos",
     codigoCor: "bg-orange-600",
-    image: "/Lactose.png",
+    image: "/produtos/Lactose.png",
     filial: "Rio de Janeiro"
   },
   {
