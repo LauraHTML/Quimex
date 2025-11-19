@@ -220,16 +220,10 @@ export default function Home() {
       </section>
       {/* Marcas de Parceria Section */}
       <section id="parcerias" className="parcerias flex flex-col justify-center items-center h-full m-10  overflow-hidden">
-        <div className="flex flex-col h-full w-full max-w-6xl bg-accent p-10 gap-4">
+        <div className="flex flex-col h-full w-full max-w-6xl bg-accent p-10 gap-4 items-center justify-center">
           <h2 className="text-3xl text-center">Nossas Marcas Parceiras</h2>
           <div className="w-full max-w-7xl mx-auto px-4">
             <EmblaCarousel />
-          </div>
-          
-          <div className="text-center">
-            <Button>
-              <Link to="contato" smooth={true} duration={500} spy={true} offset={-70}>Seja Nosso Parceiro</Link>
-            </Button>
           </div>
         </div>
       </section>
@@ -245,11 +239,11 @@ export default function Home() {
             </p>
             <div className="flex flex-row items-center gap-2">
               <Mail className="text-secondary h-5 w-5" />
-              <p>Email@gmail?.com</p>
+              <p>quimex05@gmail.com</p>
             </div>
             <div className="flex flex-row items-center gap-2"> 
               <PhoneCall className="text-secondary h-5 w-5" />
-            <p>+1 2345-5643</p>
+            <p>11 2345-5643</p>
             </div>
             <div className="flex flex-row items-center gap-2">
             <Clock4 className="text-secondary h-5 w-5" />          

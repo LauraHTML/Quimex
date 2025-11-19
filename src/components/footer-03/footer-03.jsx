@@ -116,7 +116,7 @@ const Footer03Page = () => {
             {footerSections.map(({ title, links }) => (
               <div key={title}className="flex flex-col gap-5" >
                 <h1 className="font-bold">{title}</h1>
-                <ul className="space-y-4 flex flex-row gap-4">
+                <ul className="space-y-4 flex flex-col md:flex-row gap-4">
                   {links.map(({ title, href }) => (
                     <li key={title} >
                       <Link
